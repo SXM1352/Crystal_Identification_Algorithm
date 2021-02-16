@@ -99,12 +99,11 @@ c1.Update()
 #
 # Open a ROOT file and save the histogram
 #
-myfile = TFile( 'SingleCrystalPV.root', 'RECREATE' )
+#myfile = TFile( 'SingleCrystalPV.root', 'RECREATE' )
 # form1.Write()
 # sqroot.Write()
-h1f.Write()
-h1f_2.Write()
-myfile.Close()
+#h1f.Write()
+#myfile.Close()
 gBenchmark.Show( 'fillTest' )
 
 """
@@ -114,5 +113,45 @@ There is a discrepancy between root fit and python fit. In fact,
  when fitting using the default least square (chi2) method but skip empty bins]. I got 
  the same fitting result now by switching root fit option to “RQW”.
 """
+raw_input("Press Enter to be able to analyze further crystals.")
 
-raw_input("Press enter to continue. ")
+while i_crystal != "exit":
+    i_crystal = raw_input("Enter id of crystal to be plotted or type 'exit' to quit: ")
+    if i_crystal == "exit":
+        continue
+    else:
+        i_crystal = int(i_crystal)
+    print("{} will be plotted.".format(i_crystal))
+    print("The corresponding layer is: ", datapv[i_crystal]["layer"])
+    print("The corresponding row is: ", datapv[i_crystal]["row"])
+    c1 = TCanvas('c1', 'Fill example', 200, 10, 900, 900)
+
+    pad2 = TPad('pad2', 'The pad with the histogram', 0.05, 0.05, 0.95, 0.95, 0)
+
+    pad2.Draw()
+    gBenchmark.Start('fillTest')
+
+    pad2.cd()
+    pad2.GetFrame().SetFillColor(0)
+    pad2.GetFrame().SetBorderMode(-1)
+    pad2.GetFrame().SetBorderSize(5)
+
+    h1f = TH1F('h1f', 'Test PV', (5000 - 500) / 45, 500, 5000)
+    h1f.SetLineColor(kBlue)
+
+    for x in datapv[i_crystal]['pv']:
+        h1f.Fill(x)
+
+    h1f.Draw()
+
+    leg = TLegend() # TLegend(x1,y1,x2,y2) where x,y are in units of percentage of canvas (i.e. x,y \in [0,1])
+    leg.SetBorderSize(0) # no border
+    leg.SetFillColor(0) # probably kWhite
+    leg.SetFillStyle(0) # I'm guessing this just means pure color, no patterns
+    leg.SetTextFont(42)
+    leg.SetTextSize(0.035) # somewhat large, may need to play with this to make the plot look ok
+    leg.AddEntry(h1f,"{}".format(i_crystal),"L") # AddEntry(TGraph/TH1D varName, what you want the legend to say for this graph, show the line)
+
+    leg.Draw() # draw it!
+
+    c1.Update()
