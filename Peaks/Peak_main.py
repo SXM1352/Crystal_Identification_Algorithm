@@ -40,17 +40,17 @@ def main():
     
     savedir = '/home/david.perez/Desktop'
     
-    cg = 1 #0 for 000, 1 for 010, 2 for 100, 3 for 111 #CAREFUL WITH ORDER, it changes thresholds and more
+    cg = 3 #0 for 000, 1 for 010, 2 for 100, 3 for 111 #CAREFUL WITH ORDER, it changes thresholds and more
     HVD_list = ["000", "010", "100", "111"]
     HVD = HVD_list[cg]
     
     n_p_list = [36, 30, 30, 25]
     n_p = n_p_list[cg] #number of pickles
     
-    ht_list = ["hist0", "hist01", "hist10", "hist1"]
+    #ht_list = ["hist0", "hist01", "hist10", "hist1"]
     
-    ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/{}_{}.pickle'.format(ht_list[cg], p), 'rb')) for p in range(n_p)] 
-    #ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/{}_6.pickle'.format(ht_list[cg])))]
+    ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/hist{}_{}.pickle'.format(HVD, p), 'rb')) for p in range(n_p)]
+    #ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/hist{}_13.pickle'.format(HVD)))]
  
     x_arr = []
     y_arr = []
@@ -112,33 +112,36 @@ def main():
     for jr,roi_hist in enumerate(ht):
         pFinder = PeakFinder(cg, roi_hist, bins,sigma[cg],threshold[cg],rmBackground,convIter,markov,mIter)
         dic_rows = pFinder.runPeakFinder() #steps[cg], cg) #100 for 111; in principle also for 100; 010 needs 50 (or less); and 000 auch 
-        #jr = 23 #in  case we want to see only one
+        #jr = 13 #in  case we want to see only one
             
         pclosest, c_roi = pFinder.closest_to_cent(dic_rows, Centers_COG[cg], jr)
-        print("pclosest is: ",pclosest)
+        
         pLabels = PeakLabels(cg, pclosest, c_roi, rows, dop_columns_accepted_edge, dop_min_edge, dop_max_edge, lenmin_edge, lenmax_edge, rows_accepted, dop_columns_accepted, len_columns_accepted, dop_min_cent, dop_max_cent, lenmin_cent, lenmax_cent)
         dic_crystal, dic_palone, dic_rdefect = pLabels.label(dic_palone, dic_rdefect, dic_crystal, dic_rows, dic_c[cg]) #auch global!!!
                 
         print("palone",dic_palone)
         print("rdefect", dic_rdefect)
-
+        print("dc_c", dic_crystal[1703])
 
         for ij in dic_rows.keys():
             x = np.array(PeakHelper.Extract_x(dic_rows[ij][0]))
             y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))
             x_arr.append(x)
             y_arr.append(y)
+            
+        #pplot = PeakPlot(x_arr, y_arr, jr, HVD)
+        #pplot.runPeakPlot()
     
     with open('{}/dic-crystal-{}.pickle'.format(savedir, HVD), 'wb') as handle:
         pickle.dump(dic_crystal, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        
+
     logging.info('Dictionary containing labels of crystals saved in ' + savedir + '/ \n')
-    
+
     with open('{}/dic_pAlone-{}.pickle'.format(savedir, HVD), 'wb') as handle:
-        pickle.dump(dic_palone, handle, protocol=pickle.HIGHEST_PROTOCOL) 
-        
+        pickle.dump(dic_palone, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     logging.info('Dictionary containing peaks which were not assigned to any row saved in ' + savedir + '/ \n')
-        
+
     with open('{}/dic_rDefect-{}.pickle'.format(savedir, HVD), 'wb') as handle:
         pickle.dump(dic_rdefect, handle, protocol=pickle.HIGHEST_PROTOCOL)
         

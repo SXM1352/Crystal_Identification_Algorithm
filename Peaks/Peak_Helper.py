@@ -1,3 +1,4 @@
+__author__ = "david.perez.gonzalez" 
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jan 10 16:52:04 2021
@@ -8,19 +9,30 @@ import logging
 import numpy as np
 
 class PeakHelper(object):
-    
     def __init__(self):
         pass
     
     @staticmethod 
     def euqli_dist(p, q, squared=True):
-        # Calculates the euclidean distance, the "ordinary" distance between two
-        # points
-        # 
-        # The standard Euclidean distance can be squared in order to place
-        # progressively greater weight on objects that are farther apart. This
-        # frequently used in optimization problems in which distances only have
-        # to be compared.
+        """!
+        Calculates the euclidean distance, the "ordinary" distance between two
+        points
+         
+        The standard Euclidean distance can be squared in order to place
+        progressively greater weight on objects that are farther apart. This
+        frequently used in optimization problems in which distances only have
+        to be compared.
+
+        @param p: coordinates of point
+        @type p: list
+        @param q: coordinates of point
+        @type q: list
+        @param squared: 
+        @type squared: boolean
+
+        @return: distance
+        @rtype: float
+        """
         if squared:
             return ((p[0] - q[0]) ** 2) + ((p[1] - q[1]) ** 2)
         else:
@@ -29,11 +41,11 @@ class PeakHelper(object):
 
     @staticmethod 
     def ref_peaks():
-        """
-        Filter peaks using center of rois (the most defined peak) and also the "coordinates"
+        """!
+        Creates reference peaks using center of rois (the most defined peak)
         
-        @return: Centers and dictionary with centers and coordinates
-        @rtype:
+        @return: list of Centers, dictionary with centers and coordinates
+        @rtype: list, dict
         """
         peak_ref000_r = [5,17,29,41,53,65]
         peak_ref000_c = [0,6,12,18,24,30]
@@ -113,11 +125,13 @@ class PeakHelper(object):
 
     @staticmethod 
     def CrystalDict():
-        """
-        Define Crystal identification dictionary with respective ids for all the peaks based on layer
+        """!
+        Define Crystal identification dictionary with respective ids for all the peaks
+        based on the different layers
          
-        @return: None
-        @rtype:
+        @return: rows =  ids of crystal ordered by row and column,
+            dic_crystal_test = id from crystals
+        @rtype: 2D-arr, dict
         """
         m=1
         row=[]

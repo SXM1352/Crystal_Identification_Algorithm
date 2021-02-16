@@ -10,17 +10,17 @@ import matplotlib.pyplot as plt
 import pickle
 
 class PeakPlot():
-    def __init__(self, x_arr, y_arr, jr):
+    def __init__(self, x_arr, y_arr, jr, HVD):
         self.x_arr = x_arr
         self.y_arr = y_arr
         self.jr = jr
+        self.HVD = HVD
         
     def runPeakPlot(self):
-
         figure2,ax = plt.subplots()
         for kl in range(len(self.x_arr)):
             plt.plot(self.x_arr[kl],self.y_arr[kl], '-ok', mfc='C1', mec='C1')
-            #print(x_arr[kl])
+
         x_size = 3.8016
         y_size = 3.2
         pix_x = [-21.95982,-18.04018,-13.95982,-10.04018,-5.95982, -2.04018, 2.04018,5.98982,10.04018,13.95982,18.04018,21.95982]
@@ -34,12 +34,11 @@ class PeakPlot():
         plt.ylabel("y")
         plt.show()
         #plt.savefig("./RowPeaks{}.png".format(j))
-        #print(dic_crystal[662])
-    #    print(dic_palone)
-        with open('/home/david.perez/Desktop/Ref010-Sections.pickle', 'rb') as handle:
-                     ref010 = pickle.load(handle)
+
+        with open('/home/david.perez/Desktop/Ref{}_Sections.pickle'.format(self.HVD), 'rb') as handle:
+                     refHVD = pickle.load(handle)
         fig, axs = plt.subplots(nrows=2, ncols=2)
-        hi = axs[1, 1].hist2d(ref010[self.jr][:, 0], ref010[self.jr][:, 1], bins=100)
+        hi = axs[1, 1].hist2d(refHVD[self.jr][:, 0], refHVD[self.jr][:, 1], bins=100)
         
         for kl in range(len(self.x_arr)):
             plt.plot(self.x_arr[kl],self.y_arr[kl], '-ok', mfc='C1', mec='C1')
