@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-
 __author__ = 'david.perez.gonzalez'
 """
 Created on Fri Jan 15 19:27:39 2021
 
 @author: David
 """
-
 #module imports
 import argparse
 import logging
@@ -20,37 +18,35 @@ from SanCheck_Col import SanCheckCol
 from SanCheck_Row import SanCheckRow
 from SanCheck_Inv import SanCheckInv
 from SanCheck_Plot import SanCheckPlot
-
 """
 SanCheck_main.py provides a frame to run sanity checks on the corresponding
 given data (ordered labels of peaks distributed in region of interest) by
 looking at the median values of the complete sets of data. 
 """
-
 def read_data_COG(HVD):
-    """
-    read data from the three dictionaries containing all the peaks ordered by \
+    """!
+    Read data from the three dictionaries containing all the peaks ordered by \
     its extracted condition at first place. \
     Input parameters: \
-    HVD = string (it indicates which COG algorithm is used to check)
+    @param HVD: it indicates which COG algorithm is used to check
+    @type HVD: string 
     
-    Returns: \
-    dic_crystal = dictionary containing most of peaks ordered by rows
+    @return:
+    dic_crystal = dictionary containing most of peaks ordered by rows,
     dic_palone = dictionary containing those peaks which did not find a 
-    corresponding row. \
+    corresponding row, 
     dic_rdefect dictionary containing rows which are considered to be wrongly
-    labelled. \
-    RefNVD_Sections = original flood maps to be plotted with the labelled peaks
+    labelled,
+    RefNVD_Sections = original flood maps to be plotted with the labelled peaks,
     ludHVD = look-up-table to be plotted with the labelled peaks
-    """
-    
-    with open('./010/dic-crystal-{}.pickle'.format(HVD), 'rb') as handle:
+    """    
+    with open('./111/dic-crystal-{}.pickle'.format(HVD), 'rb') as handle:
         dic_crystal = pickle.load(handle) # 000, 100, 010, 111 order of columns!!!
         
-    with open('./010/dic_pAlone-{}.pickle'.format(HVD), 'rb') as handle:
+    with open('./111/dic_pAlone-{}.pickle'.format(HVD), 'rb') as handle:
         dic_palone = pickle.load(handle) # 000, 100, 010, 111 
     
-    with open('./010/dic_rDefect-{}.pickle'.format(HVD), 'rb') as handle:
+    with open('./111/dic_rDefect-{}.pickle'.format(HVD), 'rb') as handle:
         dic_rdefect = pickle.load(handle) # 000, 100, 010, 111
     
     RefHVD_Sections = np.array([])
@@ -60,8 +56,8 @@ def read_data_COG(HVD):
 #    with open('dic-LUD-{}.pickle'.format(HVD), 'rb') as handle:
 #        ludHVD = pickle.load(handle) # 000, 100, 010, 111
     
-#    with open('Ref{}_Sections-together.pickle'.format(HVD), 'rb') as handle:
-#        RefNVD_Sections = pickle.load(handle)
+    # with open('Ref{}_Sections-together.pickle'.format(HVD), 'rb') as handle:
+    #     RefNVD_Sections = pickle.load(handle)
         
     return dic_crystal, dic_palone, dic_rdefect, RefHVD_Sections, ludHVD
 
@@ -69,17 +65,17 @@ def main():
     """
     Runs the checks on the data, plot the results and save them into a file
     """
-    logging.config.fileConfig('ini-files/logging.ini')
-    logging.getLogger('cia')    
-
-    logging.info('----------------------------------')
-    logging.info('NEW RUN OF THE PROGRAM \n')   
+    # logging.config.fileConfig('ini-files/logging.ini')
+    # logging.getLogger('cia')
+    #
+    # logging.info('----------------------------------')
+    # logging.info('NEW RUN OF THE PROGRAM \n')
     # we can use an argparser for the values we use, this is temporary
     
     savedir = '.'
             
     for cg in range(1):
-        cg = 1 #0 for 000, 1 for 010, 2 for 100, 3 for 111 
+        cg = 3 #0 for 000, 1 for 010, 2 for 100, 3 for 111
         HVD_list = ["000", "010", "100", "111"]
         
         HVD = HVD_list[cg]
@@ -124,13 +120,13 @@ def main():
         CheckPlot = SanCheckPlot(cg, RefNVD_Sections, ludHVD, dist_min_x, dist_min_y)
         dic_crystal_f = CheckPlot.runSanCheckPlot(dic_crystal, m_cols_def, dic_inv)
         
-        #Extract result        
-#        with open('{}/dic-crystal-{}-checked.pickle'.format(savedir, HVD), 'wb') as handle:
-#            pickle.dump(dic_crystal_f, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)  
-#    
-        logging.info('Dictionary containing checked labels of peaks saved in ' + savedir + '/ \n')
+        #Extract result
+        with open('{}/dic-crystal-{}-checked.pickle'.format(savedir, HVD), 'wb') as handle:
+            pickle.dump(dic_crystal_f, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+        #logging.info('Dictionary containing checked labels of peaks saved in ' + savedir + '/ \n')
         
-    logging.info('Thanks for using our software. Hope to see you soon. ## (in Peak_main)\n')
+    #logging.info('Thanks for using our software. Hope to see you soon. ## (in Peak_main)\n')
 
 if __name__=='__main__':
     main()

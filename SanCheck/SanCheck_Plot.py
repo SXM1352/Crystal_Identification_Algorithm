@@ -87,7 +87,7 @@ class SanCheckPlot(object):
     
         fig, ax = plt.subplots(figsize=(100, 100))
         
-        if self.Ref_Sections.size != 0:
+        if self.Ref_Sections.size != 0:#ludHVD?
             x_lud = []
             y_lud = []
             for i in self.ludHVD.keys():
@@ -108,19 +108,18 @@ class SanCheckPlot(object):
             
         for kl in dic_columns_x.keys():
             plt.plot(dic_columns_x[kl],dic_columns_y[kl], '-ok', mfc='C1', mec='C1')
-            
-        for inv in dic_inv_plot.keys():
-            print(dic_inv_plot[inv], inv)
+
         for inv in dic_inv_plot.keys():
             print(dic_inv_plot[inv], inv)
             plt.plot(dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][0],dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][1], ".", color="r") 
         
         for i in dic_crystal.keys(): #check where there are two or more, one color, if invalid, but points, red, one point and valid, green, all the rows connected
-            if dic_crystal[i]["valid"]:
+            if dic_crystal[i]["valid"] and dic_crystal[i]["center"]: #look for bug in 010 with valid true but no center
                 if len(dic_crystal[i]["center"].keys()) > 1:
                     for cr in dic_crystal[i]["center"].keys():
                         plt.plot(dic_crystal[i]["center"][cr][0][0],dic_crystal[i]["center"][cr][0][1], ".", color="b")# mfc="C1")
                 else:
+                    print(dic_crystal[i])
                     plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="g")#mfc="C1")
             else:
                 pass
