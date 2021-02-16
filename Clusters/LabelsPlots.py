@@ -16,42 +16,42 @@ import pickle
 import matplotlib
 
 
-data = np.random.random_sample((36,34))
+# data = np.random.random_sample((36,34))
+#
+# def read_data_COG(NVD):
+#     with open('./20210121NEWCHECK/data-layer1-{}-valid.pickle'.format(NVD), 'rb') as handle:
+#         data1 = pickle.load(handle) # 000, 100, 010, 111
+#
+#     with open('./20210121NEWCHECK/data-layer2-{}-valid.pickle'.format(NVD), 'rb') as handle:
+#         data2 = pickle.load(handle) # 000, 100, 010, 111
+#
+#     with open('./20210121NEWCHECK/data-layer3-{}-valid.pickle'.format(NVD), 'rb') as handle:
+#         data3 = pickle.load(handle) # 000, 100, 010, 111
+#
+#     return data1, data2, data3
+#
+# data1000, data2000, data3000 =  read_data_COG("000")
+# data1100, data2100, data3100 =  read_data_COG("100")
+# data1010, data2010, data3010 =  read_data_COG("010")
+# data1111, data2111, data3111 =  read_data_COG("111")
+#
+# #data1 = (data1100+data1000+data1010+data1111)/4
+# #data2 = (data2100+data2000+data2010+data2111)/4
+# #data3 = (data3100+data3000+data3010+data3111)/4
+#
+# data1 = data1100
+# data2 = data2100
+# data3 = data3100
 
-def read_data_COG(NVD):       
-    with open('./20210121NEWCHECK/data-layer1-{}-valid.pickle'.format(NVD), 'rb') as handle:
-        data1 = pickle.load(handle) # 000, 100, 010, 111 
-        
-    with open('./20210121NEWCHECK/data-layer2-{}-valid.pickle'.format(NVD), 'rb') as handle:
-        data2 = pickle.load(handle) # 000, 100, 010, 111
-        
-    with open('./20210121NEWCHECK/data-layer3-{}-valid.pickle'.format(NVD), 'rb') as handle:
-        data3 = pickle.load(handle) # 000, 100, 010, 111 
-        
-    return data1, data2, data3
-
-data1000, data2000, data3000 =  read_data_COG("000") 
-data1100, data2100, data3100 =  read_data_COG("100") 
-data1010, data2010, data3010 =  read_data_COG("010") 
-data1111, data2111, data3111 =  read_data_COG("111") 
-    
-#data1 = (data1100+data1000+data1010+data1111)/4
-#data2 = (data2100+data2000+data2010+data2111)/4
-#data3 = (data3100+data3000+data3010+data3111)/4
-    
-data1 = data1100
-data2 = data2100
-data3 = data3100
 
 
-
-with open('./20210121NEWCHECK/data-layer1-all-valid.pickle', 'rb') as handle:
+with open('./data-layer1-all149703925-valid.pickle', 'rb') as handle:
     data1 = pickle.load(handle) # 000, 100, 010, 111 
     
-with open('./20210121NEWCHECK/data-layer2-all-valid.pickle', 'rb') as handle:
+with open('./data-layer2-all149703925-valid.pickle', 'rb') as handle:
     data2 = pickle.load(handle) # 000, 100, 010, 111
     
-with open('./20210121NEWCHECK/data-layer3-all-valid.pickle', 'rb') as handle:
+with open('./data-layer3-all149703925-valid.pickle', 'rb') as handle:
     data3 = pickle.load(handle) # 000, 100, 010, 111 
 
 
