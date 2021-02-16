@@ -100,13 +100,27 @@ def f_lud(dic_crystal, val_region, dic_label, lud):
             if l_d > val_region:
                 lud[round(i,1),round(j,1)] = None
             else:
-                
-                dic_label["CLOP"] = dic_crystal[cry]
-                dic_label["2CLOP"] = dic_crystal[cry_2]
-                QF = l_d/(l_d+l_d_2)
-                dic_label["QF"] = QF
-                lud[round(i,1),round(j,1)] = dic_label
-                dic_label = {}
+                if l_d_2 != 0:
+                    QF = l_d/(l_d+l_d_2)
+                    dic_label["CLOP"] = dic_crystal[cry]
+                    dic_label["2CLOP"] = dic_crystal[cry_2]
+
+                    dic_label["QF"] = QF
+                    lud[round(i, 1), round(j, 1)] = dic_label
+                    dic_label = {}
+                else:
+                    QF = 0
+                    dic_label["CLOP"] = dic_crystal[cry]
+                    dic_label["2CLOP"] = dic_crystal[cry_2]
+
+                    dic_label["QF"] = QF
+                    lud[round(i, 1), round(j, 1)] = dic_label
+                    dic_label = {}
+                    print(round(i,1),round(j,1))
+                    print(l_d)
+                    print("l_2", l_d_2)
+                    print(lud[round(i, 1), round(j, 1)] )
+
             n_lud += 1
         #i_lud += 1
     return lud
@@ -115,63 +129,65 @@ def f_lud(dic_crystal, val_region, dic_label, lud):
 #    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
 #    for row in spamreader:
 #        print(', '.join(row))
-         
+
+# WE CAN RUN LUT FOR EVERY COG INDEPENDENTLY WITH SCREEN AND IT IS WAY FASTER
+
 with open('/home/david.perez/Desktop/dic-crystal-111-checked.pickle', 'rb') as handle:
     dic_crystal_111 = pickle.load(handle)
-         
+
 lud_111 = {}
 dic_label_111 = {}
 #j_lud = 0
 val_region_111 = 0.2 #1 for 111, 0.5 for the rest?
 lud_111 = f_lud(dic_crystal_111, val_region_111, dic_label_111, lud_111)
 
-    
+
 with open('/home/david.perez/Desktop/dic-LUD-111.pickle', 'wb') as handle:
-    pickle.dump(lud_111, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)  
+    pickle.dump(lud_111, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
 
 print("111 done.")
 
 with open('/home/david.perez/Desktop/dic-crystal-100-checked.pickle', 'rb') as handle:
     dic_crystal_100 = pickle.load(handle)
-         
+
 lud_100 = {}
 dic_label_100 = {}
 #j_lud = 0
 val_region_100 = 0.1 #0.2 for 111, 0.1 for the rest?
 lud_100 = f_lud(dic_crystal_100, val_region_100, dic_label_100, lud_100)
 
-    
+
 with open('/home/david.perez/Desktop/dic-LUD-100.pickle', 'wb') as handle:
-    pickle.dump(lud_100, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)  
-   
+    pickle.dump(lud_100, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
+
 print("100 done.")
 
 with open('/home/david.perez/Desktop/dic-crystal-010-checked.pickle', 'rb') as handle:
     dic_crystal_010 = pickle.load(handle)
-         
+
 lud_010 = {}
 dic_label_010 = {}
 #j_lud = 0
 val_region_010 = 0.1 #0.2 for 111, 0.1 for the rest?
 lud_010 = f_lud(dic_crystal_010, val_region_010, dic_label_010, lud_010)
 
-    
+
 with open('/home/david.perez/Desktop/dic-LUD-010.pickle', 'wb') as handle:
-    pickle.dump(lud_010, handle, protocol=pickle.HIGHEST_PROTOCOL) 
-    
+    pickle.dump(lud_010, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 print("010 done.")
 
 with open('/home/david.perez/Desktop/dic-crystal-000-checked.pickle', 'rb') as handle:
     dic_crystal_000 = pickle.load(handle)
-         
+
 lud_000 = {}
 dic_label_000 = {}
 #j_lud = 0
 val_region_000 = 0.1 #0.2 for 111, 0.1 for the rest?
 lud_000 = f_lud(dic_crystal_000, val_region_000, dic_label_000, lud_000)
 
-    
+
 with open('/home/david.perez/Desktop/dic-LUD-000.pickle', 'wb') as handle:
-    pickle.dump(lud_000, handle, protocol=pickle.HIGHEST_PROTOCOL) 
-    
+    pickle.dump(lud_000, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 print("000 done.")
