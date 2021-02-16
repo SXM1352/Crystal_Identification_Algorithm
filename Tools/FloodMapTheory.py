@@ -60,7 +60,7 @@ y_size = 3.2
 pix_x = [-21.95982,-18.04018,-13.95982,-10.04018,-5.95982, -2.04018, 2.04018,5.98982,10.04018,13.95982,18.04018,21.95982]
 pix_y = [21.6704,18.3296,13.6704,10.3296,5.6704,2.3296,-2.3296,-5.6704,-10.3296,-13.6704,-18.3296,-21.6704]
 
-fig1, ax1 = plt.subplots(figsize=(100, 100))
+fig1, ax1 = plt.subplots(figsize=(10, 10))
 # Set axis ranges; by default this will put major ticks every 25.
 ax1 = axis_f(22.78, 24.12, 17,18,(-22.78, 22.78),(-24.12, 24.12),ax1) #14.925373134328357
 
@@ -87,7 +87,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         
 #plt.show()
 
-fig2, ax2 = plt.subplots(figsize=(100, 100))
+fig2, ax2 = plt.subplots(figsize=(10, 10))
 # Set axis ranges; by default this will put major ticks every 25.
 ax2 = axis_f(22.78, 24.12, 17,18,(-22.78, 22.78),(-24.12, 24.12),ax2) #14.925373134328357
 
@@ -105,7 +105,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         
 #plt.show()
 
-fig3, ax3 = plt.subplots(figsize=(100, 100))
+fig3, ax3 = plt.subplots(figsize=(10, 10))
 # Set axis ranges; by default this will put major ticks every 25.
 ax3 = axis_f(22.78, 24.12, 17,18,(-22.78, 22.78),(-24.12, 24.12),ax3) #14.925373134328357
 
@@ -123,7 +123,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
         
 #plt.show()
 
-fig, ax = plt.subplots(figsize=(100, 100))
+fig, ax = plt.subplots(figsize=(10, 10))
 
 
 # Set axis ranges; by default this will put major ticks every 25.
