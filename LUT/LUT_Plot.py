@@ -4,11 +4,11 @@ Created on Thu Jan 21 13:27:59 2021
 
 @author: David
 """
-import pickle
+from HelpExamples import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-with open('dic-LUD-{}.pickle'.format("010"), 'rb') as handle:
+with open('dic-LUD-{}.pickle'.format("111"), 'rb') as handle:
     ludHVD = pickle.load(handle) # 000, 100, 010, 111
 
 x_lud = []
