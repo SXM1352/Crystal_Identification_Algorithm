@@ -13,8 +13,16 @@ from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 from matplotlib import cm
 import matplotlib
 import itertools
+import os
 
-from LabelsPlots import Plot_Labels_with_Values
+# from LabelsPlots import Plot_Labels_with_Values
+
+def checkFolder(pathDirectory):
+    CHECK_FOLDER = os.path.isdir(pathDirectory)
+    # If folder doesn't exist, then create it.
+    if not CHECK_FOLDER:
+        os.makedirs(pathDirectory)
+        print("created folder : ", pathDirectory)
 
 def CrystalDict():
     """
@@ -250,7 +258,7 @@ class Plot_Crystal_Map():
         #
         ax.set_aspect(1.0) #keep aspects 1:1 between axis
         return ax
-    def runPlot(self, data1, data2, data3, title):
+    def runPlot(self, data1, data2, data3, title, pathtodirectorySaveCM, HVD):
         # make grid First Layer
         xpo, ypo, xo_pcolor, yo_pcolor = self.__layer(-22.11,22.78,-23.45,24.12) #0.67 -21.95982 x, 21.6704 y
         xo1, yo1 = xpo, ypo
@@ -294,7 +302,7 @@ class Plot_Crystal_Map():
         y3 = ypos3
         t3 = dz3
 
-        fig, _axs = plt.subplots(2, 2)
+        fig, _axs = plt.subplots(2, 2, figsize=(25,25))
         axs = _axs.flatten()
 
         #cbar = np.linspace(min([min(data1[np.nonzero(data1)]), min(data2[np.nonzero(data2)]), min(data3[np.nonzero(data3)])]), max([np.amax(data1), np.amax(data2), np.amax(data3)]), 6, endpoint=True)
@@ -435,27 +443,42 @@ class Plot_Crystal_Map():
         plt.setp(_axs[-1, :], xlabel='x [mm]')
         plt.setp(_axs[:, 0], ylabel='y [mm]')
 
-        plt.suptitle(str(title))
-        plt.show()
+        plt.suptitle(str(title) + ' - ' + HVD)
+
+        if pathtodirectorySaveCM != 'None':
+            finaldirectorySaveCMCM = pathtodirectorySaveCM + 'CrystalMaps/'
+            checkFolder(finaldirectorySaveCMCM)
+            finaldirectorySaveE = finaldirectorySaveCMCM + 'EneResolution/'
+            checkFolder(finaldirectorySaveE)
+            finaldirectorySaveM = finaldirectorySaveCMCM + 'MeanValues/'
+            checkFolder(finaldirectorySaveM)
+            if title == "E_r(%FWHM)":
+                plt.savefig('{}CrystalMaps/EneResolution/Er-{}.png'.format(pathtodirectorySaveCM, HVD))
+            elif title == 'Mean':
+                plt.savefig('{}CrystalMaps/MeanValues/MeanV-{}.png'.format(pathtodirectorySaveCM, HVD))
+        else:
+            plt.show()
 # to distinguish between layers and plot it to check better energy resolution
 # rows, dic_crystal_test = CrystalDict()
 # rows = np.array(rows)
 
-#pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
-# pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/' + 'Parallel/'
-pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/' + 'Parallel/'
+parser = argparse.ArgumentParser()
+parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+                                             directory where to read the files from.')
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                             directory where to save the files in.', default='None')
+parser.add_argument('--auto', dest='auto', help='Automatically plot everything (Default Off) e.g. "--auto On".', default='Off')
+args = parser.parse_args()
 
-#pathtodirectoryRead = "C:\\Users\\David\\Downloads\\"
+pathtodirectory, pathtodirectorySaveCM, auto = args.fileDirect, args.saveDirect, args.auto
 
-#pathtodirectorySave = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
-#pathtodirectorySave = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/'
+pathtodirectoryRead = pathtodirectory + 'Parallel/'
+
 pathtodirectorySave = pathtodirectoryRead
 
-#pathtoPV = '20210304_NEW-2021-02-17_PhotonSpectrum/'
-#pathtoPV = '20210303_NEW-2021-02-17_PhotonSpectrum/'
-# pathtoPV = '20210315_NEW_PhotonSpectrum/'
 pathtoPV = 'PhotonSpectrum/'
 
+checkFolder(pathtodirectorySaveCM)
 
 HVD_list = ['000', '100', '010', '111']
 dic_calFactor_000 = {}
@@ -470,31 +493,30 @@ dic_calFactor_111 = dic_calFactor_HVD(pathtodirectoryRead + pathtoPV, '111', dic
 
 list_dic_calFactor = [dic_calFactor_000, dic_calFactor_100, dic_calFactor_010, dic_calFactor_111]
 variable = 0
-list_Events = [[0, 2553191], [2553191, 5106382], [5106382, 7659573], [7659573, 10212764], [10212764, 12765955],
-               [12765955, 15319146], [15319146, 17872337], [17872337, 20425528], [20425528, 22978719],
-               [22978719, 25531910], [25531910, 28085101], [28085101, 30638292], [30638292, 33191483],
-               [33191483, 35744674], [35744674, 38297865], [38297865, 40851056], [40851056, 43404247],
-               [43404247, 45957438], [45957438, 48510629], [48510629, 51063820], [51063820, 53617011],
-               [53617011, 56170202], [56170202, 58723393], [58723393, 61276584], [61276584, 63829775],
-               [63829775, 66382966], [66382966, 68936157], [68936157, 71489348], [71489348, 74042539],
-               [74042539, 76595730], [76595730, 79148921], [79148921, 81702112], [81702112, 84255303],
-               [84255303, 86808494], [86808494, 89361685], [89361685, 91914876], [91914876, 94468067],
-               [94468067, 97021258], [97021258, 99574449], [99574449, 102127640], [102127640, 104680831],
-               [104680831, 107234022], [107234022, 109787213], [109787213, 112340404], [112340404, 114893595],
-               [114893595, 117446786], [117446786, 119999977]]
+
 with open('{}Jobs_list.pickle'.format(pathtodirectoryRead), 'rb') as handle:
     list_Events = pickle.load(handle)  # 000, 100, 010, 111
 
-while variable != "quit": #CREATE ARGPARSE TO PARSE INPUT WITH ROW; LAYER; CRYSTAL
-    #WHEN ROW OR LAYER IS SELECTED; CRYSTAL IS -1
-    #add option to show plot
-    #add option to create log with selected data
-    variable = raw_input('Enter index (0->000, 1->100, 2->010, 3->111) or "quit" to exit: ')
-    if variable == "quit":
-        continue
-    HVD = int(variable.split(',')[0])
+if auto == 'On':
+    for HVD in range(4):
+        # WHEN ROW OR LAYER IS SELECTED; CRYSTAL IS -1
+        # add option to create log with selected data
+        data1_m, data2_m, data3_m, data1_er, data2_er, data3_er = Counts_in_layers(list_dic_calFactor[HVD], HVD_list[HVD],
+                                                                                   list_Events)
+        CrytalMap = Plot_Crystal_Map()
+        CrytalMap.runPlot(data1_m, data2_m, data3_m, 'Mean', pathtodirectorySaveCM, HVD_list[HVD])
+        CrytalMap.runPlot(data1_er, data2_er, data3_er, "E_r(%FWHM)", pathtodirectorySaveCM, HVD_list[HVD])
+else:
+    while variable != "quit": #CREATE ARGPARSE TO PARSE INPUT WITH ROW; LAYER; CRYSTAL
+        #WHEN ROW OR LAYER IS SELECTED; CRYSTAL IS -1
+        #add option to show plot
+        #add option to create log with selected data
+        variable = raw_input('Enter index (0->000, 1->100, 2->010, 3->111) or "quit" to exit: ')
+        if variable == "quit":
+            continue
+        HVD = int(variable.split(',')[0])
 
-    data1_m, data2_m, data3_m, data1_er, data2_er, data3_er = Counts_in_layers(list_dic_calFactor[HVD], HVD_list[HVD], list_Events)
-    CrytalMap = Plot_Crystal_Map()
-    CrytalMap.runPlot(data1_m, data2_m, data3_m, 'Mean')
-    CrytalMap.runPlot(data1_er, data2_er, data3_er, "E_r(%FWHM)")
+        data1_m, data2_m, data3_m, data1_er, data2_er, data3_er = Counts_in_layers(list_dic_calFactor[HVD], HVD_list[HVD], list_Events)
+        CrytalMap = Plot_Crystal_Map()
+        CrytalMap.runPlot(data1_m, data2_m, data3_m, 'Mean', pathtodirectorySaveCM, HVD_list[HVD])
+        CrytalMap.runPlot(data1_er, data2_er, data3_er, "E_r(%FWHM)", pathtodirectorySaveCM, HVD_list[HVD])
