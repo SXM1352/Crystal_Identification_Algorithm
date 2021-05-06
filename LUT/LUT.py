@@ -14,12 +14,16 @@ from scipy.spatial import Delaunay
 import argparse
 
 class LUD():
-    def __init__(self, selected_HVD, pathtodirectory):
+    def __init__(self, decimals, init_event, final_event, selected_HVD, pathtodirectory):
+        # self.precision_grid = 2
+        self.decimals = decimals # 0.01
         self.HVD_list = ["000", "010", "100", "111"]
-        self.val_region_HVD_list = [0.2, 0.2, 0.2, 0.3]
+        self.val_region_HVD_list = [0.05, 0.05, 0.05, 0.05] #[0.2, 0.2, 0.2, 0.3]
         self.n_roi = [36, 30, 30, 25]
         self.selected_HVD = int(selected_HVD)
         self.pathtodirectory = pathtodirectory
+        self.init_event = init_event
+        self.final_event = final_event
         # pathtodirectory = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
         # self.pathtodirectory = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/'
         # self.pathtodirectory = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
@@ -150,17 +154,17 @@ class LUD():
 
         return closest_peak, low_dist, crystal, closest_peak_2, low_dist_2, crystal_2
 
-    def __f_lud(self, cg, dic_crystal, val_region, dic_label, lud):
+    def __f_lud(self, cg, dic_crystal, val_region, dic_label, lud, precision_grid, decimals):
         n_lud = 0
         hull_list = self.__calculate_Hull(dic_crystal, cg)
-        for i in np.arange(24,-24.1,-0.1): #change depends on cog
+        for i in np.arange(self.init_event, self.final_event, -decimals):#24,-24.1,-decimals): #change depends on cog
 
-            for j in np.arange(-24,24.1,0.1):
-                p_clo, l_d, cry, p_clo_2, l_d_2, cry_2 = self.__closest_peak((round(i,1),round(j,1)),dic_crystal)
+            for j in np.arange(-24,24+decimals,decimals):
+                p_clo, l_d, cry, p_clo_2, l_d_2, cry_2 = self.__closest_peak((round(i,precision_grid),round(j,precision_grid)),dic_crystal)
                 into = False
-                if l_d < 1:
+                if l_d < 0: #1: now set to zero to deactivate Hull
                     for cH in hull_list:
-                        inside = self.__in_hull(np.array([[round(i,1),round(j,1)]]), cH)
+                        inside = self.__in_hull(np.array([[round(i,precision_grid),round(j,precision_grid)]]), cH)
 
                         if inside[0]:
                             # plt.title('in hull')
@@ -203,7 +207,7 @@ class LUD():
                             QF = QF + (QF*0.2)
 
                         dic_label["QF"] = QF
-                        lud[round(i, 1), round(j, 1)] = dic_label
+                        lud[round(i, precision_grid), round(j, precision_grid)] = dic_label
                         dic_label = {}
                     else:
                         QF = 0
@@ -211,15 +215,15 @@ class LUD():
                         dic_label["2CLOP"] = dic_crystal[cry_2]
 
                         dic_label["QF"] = QF
-                        lud[round(i, 1), round(j, 1)] = dic_label
+                        lud[round(i, precision_grid), round(j, precision_grid)] = dic_label
                         dic_label = {}
-                        print(round(i,1),round(j,1))
+                        print(round(i,precision_grid),round(j,precision_grid))
                         print(l_d)
                         print("l_2", l_d_2)
-                        print(lud[round(i, 1), round(j, 1)] )
+                        print(lud[round(i, precision_grid), round(j, precision_grid)] )
 
                 else:
-                    lud[round(i, 1), round(j, 1)] = None
+                    lud[round(i, precision_grid), round(j, precision_grid)] = None
 
                 n_lud += 1
             #i_lud += 1
@@ -237,6 +241,8 @@ class LUD():
                 cg = self.selected_HVD  # 0 for 000, 1 for 100, 2 for 010, 3 for 111
             HVD = self.HVD_list[cg]
             val_region_HVD = self.val_region_HVD_list[cg]
+            precision_grid = len(self.decimals.split(".")[1])
+            decimals = float(self.decimals)
 
             with open(
                     '{}dic-crystal-{}-checked.pickle'.format(self.pathtodirectoryRead, HVD),
@@ -245,7 +251,7 @@ class LUD():
 
             lud_HVD = {}
             dic_label_HVD = {}
-            lud_HVD = self.__f_lud(cg, dic_crystal_HVD, val_region_HVD, dic_label_HVD, lud_HVD)
+            lud_HVD = self.__f_lud(cg, dic_crystal_HVD, val_region_HVD, dic_label_HVD, lud_HVD, precision_grid, decimals)
 
             CHECK_FOLDER = os.path.isdir(self.pathtodirectorySave)
             # If folder doesn't exist, then create it.
@@ -254,7 +260,7 @@ class LUD():
                 print("created folder : ", self.pathtodirectorySave)
 
             with open(
-                    '{}dic-LUD-{}.pickle'.format(self.pathtodirectorySave, HVD),
+                    '{}dic-LUD-{}-{}.pickle'.format(self.pathtodirectorySave, HVD, self.final_event),
                     'wb') as handle:
                 pickle.dump(lud_HVD, handle,
                             protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
@@ -267,72 +273,18 @@ def main():
                                                          (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL)')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                              directory where to read the files from')
+    parser.add_argument('--initEvent', dest='initEvent', help='Specifiy the first event  \
+                                             (N where N=0,1,2,..., finalEvent)')
+    parser.add_argument('--finalEvent', dest='finalEvent', help='Specifiy the last event  \
+                                                 (N where N=0,1,2,..., finalEvent)')
+    parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
+                                                     e.g.: "0.01" or "0.1".')
 
     args = parser.parse_args()
-    selected_HVD, pathtodirectory = int(args.HVD), args.fileDirect
+    decimals, init_event, final_event, selected_HVD, pathtodirectory = args.decimals, int(args.initEvent), int(args.finalEvent), int(args.HVD), args.fileDirect
 
-    LUT = LUD(selected_HVD, pathtodirectory)
+    LUT = LUD(decimals, init_event, final_event, selected_HVD, pathtodirectory)
     LUT.runLUD()
 
 if __name__=='__main__':
     main()
-
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-checked/dic-crystal-111-checked.pickle', 'rb') as handle:
-#     dic_crystal_111 = pickle.load(handle)
-#
-# lud_111 = {}
-# dic_label_111 = {}
-# #j_lud = 0
-# val_region_111 = 0.3 #1 for 111, 0.5 for the rest?
-# lud_111 = f_lud(dic_crystal_111, val_region_111, dic_label_111, lud_111)
-#
-#
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-LUD/dic-LUD-111.pickle', 'wb') as handle:
-#     pickle.dump(lud_111, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-#
-# print("111 done.")
-
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-checked/dic-crystal-100-checked.pickle', 'rb') as handle:
-#     dic_crystal_100 = pickle.load(handle)
-#
-# lud_100 = {}
-# dic_label_100 = {}
-# #j_lud = 0
-# val_region_100 = 0.2 #0.2 for 111, 0.1 for the rest?
-# lud_100 = f_lud(dic_crystal_100, val_region_100, dic_label_100, lud_100)
-#
-#
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-LUD/dic-LUD-100.pickle', 'wb') as handle:
-#     pickle.dump(lud_100, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-#
-# print("100 done.")
-
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-checked/dic-crystal-010-checked.pickle', 'rb') as handle:
-#     dic_crystal_010 = pickle.load(handle)
-#
-# lud_010 = {}
-# dic_label_010 = {}
-# #j_lud = 0
-# val_region_010 = 0.2 #0.2 for 111, 0.1 for the rest?
-# lud_010 = f_lud(dic_crystal_010, val_region_010, dic_label_010, lud_010)
-#
-#
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-LUD/dic-LUD-010.pickle', 'wb') as handle:
-#     pickle.dump(lud_010, handle, protocol=pickle.HIGHEST_PROTOCOL)
-#
-# print("010 done.")
-
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-checked/dic-crystal-000-checked.pickle', 'rb') as handle:
-#     dic_crystal_000 = pickle.load(handle)
-#
-# lud_000 = {}
-# dic_label_000 = {}
-# #j_lud = 0
-# val_region_000 = 0.2 #0.2 for 111, 0.1 for the rest?
-# lud_000 = f_lud(dic_crystal_000, val_region_000, dic_label_000, lud_000)
-#
-#
-# with open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-LUD/dic-LUD-000.pickle', 'wb') as handle:
-#     pickle.dump(lud_000, handle, protocol=pickle.HIGHEST_PROTOCOL)
-#
-# print("000 done.")
