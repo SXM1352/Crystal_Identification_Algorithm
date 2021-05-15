@@ -10,7 +10,7 @@ args = parser.parse_args()
 pathtodirectoryRead, stack_id = args.fileDirect, args.sID
 
 number = 1
-file = "{}.DebugSingles".format(stack_id)
+file = "{}{}.DebugSingles".format(pathtodirectoryRead, stack_id)
 count = 0
 
 with open(file,'r+b') as f:

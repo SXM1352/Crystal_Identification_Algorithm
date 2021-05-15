@@ -10,10 +10,11 @@ import numpy as np
 import matplotlib.patches as pch
 from matplotlib.colors import LogNorm
 import cPickle as pickle
+import os
 
 class SanCheckPlot(object):
     
-    def __init__(self, cg, Ref_Sections, ludHVD, dist_min_y_list, dist_min_x_list):
+    def __init__(self, cg, Ref_Sections, ludHVD, dist_min_y_list, dist_min_x_list, HVD, pathtodirectorySave):
         self.cg = cg
         self.Ref_Sections = Ref_Sections
         
@@ -21,6 +22,18 @@ class SanCheckPlot(object):
         
         self.dist_min_y_list = dist_min_y_list
         self.dist_min_x_list = dist_min_x_list
+
+        self.HVD = HVD
+
+        self.pathtodirectorySave = pathtodirectorySave
+
+        if self.pathtodirectorySave != 'None':
+
+            CHECK_FOLDER = os.path.isdir(self.pathtodirectorySave)
+            # If folder doesn't exist, then create it.
+            if not CHECK_FOLDER:
+                os.makedirs(self.pathtodirectorySave)
+                print("created folder : ", self.pathtodirectorySave)
 
     def __clo_rs(self, cur_peak_xy, median_rc, dist_min): #find the closest position to the point given from a dict
 
@@ -34,6 +47,13 @@ class SanCheckPlot(object):
         if low_dist > dist_min[self.cg]:
             closest_rc = None
         return closest_rc, low_dist
+
+    def __checkFolder(self, pathDirectory):
+        CHECK_FOLDER = os.path.isdir(pathDirectory)
+        # If folder doesn't exist, then create it.
+        if not CHECK_FOLDER:
+            os.makedirs(pathDirectory)
+            print("created folder : ", pathDirectory)
     
     def __final_check_plot(self, dic_crystal, median_columns, dic_inv_plot):
         
@@ -151,98 +171,104 @@ class SanCheckPlot(object):
         #The last row is defined outside
         all_row_x.append(x_arr_all)
         all_row_y.append(y_arr_all)
-    
-        fig, ax = plt.subplots(figsize=(10, 10))
-        
-        if self.ludHVD:#ludHVD?
-            x_lud = []
-            y_lud = []
-            for i in self.ludHVD.keys():
-                if self.ludHVD[i]:
-                    x_lud.append(i[0])
-                    y_lud.append(i[1])
-           
-            plt.scatter(x_lud, y_lud)
+        try:
+            fig, ax = plt.subplots(figsize=(15, 15))
 
-        if self.Ref_Sections.size != 0:
-            ref_total_x = self.Ref_Sections[0][:, 0]
-            ref_total_y = self.Ref_Sections[0][:, 1]
-            for ref in self.Ref_Sections[1:]:
-                 ref_total_y = np.concatenate((ref_total_y, ref[:, 1]), axis=0)
-                 ref_total_x = np.concatenate((ref_total_x, ref[:, 0]), axis=0)
+            if self.ludHVD:#ludHVD?
+                x_lud = []
+                y_lud = []
+                for i in self.ludHVD.keys():
+                    if self.ludHVD[i]:
+                        x_lud.append(i[0])
+                        y_lud.append(i[1])
 
-            hist1 = ax.hist2d(ref_total_x, ref_total_y, bins=1000, range=[[-24,24],[-24,24]], norm=LogNorm())
-            fig.colorbar(hist1[3], ax=ax)
+                plt.scatter(x_lud, y_lud)
 
-        for kl in range(len(all_row_y)):
-            plt.plot(all_row_x[kl],all_row_y[kl], '-ok', mfc='C1', mec='C1')
-            
-        # for kl in dic_columns_x.keys():
-        #     plt.plot(dic_columns_x[kl],dic_columns_y[kl], '-ok', mfc='C1', mec='C1')
+            if self.Ref_Sections.size != 0:
+                ref_total_x = self.Ref_Sections[0][:, 0]
+                ref_total_y = self.Ref_Sections[0][:, 1]
+                for ref in self.Ref_Sections[1:]:
+                     ref_total_y = np.concatenate((ref_total_y, ref[:, 1]), axis=0)
+                     ref_total_x = np.concatenate((ref_total_x, ref[:, 0]), axis=0)
 
-        for kl in dic_columns_x_roi['col_3'].keys():
-            # indexes = range(len(dic_columns_y_roi['col_3'][kl]))
-            # indexes.sort(key=dic_columns_y_roi['col_3'][kl].__getitem__)
-            # sorted_y = map(dic_columns_y_roi['col_3'][kl].__getitem__, indexes)
-            # sorted_x = map(dic_columns_x_roi['col_3'][kl].__getitem__, indexes)
-            plt.plot(dic_columns_x_roi['col_3'][kl],dic_columns_y_roi['col_3'][kl], '-ok', mfc='C1', mec='C1')
+                hist1 = ax.hist2d(ref_total_x, ref_total_y, bins=1000, range=[[-24,24],[-24,24]], norm=LogNorm())
+                fig.colorbar(hist1[3], ax=ax)
 
-        for kl in dic_columns_x_roi['col_12'].keys():
-            # indexes = range(len(dic_columns_y_roi['col_12'][kl]))
-            # indexes.sort(key=dic_columns_y_roi['col_12'][kl].__getitem__)
-            # sorted_y = map(dic_columns_y_roi['col_12'][kl].__getitem__, indexes)
-            # sorted_x = map(dic_columns_x_roi['col_12'][kl].__getitem__, indexes)
-            plt.plot(dic_columns_x_roi['col_12'][kl], dic_columns_y_roi['col_12'][kl], '-ok', mfc='C1', mec='C1')
+            for kl in range(len(all_row_y)):
+                plt.plot(all_row_x[kl],all_row_y[kl], '-ok', mfc='C1', mec='C1')
+
+            # for kl in dic_columns_x.keys():
+            #     plt.plot(dic_columns_x[kl],dic_columns_y[kl], '-ok', mfc='C1', mec='C1')
+
+            for kl in dic_columns_x_roi['col_3'].keys():
+                # indexes = range(len(dic_columns_y_roi['col_3'][kl]))
+                # indexes.sort(key=dic_columns_y_roi['col_3'][kl].__getitem__)
+                # sorted_y = map(dic_columns_y_roi['col_3'][kl].__getitem__, indexes)
+                # sorted_x = map(dic_columns_x_roi['col_3'][kl].__getitem__, indexes)
+                plt.plot(dic_columns_x_roi['col_3'][kl],dic_columns_y_roi['col_3'][kl], '-ok', mfc='C1', mec='C1')
+
+            for kl in dic_columns_x_roi['col_12'].keys():
+                # indexes = range(len(dic_columns_y_roi['col_12'][kl]))
+                # indexes.sort(key=dic_columns_y_roi['col_12'][kl].__getitem__)
+                # sorted_y = map(dic_columns_y_roi['col_12'][kl].__getitem__, indexes)
+                # sorted_x = map(dic_columns_x_roi['col_12'][kl].__getitem__, indexes)
+                plt.plot(dic_columns_x_roi['col_12'][kl], dic_columns_y_roi['col_12'][kl], '-ok', mfc='C1', mec='C1')
 
 
-        for inv in dic_inv_plot.keys():
-            print(dic_inv_plot[inv], inv)
-            plt.plot(dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][0],dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][1], ".", color="r") 
-        
-        for i in dic_crystal.keys(): #check where there are two or more, one color, if invalid, but points, red, one point and valid, green, all the rows connected
-            if dic_crystal[i]["valid"] and dic_crystal[i]["center"]: #look for bug in 010 with valid true but no center
-                try:
-                    if len(dic_crystal[i]["center"].keys()) > 1:
-                        for cr in dic_crystal[i]["center"].keys():
-                            dic_crystal[i]["ghost"] = 'QF=QF+QF*0.2'
-                            plt.plot(dic_crystal[i]["center"][cr][0][0],dic_crystal[i]["center"][cr][0][1], ".", color="b")# mfc="C1")
-                    elif len(dic_crystal[i]["roi"]) > 1:
-                        dic_crystal[i]["ghost"] = '(ALONE)QF=QF+QF*0.2'
-                        plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
-                                 color="dodgerblue")  # mfc="C1")
-                    else:
+            for inv in dic_inv_plot.keys():
+                print(dic_inv_plot[inv], inv)
+                plt.plot(dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][0],dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][1], ".", color="r")
+
+            for i in dic_crystal.keys(): #check where there are two or more, one color, if invalid, but points, red, one point and valid, green, all the rows connected
+                if dic_crystal[i]["valid"] and dic_crystal[i]["center"]: #look for bug in 010 with valid true but no center
+                    try:
+                        if len(dic_crystal[i]["center"].keys()) > 1:
+                            for cr in dic_crystal[i]["center"].keys():
+                                dic_crystal[i]["ghost"] = 'QF=QF+QF*0.2'
+                                plt.plot(dic_crystal[i]["center"][cr][0][0],dic_crystal[i]["center"][cr][0][1], ".", color="b")# mfc="C1")
+                        elif len(dic_crystal[i]["roi"]) > 1:
+                            dic_crystal[i]["ghost"] = '(ALONE)QF=QF+QF*0.2'
+                            plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
+                                     color="dodgerblue")  # mfc="C1")
+                        else:
+                            print(dic_crystal[i])
+                            plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="g")#mfc="C1")
+                    except:
                         print(dic_crystal[i])
-                        plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="g")#mfc="C1")
-                except:
-                    print(dic_crystal[i])
-                    plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],
-                             dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
-                             color="g")  # mfc="C1")
+                        plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],
+                                 dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
+                                 color="g")  # mfc="C1")
+                else:
+                    pass
+                    if dic_crystal[i]["center"]:
+                        if len(dic_crystal[i]["center"].keys()) > 1:
+                            for cr in dic_crystal[i]["center"].keys():
+                                plt.plot(dic_crystal[i]["center"][cr][0][0],dic_crystal[i]["center"][cr][0][1], ".", color="r")#mfc="C2")
+                        else:
+                            plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="r")#mfc="C1")
+
+            x_size = 3.8016
+            y_size = 3.2
+            pix_x = [-21.95982,-18.04018,-13.95982,-10.04018,-5.95982, -2.04018, 2.04018,5.98982,10.04018,13.95982,18.04018,21.95982]
+            pix_y = [21.6704,18.3296,13.6704,10.3296,5.6704,2.3296,-2.3296,-5.6704,-10.3296,-13.6704,-18.3296,-21.6704]
+
+            for pix_x_i in pix_x:
+                for pix_y_i in pix_y:
+                    rect = pch.Rectangle((pix_x_i-x_size/2,pix_y_i-y_size/2),x_size,y_size, linewidth=0.5, edgecolor="dimgray",facecolor="none")
+                    ax.add_patch(rect)
+
+            plt.xlabel("x")
+            plt.ylabel("y")
+            plt.xlim(-24,24)
+            plt.ylim(-24,24)
+            if self.pathtodirectorySave != 'None':
+                finaldirectorySave = self.pathtodirectorySave + 'CiAplots/'
+                self.__checkFolder(finaldirectorySave)
+                plt.savefig('{}SanCheck-{}.png'.format(finaldirectorySave, self.HVD))
             else:
-                pass
-                if dic_crystal[i]["center"]:
-                    if len(dic_crystal[i]["center"].keys()) > 1:
-                        for cr in dic_crystal[i]["center"].keys():
-                            plt.plot(dic_crystal[i]["center"][cr][0][0],dic_crystal[i]["center"][cr][0][1], ".", color="r")#mfc="C2")
-                    else:
-                        plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="r")#mfc="C1")
-       
-        x_size = 3.8016
-        y_size = 3.2
-        pix_x = [-21.95982,-18.04018,-13.95982,-10.04018,-5.95982, -2.04018, 2.04018,5.98982,10.04018,13.95982,18.04018,21.95982]
-        pix_y = [21.6704,18.3296,13.6704,10.3296,5.6704,2.3296,-2.3296,-5.6704,-10.3296,-13.6704,-18.3296,-21.6704]
-        
-        for pix_x_i in pix_x:
-            for pix_y_i in pix_y:
-                rect = pch.Rectangle((pix_x_i-x_size/2,pix_y_i-y_size/2),x_size,y_size, linewidth=0.5, edgecolor="dimgray",facecolor="none")
-                ax.add_patch(rect)
-                
-        plt.xlabel("x")
-        plt.ylabel("y")
-        plt.xlim(-24,24)
-        plt.ylim(-24,24)
-        plt.show()
-        
+                plt.show()
+        except:
+            print('Not possible to plot.')
         return dic_crystal
         
     def runSanCheckPlot(self, dic_crystal, median_columns, dic_inv):

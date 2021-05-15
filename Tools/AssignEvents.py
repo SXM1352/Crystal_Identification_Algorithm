@@ -15,6 +15,15 @@ from matplotlib import cm
 import cPickle as pickle
 import matplotlib
 import itertools
+import argparse
+import os
+
+def checkFolder(pathDirectory):
+    CHECK_FOLDER = os.path.isdir(pathDirectory)
+    # If folder doesn't exist, then create it.
+    if not CHECK_FOLDER:
+        os.makedirs(pathDirectory)
+        print("created folder : ", pathDirectory)
 
 def CrystalDict():
     """!
@@ -138,43 +147,42 @@ def Counts_in_layers(dic_Assign):
             index += 1
     return data1, data2, data3
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+                                             directory where to read the files from')
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                             directory where to read the files from', default='None')
+parser.add_argument('--DecisionTag', dest='DT', help='Specifiy the name of the   \
+                                             decision tag that you want to plot', default='-1')
+args = parser.parse_args()
 
-dic_Events = {}
-dic_Events["ALL"] = {"000":True, "100":True, "010":True, "111":True}
-dic_Events["three_100_111_010"] = {"000":False, "100":True, "010":True, "111":True}
-dic_Events["three_000_010_100"] = {"000":True, "100":True, "010":True, "111":False}
-dic_Events["three_100_111_000"] = {"000":True, "100":True, "010":False, "111":True}
-dic_Events["three_010_111_000"] = {"000":True, "100":False, "010":True, "111":True}
-dic_Events["two_010_100"] = {"000":False, "100":True, "010":True, "111":False}
-dic_Events["two_010_111"] = {"000":False, "100":False, "010":True, "111":True}
-dic_Events["two_100_111"] = {"000":False, "100":True, "010":False, "111":True}
-dic_Events["two_000_111"] = {"000":True, "100":False, "010":False, "111":True}
-dic_Events["two_000_010"] = {"000":True, "100":False, "010":True, "111":False}
-dic_Events["two_000_100"] = {"000":True, "100":True, "010":False, "111":False}
-dic_Events["000"] = {"000":True, "100":False, "010":False, "111":False}
-dic_Events["100"] = {"000":False, "100":True, "010":False, "111":False}
-dic_Events["010"] = {"000":False, "100":False, "010":True, "111":False}
-dic_Events["111"] = {"000":False, "100":False, "010":False, "111":True}
+pathtodirectoryRead, pathtodirectorySaveCM, DT = args.fileDirect, args.saveDirect, args.DT
 
-pathtodirectory = 'C:\\Users\\David\\Google Drive\\RWTHDrive\\MasterThesis\\'
-pathtodirectoryRead = '2021-03-16-Crystal-015\\'
-pathtodirectorySave = pathtodirectoryRead
+pathtodirectoryReadCC = pathtodirectoryRead + 'Parallel/'
+pathtoHDF5 = pathtodirectoryRead + 'hdf5Data/'
 
-#try:
-with open('{}dic_AssignEParallel20210408.pickle'.format(pathtodirectory + pathtodirectoryRead), 'rb') as handle:
+pathtodirectorySave = pathtodirectorySaveCM
+
+checkFolder(pathtodirectorySaveCM)
+
+with open('{}dic_AssignE.pickle'.format(pathtodirectoryReadCC), 'rb') as handle:
     dic_AssignE = pickle.load(handle)  # 000, 100, 010, 111
-
-# with open('{}dic_AssignE.pickle'.format(pathtodirectory + pathtodirectoryRead), 'rb') as handle:
-#     dic_AssignE = pickle.load(handle)  # 000, 100, 010, 111
 
 from LabelsPlots import Plot_Labels_with_Values
 
-data_name = "100_ONLY_VALID"
+if DT == '-1':
+    for data_name in dic_AssignE.keys():
+        data1, data2, data3 = Counts_in_layers(dic_AssignE["{}".format(data_name)])
 
-data1, data2, data3 = Counts_in_layers(dic_AssignE["{}".format(data_name)])
+        Assign = Plot_Labels_with_Values()
+        Assign.runPlot(data1, data2, data3, "{}".format(data_name), pathtodirectorySaveCM)
+else:
+    data_name = DT
 
-Assign = Plot_Labels_with_Values()
-Assign.runPlot(data1, data2, data3, "{}".format(data_name))
+    data1, data2, data3 = Counts_in_layers(dic_AssignE["{}".format(data_name)])
+
+    Assign = Plot_Labels_with_Values()
+    Assign.runPlot(data1, data2, data3, "{}".format(data_name), pathtodirectorySaveCM)
 
 # except:
 #     with open('{}dic-126894299cluster.pickle'.format(pathtodirectoryRead), 'rb') as handle:

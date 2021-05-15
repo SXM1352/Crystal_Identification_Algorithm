@@ -31,7 +31,7 @@ def main():
     Runs the peak finder, assign the first labels on the peaks, 
     plot the results and save them into a files (dictionaries)
     """
-    logging.config.fileConfig('ini-files/logging.ini')
+    logging.config.fileConfig('/home/david.perez/cia/ini-files/logging.ini')
     logging.getLogger('cia')    
 
     logging.info('----------------------------------')
@@ -91,8 +91,8 @@ def main():
         sigma = [3.3, 2.5, 1.5, 1.5] #3.3 works for 000,1.5 works fine for 111 and 100, 2.5 for 010 #normal
         # sigma = [3.3, 3, 3, 1.5] #3.3 works for 000,1.5 works fine for 111 and 100, 2.5 for 010
 
-        # threshold = [2, 3, 2, 4]
-        threshold = [2, 6, 7, 4]  #2 works for 000,4 in 111 for all and 6 for most(same for 010), 7 for 100, # for normal measurement with high activity source
+        threshold = [2, 3, 2, 4]
+        # threshold = [2, 6, 7, 4]  #2 works for 000,4 in 111 for all and 6 for most(same for 010), 7 for 100, # for normal measurement with high activity source
 
         rmBackground = True #forall
         convIter = 200 #forall with more tends to reagroup peaks and with less some are missing

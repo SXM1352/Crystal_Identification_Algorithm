@@ -14,7 +14,7 @@ import numpy as np
 import os
 
 #class imports
-from Peak_Helper import PeakHelper
+from Peak_Helper import PeakHelper #it can be included as a package, but from python 3 on it is not needed
 from SanCheck_Col import SanCheckCol
 from SanCheck_Row import SanCheckRow
 from SanCheck_Inv import SanCheckInv
@@ -133,14 +133,13 @@ def main():
     parser.add_argument('--HVD N', dest='HVD', help='Specifiy the HVD algorithm to show  \
                                                  (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL)')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-                                                     directory where to read the files from')
+                                                     directory where to read the files from.')
+    parser.add_argument('--saveDirectory', dest='SavePlot', help='Specifiy the name of the   \
+                                                         directory where to save the files in.', default='None')
+    # parser.add_argument('--plot', dest='plot_active', help='Plot grid of found peaks. 0: Off, 1: On.')
     args = parser.parse_args()
 
-    selected_HVD, pathtodirectoryRead = int(args.HVD), args.fileDirect
-
-    # pathtodirectorySave =  '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_dic-checked/'
-    #pathtodirectorySave = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_dic-checked/'
-    #pathtodirectorySave = 'C:\\Users\\David\\Google Drive\\RWTHDrive\\MasterThesis\\2021-03-16-Crystal-015\\'
+    selected_HVD, pathtodirectoryRead, pathtodirectorySavePlot = int(args.HVD), args.fileDirect, args.SavePlot
 
     pathtodirectorySave = 'dic-checked/'
 
@@ -234,7 +233,7 @@ def main():
 
         dic_crystal_ROI = dic_HVD_ROI(rows_HVD_ROI, cols_HVD_ROI_12, cols_HVD_ROI_3, dic_crystal, rows)
         
-        CheckPlot = SanCheckPlot(cg, RefHVD_Sections, ludHVD, dist_min_x, dist_min_y)
+        CheckPlot = SanCheckPlot(cg, RefHVD_Sections, ludHVD, dist_min_x, dist_min_y, HVD, pathtodirectorySavePlot)
         dic_crystal_f = CheckPlot.runSanCheckPlot(dic_crystal_ROI, m_cols_def, dic_inv)
         
         #Extract result

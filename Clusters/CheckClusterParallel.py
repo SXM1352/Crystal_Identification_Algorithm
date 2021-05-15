@@ -23,7 +23,7 @@ import gc  # garbage collector
 
 class C_Cluster(object):
 
-    def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead):
+    def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals):
         self.line = "=" * 40
 
         self.lock = Lock()
@@ -36,6 +36,7 @@ class C_Cluster(object):
         self.final_event = final_event
 
         self.HVD_list = ["000", "100", "010", "111"]
+        self.decimals = int(decimals) # 2 = 0.01
 
         self.pathtodirectoryRead = pathtodirectoryRead
         # self.pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
@@ -226,7 +227,7 @@ class C_Cluster(object):
         # Returns a dict of duplicate elements and their frequency count
         return dictOfElems
 
-    def __Checker(self, cgt, i, cog000_i, cog100_i, cog010_i, cog111_i, pv000, pv100, pv010, pv111):
+    def __Checker(self, cgt, i, cog000_i, cog100_i, cog010_i, cog111_i, pv000, pv100, pv010, pv111, decimals):
         pos000 = None
         pos010 = None
         pos100 = None
@@ -239,49 +240,49 @@ class C_Cluster(object):
 
         qf = {}
         dic_Id = {}
-        if self.lud000[round(cog000_i[0], 1), round(cog000_i[1], 1)] != None and self.lud000[round(cog000_i[0], 1), round(cog000_i[1], 1)]["CLOP"]["valid"] == True:
-            pos000 = self.lud000[round(cog000_i[0], 1), round(cog000_i[1], 1)]
+        if self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)] != None and self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)]["CLOP"]["valid"] == True:
+            pos000 = self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)]
             id000 = pos000["CLOP"]["id"]
             qf[id000] = pos000["QF"]
             dic_Id["000"] = {"id": id000, "QF": qf[id000], "COORDS": pos000["CLOP"]["center"], "pv": pv000[i]}
         else:
-            dic_Id["000"] = {"COORDS": [round(cog000_i[0], 1), round(cog000_i[1], 1)], "pv": pv000[i]}
+            dic_Id["000"] = {"COORDS": [round(cog000_i[0], decimals), round(cog000_i[1], decimals)], "pv": pv000[i]}
 
         try:
-            if self.lud100[round(cog100_i[0], 1), round(cog100_i[1], 1)] != None and self.lud100[round(cog100_i[0], 1), round(cog100_i[1], 1)]["CLOP"]["valid"] == True and cgt[1] == 1:  # if we want to include only valid from hitAnalysis
-                pos100 = self.lud100[round(cog100_i[0], 1), round(cog100_i[1], 1)]  # introduce in each iteration
+            if self.lud100[round(cog100_i[0], decimals), round(cog100_i[1], decimals)] != None and self.lud100[round(cog100_i[0], decimals), round(cog100_i[1], decimals)]["CLOP"]["valid"] == True and cgt[1] == 1:  # if we want to include only valid from hitAnalysis
+                pos100 = self.lud100[round(cog100_i[0], decimals), round(cog100_i[1], decimals)]  # introduce in each iteration
                 id100 = pos100["CLOP"]["id"]
                 qf[id100] = pos100["QF"]
                 dic_Id["100"] = {"id": id100, "QF": qf[id100], "COORDS": pos100["CLOP"]["center"], "pv": pv100[i]}
             else:
-                dic_Id["100"] = {"COORDS": [round(cog100_i[0], 1), round(cog100_i[1], 1)], "pv": pv100[i]}
+                dic_Id["100"] = {"COORDS": [round(cog100_i[0], decimals), round(cog100_i[1], decimals)], "pv": pv100[i]}
         except:
             dic_Id["100"] = {"COORDS": [-30, 30], "pv": 0}
-            self.lud100[round(cog100_i[0], 1), round(cog100_i[1], 1)] = [30, 30]
+            self.lud100[round(cog100_i[0], decimals), round(cog100_i[1], decimals)] = [30, 30]
 
         try:
-            if self.lud010[round(cog010_i[0], 1), round(cog010_i[1], 1)] != None and self.lud010[round(cog010_i[0], 1), round(cog010_i[1], 1)]["CLOP"]["valid"] == True and cgt[2] == 1:
-                pos010 = self.lud010[round(cog010_i[0], 1), round(cog010_i[1], 1)]
+            if self.lud010[round(cog010_i[0], decimals), round(cog010_i[1], decimals)] != None and self.lud010[round(cog010_i[0], decimals), round(cog010_i[1], decimals)]["CLOP"]["valid"] == True and cgt[2] == 1:
+                pos010 = self.lud010[round(cog010_i[0], decimals), round(cog010_i[1], decimals)]
                 id010 = pos010["CLOP"]["id"]
                 qf[id010] = pos010["QF"]
                 dic_Id["010"] = {"id": id010, "QF": qf[id010], "COORDS": pos010["CLOP"]["center"], "pv": pv010[i]}
             else:
-                dic_Id["010"] = {"COORDS": [round(cog010_i[0], 1), round(cog010_i[1], 1)], "pv": pv010[i]}
+                dic_Id["010"] = {"COORDS": [round(cog010_i[0], decimals), round(cog010_i[1], decimals)], "pv": pv010[i]}
         except:
             dic_Id["010"] = {"COORDS": [-30, 30], "pv": 0}
-            self.lud010[round(cog010_i[0], 1), round(cog010_i[1], 1)] = [30, 30]
+            self.lud010[round(cog010_i[0], decimals), round(cog010_i[1], decimals)] = [30, 30]
 
-        if self.lud111[round(cog111_i[0], 1), round(cog111_i[1], 1)] != None and self.lud111[round(cog111_i[0], 1), round(cog111_i[1], 1)]["CLOP"]["valid"] == True and cgt[3] == 1:
-            pos111 = self.lud111[round(cog111_i[0], 1), round(cog111_i[1], 1)]
+        if self.lud111[round(cog111_i[0], decimals), round(cog111_i[1], decimals)] != None and self.lud111[round(cog111_i[0], decimals), round(cog111_i[1], decimals)]["CLOP"]["valid"] == True and cgt[3] == 1:
+            pos111 = self.lud111[round(cog111_i[0], decimals), round(cog111_i[1], decimals)]
             id111 = pos111["CLOP"]["id"]
             qf[id111] = pos111["QF"]
             dic_Id["111"] = {"id": id111, "QF": qf[id111], "COORDS": pos111["CLOP"]["center"], "pv": pv111[i]}
         else:
-            dic_Id["111"] = {"COORDS": [round(cog111_i[0], 1), round(cog111_i[1], 1)], "pv": pv111[i], 'Flag': cgt,
-                             'LUT_000': self.lud000[round(cog000_i[0], 1), round(cog000_i[1], 1)],
-                             'LUT_100': self.lud100[round(cog100_i[0], 1), round(cog100_i[1], 1)],
-                             'LUT_010': self.lud010[round(cog010_i[0], 1), round(cog010_i[1], 1)],
-                             'LUT_111': self.lud111[round(cog111_i[0], 1), round(cog111_i[1], 1)]}
+            dic_Id["111"] = {"COORDS": [round(cog111_i[0], decimals), round(cog111_i[1], decimals)], "pv": pv111[i], 'Flag': cgt,
+                             'LUT_000': self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)],
+                             'LUT_100': self.lud100[round(cog100_i[0], decimals), round(cog100_i[1], decimals)],
+                             'LUT_010': self.lud010[round(cog010_i[0], decimals), round(cog010_i[1], decimals)],
+                             'LUT_111': self.lud111[round(cog111_i[0], decimals), round(cog111_i[1], decimals)]}
 
         # List of strings
         listOfIds = [id100, id111, id010, id000]
@@ -397,6 +398,8 @@ class C_Cluster(object):
         data_cluster_calib_pv_all = {}
 
         i = self.init_event #cluster identification (which event is it)
+        
+        decimals = self.decimals
 
         for i_cgt, cgt in enumerate(cog):
             data_cluster_calib_pv = {'id': None, 'selected_pv': None,
@@ -423,7 +426,7 @@ class C_Cluster(object):
             cog010_i = cog010[i_cgt]
             cog111_i = cog111[i_cgt]
 
-            qf, dictOfElems, dic_Id = self.__Checker(cgt, i_cgt, cog000_i, cog100_i, cog010_i, cog111_i, pv000, pv100, pv010, pv111)
+            qf, dictOfElems, dic_Id = self.__Checker(cgt, i_cgt, cog000_i, cog100_i, cog010_i, cog111_i, pv000, pv100, pv010, pv111, decimals)
 
             dic_labels_count, stop, dic_cluster, COG, dic_Events_Counts = self.__multiple_Labels(dic_Id, dictOfElems,
                                                                                                  dic_labels_count, stop,
@@ -557,15 +560,15 @@ class C_Cluster(object):
                         else:
                             self.dic_AssignE[j][dic_cluster[i]["id"]]['n_events'] += 1
             else:
-                dic_notSelected_cluster[i] = {}
-                dic_notSelected_cluster[i]["COORDS"] = -1
-                dic_notSelected_cluster[i]['Cluster'] = i
-                dic_notSelected_cluster[i]["COORDS"] = str([dic_Id["111"]["COORDS"]])
-                dic_notSelected_cluster[i]["Flag"] = str([dic_Id["111"]["Flag"]])
-                dic_notSelected_cluster[i]["LUT_000"] = str([dic_Id["111"]["LUT_000"]])
-                dic_notSelected_cluster[i]["LUT_100"] = str([dic_Id["111"]["LUT_100"]])
-                dic_notSelected_cluster[i]["LUT_010"] = str([dic_Id["111"]["LUT_010"]])
-                dic_notSelected_cluster[i]["LUT_111"] = str([dic_Id["111"]["LUT_111"]])
+                # dic_notSelected_cluster[i] = {}
+                # dic_notSelected_cluster[i]["COORDS"] = -1
+                # dic_notSelected_cluster[i]['Cluster'] = i
+                # dic_notSelected_cluster[i]["COORDS"] = str([dic_Id["111"]["COORDS"]])
+                # dic_notSelected_cluster[i]["Flag"] = str([dic_Id["111"]["Flag"]])
+                # dic_notSelected_cluster[i]["LUT_000"] = str([dic_Id["111"]["LUT_000"]])
+                # dic_notSelected_cluster[i]["LUT_100"] = str([dic_Id["111"]["LUT_100"]])
+                # dic_notSelected_cluster[i]["LUT_010"] = str([dic_Id["111"]["LUT_010"]])
+                # dic_notSelected_cluster[i]["LUT_111"] = str([dic_Id["111"]["LUT_111"]])
                 dic_Events_Counts['None'] += 1
                 dic_cluster.pop(i)
 
@@ -760,13 +763,13 @@ class C_Cluster(object):
         #     print("Problem saving CalibPV.")
 
         # try:
-        self.__save_Dic_Cluster(dic_cluster)
+        # self.__save_Dic_Cluster(dic_cluster)
         #     self.__log("DicCluster is saved.")
         # except:
         #     print("Problem saving DicCluster.")
 
         # try:
-        self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
+        # self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
         #     self.__log("DicnotSelectedCluster is saved.")
         # except:
         #     print("Problem saving DicnotSelectedCluster.")

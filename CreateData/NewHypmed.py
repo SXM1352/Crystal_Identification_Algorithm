@@ -375,9 +375,66 @@ class Hypmed():
         with open('{}hist111.pickle'.format(self.pathtodirectorySavehist), 'wb') as handle:
             pickle.dump(self.hist1_all, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)  
 
+    def save_hist_into_file_noplot(self):
+        """
+        Saving Histograms into pickle data
+
+        @return: None
+        @rtype:
+        """
+        self.hist0_all = []
+        self.hist01_all = []
+        self.hist10_all = []
+        self.hist1_all = []
+
+        for i_36 in range(36):
+
+            hist0 = np.histogram2d(self.Ref000_Sections[i_36][:, 0], self.Ref000_Sections[i_36][:, 1], bins=100)
+            self.hist0_all.append(hist0)
+
+            with open('{}hist000_{}.pickle'.format(self.pathtodirectorySavehist, str(i_36)), 'wb') as handle:
+                pickle.dump(hist0, handle,
+                            protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+            if i_36 < 30:
+                hist01 = np.histogram2d(self.Ref010_Sections[i_36][:, 0], self.Ref010_Sections[i_36][:, 1], bins=100)
+                self.hist01_all.append(hist01)
+                with open('{}hist010_{}.pickle'.format(self.pathtodirectorySavehist, str(i_36)), 'wb') as handle:
+                    pickle.dump(hist01, handle,
+                                protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+                hist10 = np.histogram2d(self.Ref100_Sections[i_36][:, 0], self.Ref100_Sections[i_36][:, 1], bins=100)
+                self.hist10_all.append(hist10)
+                with open('{}hist100_{}.pickle'.format(self.pathtodirectorySavehist, str(i_36)), 'wb') as handle:
+                    pickle.dump(hist10, handle,
+                                protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+            if i_36 < 25:
+                hist1 = np.histogram2d(self.Ref111_Sections[i_36][:, 0], self.Ref111_Sections[i_36][:, 1], bins=100)
+                self.hist1_all.append(hist1)
+                with open('{}hist111_{}.pickle'.format(self.pathtodirectorySavehist, str(i_36)), 'wb') as handle:
+                    pickle.dump(hist1, handle,
+                                protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+        with open('{}hist000.pickle'.format(self.pathtodirectorySavehist), 'wb') as handle:
+            pickle.dump(self.hist0_all, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+        with open('{}hist010.pickle'.format(self.pathtodirectorySavehist), 'wb') as handle:
+            pickle.dump(self.hist01_all, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+        with open('{}hist100.pickle'.format(self.pathtodirectorySavehist), 'wb') as handle:
+            pickle.dump(self.hist10_all, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
+        with open('{}hist111.pickle'.format(self.pathtodirectorySavehist), 'wb') as handle:
+            pickle.dump(self.hist1_all, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
     def runHypmed(self):
         self.load_raw_data()
         self.valid_events()
         self.region_ana()
         self.save_RefSection_into_file()
-        self.save_hist_into_file()
+        self.save_hist_into_file_noplot()
