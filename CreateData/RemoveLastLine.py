@@ -13,6 +13,7 @@ number = 1
 file = "{}{}.DebugSingles".format(pathtodirectoryRead, stack_id)
 count = 0
 
+# try:
 with open(file,'r+b') as f:
     f.seek(0, os.SEEK_END)
     end = f.tell()
@@ -30,6 +31,27 @@ with open(file,'r+b') as f:
             print "Removed " + str(number) + " lines from end of file"
             exit(0)
         f.seek(-1, os.SEEK_CUR)
+# except:
+#     number = 1
+#     file = "{}{}.DebugCoincidentSingles".format(pathtodirectoryRead, stack_id)
+#     count = 0
+#     with open(file,'r+b') as f:
+#         f.seek(0, os.SEEK_END)
+#         end = f.tell()
+#         while f.tell() > 0:
+#             f.seek(-1, os.SEEK_CUR)
+#             char = f.read(1)
+#             if char != '\n' and f.tell() == end:
+#                 # print "No change: file does not end with a newline"
+#                 # exit(1)
+#                 pass
+#             if char == '\n':
+#                 count += 1
+#             if count == number + 1:
+#                 f.truncate()
+#                 print "Removed " + str(number) + " lines from end of file"
+#                 exit(0)
+#             f.seek(-1, os.SEEK_CUR)
 
 if count < number + 1:
     print "No change: requested removal would leave empty file"
