@@ -106,7 +106,7 @@ def __parallel_apply_line_by_line(input_file_path, chunk_size_factor, num_procs,
     dic_HVD = {}
 
     outputs = []
-    for i in range(0, len(jobs)-num_parallel, num_parallel):
+    for i in range(0, len(jobs), num_parallel):
         print("Chunk start = ", i)
         t1 = time.time()
         chunk_outputs = pool.map(__parallel_apply_line_by_line_chunk, jobs[i: i + num_parallel])
@@ -143,7 +143,7 @@ def __index_inline(line, index):
     return line.strip().split(",")[index]
 
 def __index_inline_crt(line, index_init, index_fin):
-    return [float(element_list) for element_list in line.strip().split(",")[index_init:index_fin]]
+    return [int(element_list) for element_list in line.strip().split(",")[index_init:index_fin]]
 
 def __list_index_inline(line, list_index):
     return [line.strip().split(",")[index] for index in list_index]
@@ -196,7 +196,7 @@ for i_s in list_save_crt.keys():
 
     outp, list_save_dic_crt[i_s] = __parallel_apply_line_by_line(
         pathtodirectoryRead + "{}{}".format(stack_id, file_type),
-        1000, 31, 0, __index_inline_crt, [index[0], index[1]], fout=None)
+        1000, 25, 0, __index_inline_crt, [index[0], index[1]], fout=None)
     # for name in list_save_dic.keys():
     #name = i_s
     #dic_HVD = list_save_dic_crt[name]
