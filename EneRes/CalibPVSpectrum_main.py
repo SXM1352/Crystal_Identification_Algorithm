@@ -28,9 +28,12 @@ def main():
                                              (N where N=0,1,2,..., finalEvent)')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
+    parser.add_argument('--typeStack', dest='typeStack', help='Specifiy if the stack is  \
+                                                                         "_cal" or "_coinc".',
+                        default='')
     args = parser.parse_args()
 
-    final_event, pathtodirectoryRead = int(args.finalEvent), args.fileDirect
+    final_event, pathtodirectoryRead, stack_type = int(args.finalEvent), args.fileDirect, args.typeStack
     logging.info('----------------------------------')
     logging.info('NEW RUN OF THE PROGRAM \n')
     # we can use an argparser for the values we use, this is temporary
@@ -43,7 +46,7 @@ def main():
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/'
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
 
-    C_Calib = CalibPV(final_event, pathtodirectoryRead)
+    C_Calib = CalibPV(final_event, pathtodirectoryRead, stack_type)
     C_Calib.RunCalibPV()
 
     logging.info('Thanks for using our software. Hope to see you soon. ## (in Check_main)\n')

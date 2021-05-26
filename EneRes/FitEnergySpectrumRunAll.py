@@ -175,12 +175,12 @@ def __fitPeaks(hist, i_crystal):
 
 
         #check for minimum of fit bins:
-        elif (fitStop_bin - fitStart_bin) <= 10:
+        elif (fitStop_bin - fitStart_bin) < 10:
             fitRangeBins = (fitStop_bin - fitStart_bin)
             fitRangeMid = (fitStart+fitStop) / 2.
             fitstart_original = fitStart
-            fitStart = fitRangeMid - (fitRangeMid-fitstart_original) / (fitRangeBins / 2.) * 6.
-            fitStop = fitRangeMid + (fitRangeMid-fitstart_original) / (fitRangeBins / 2.) * 6.
+            fitStart = fitRangeMid - (fitRangeMid-fitstart_original) / (fitRangeBins / 2.) * 5.
+            fitStop = fitRangeMid + (fitRangeMid-fitstart_original) / (fitRangeBins / 2.) * 5.
 
         #define prefit gauss
         gaus = TF1("gaus_peak_" + str(kl), "gaus", fitStart, fitStop)
@@ -337,7 +337,7 @@ def set_char_TCanvas_TPad(c1, pad, h1d, leg, datapv, i_crystal):
     leg.SetFillStyle(0) # I'm guessing this just means pure color, no patterns
     leg.SetTextFont(42)
     leg.SetTextSize(0.035) # somewhat large, may need to play with this to make the plot look ok
-    leg.AddEntry(h1d,"{}".format(i_crystal),"L") # AddEntry(TGraph/TH1D varName, what you want the legend to say for this graph, show the line)
+    leg.AddEntry(h1d,"{} - {}".format(i_crystal, datapv[i_crystal]["layer"]),"L") # AddEntry(TGraph/TH1D varName, what you want the legend to say for this graph, show the line)
     leg.Draw() # draw it!
     c1.Update()
     #

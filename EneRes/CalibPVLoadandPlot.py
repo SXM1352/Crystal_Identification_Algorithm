@@ -13,6 +13,7 @@ from textwrap import dedent
 import sys
 import itertools
 import re
+import os
 
 class CalibLoadPlot():
     def __init__(self, splits, pathtodirectoryRead):
@@ -27,12 +28,21 @@ class CalibLoadPlot():
 
         self.pathtodirectorySave = self.pathtodirectoryRead
 
+        self.pathtodirectoryReadCrystal = 'CrystalsKeV/'
+
         # self.pathtodirectorySavePV = '20210304_NEW-2021-02-17_PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210303_NEW-2021-02-17_PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210315_NEW_PhotonSpectrum/'
 
         # self.pathtodirectorySave = '/home/david.perez/TestParallel/'
         # self.pathtodirectorySavePV = 'PV/'
+
+    def checkFolder(self, pathDirectory):
+        CHECK_FOLDER = os.path.isdir(pathDirectory)
+        # If folder doesn't exist, then create it.
+        if not CHECK_FOLDER:
+            os.makedirs(pathDirectory)
+            print("created folder : ", pathDirectory)
 
     def normalizeAndSplit(self, l):
         ''' function to split an input line and remove unwanted characters \
@@ -86,7 +96,10 @@ class CalibLoadPlot():
 
         #hist_clone = hist.Clone(str(i) + "_backgroundRM") # i must be the crystal id
 
-        hist.Add(hBack, -1.) # this remove the background (hist = hist + (-1)*hBack)
+        # hist.Add(hBack, -1.) # this remove the background (hist = hist + (-1)*hBack)
+
+        n_entries_afterFit = hist.GetEntries()
+        print('n_entries_afterFit', n_entries_afterFit)
 
         threshold = 0.50
 
@@ -313,6 +326,7 @@ class CalibLoadPlot():
         hist_array_layer1 = []
         hist_array_layer2 = []
         hist_array_layer3 = []
+        hist_array_crystals = [[] for i in range(3425)]
 
         for event in self.splits:
             final_event = event[1]
@@ -338,12 +352,35 @@ class CalibLoadPlot():
                 hist_array_layer3_temp = pickle.load(arrinput)
                 for pvc in hist_array_layer3_temp:
                     hist_array_layer3.append(pvc)
-        hist_array_list = [hist_array_total, hist_array_layer1, hist_array_layer2, hist_array_layer3]
+
+            with open('{}array_calibFinalPV_Crystals_{}.pickle'.format(self.pathtodirectoryRead, final_event),
+                      'r') as arrinput:
+                hist_array_crystals_temp = pickle.load(arrinput)
+                for index_pvc, pvc in enumerate(hist_array_crystals_temp):
+                    hist_array_crystals[index_pvc] = hist_array_crystals[index_pvc] + pvc
+
+        hist_array_list = [hist_array_total, hist_array_layer1, hist_array_layer2, hist_array_layer3, hist_array_crystals]
         return hist_array_list
-        
+
+    def __load_save_dic_listmode(self):
+        'function to save the values (cluster, crystal and keV) we need for the listmode binary file.'
+        dic_listmode = {}
+
+        for event in self.splits:
+            final_event = event[1]
+            with open('{}dic_listmode_{}.pickle'.format(self.pathtodirectoryRead, final_event), 'r') as input:
+                dic_listmode_temp = pickle.load(input)
+                dic_listmode.update(dic_listmode_temp)
+
+        with open('{}dic_listmode_{}.pickle'.format(self.pathtodirectoryRead, 'total'), 'wb') as handle:
+            pickle.dump(dic_listmode, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
     def runCalibLoadPlot(self):
 
         gROOT.SetBatch(True)
+
+        self.checkFolder(self.pathtodirectorySave + self.pathtodirectoryReadCrystal)
 
         print("importing...")
 
@@ -382,4 +419,34 @@ class CalibLoadPlot():
                                             index=False))  # we write the dataframe with the index
                     fout.write('\n')  # a newline to place correctly the next rows
             myfile.Close()
+        print('Layers are finished')
+        self.__load_save_dic_listmode()
+
+        crystals_n = range(3425)
+        hist_array_crystals = hist_array_list[-1]
+        for crystal in crystals_n:
+            hist_array = hist_array_crystals[crystal]
+            if hist_array:
+                myfile = TFile('{}FittingFinalPV_{}.root'.format(self.pathtodirectorySave + self.pathtodirectoryReadCrystal, crystal), 'RECREATE')
+                canva = TCanvas('c', 'Fit', 200, 10, 900, 900)
+                pad = TPad('pad', 'The pad with the histogram', 0.05, 0.05, 0.95, 0.95, 0)
+                h1d = TH1D('h1d', 'PV', (2000 - 0) / 5, 0, 2000)
+                legend = TLegend()
+                #add tileID
+
+                peakInfoSave_all = self.set_char_TCanvas_TPad(canva, pad, h1d, legend, hist_array)
+                print(peakInfoSave_all)
+                with open('{}CalibPVLog{}.txt'.format(self.pathtodirectorySave + self.pathtodirectoryReadCrystal, crystal), 'a') as fout:
+                    for peak in peakInfoSave_all.keys():
+                        print(peakInfoSave_all[peak])
+                        df = pd.DataFrame(peakInfoSave_all[peak],
+                                          columns=['valid_peaks', 'all_peaks', 'fitStart', 'position', 'fitStop',
+                                                   'chi2_ndof', 'mean', 'mean_error', 'sigma', 'sigma_error',
+                                                   'E_r[%(sigma)]',
+                                                   'E_r[%(FWHM)]', 'n_entries'])  # create a dataframe with the data of the current file
+
+                        fout.write(df.to_string(header=False,
+                                                index=False))  # we write the dataframe with the index
+                        fout.write('\n')  # a newline to place correctly the next rows
+                myfile.Close()
 
