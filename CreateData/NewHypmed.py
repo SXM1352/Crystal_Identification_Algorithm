@@ -16,11 +16,13 @@ class Hypmed():
     """
     Working frame regarding the crystal identification algorithms
     """
-    def __init__(self, pathtodirectoryRead):
+    def __init__(self, pathtodirectoryRead, savepath):
         self.pathtodirectoryRead = pathtodirectoryRead
 
-        self.pathtodirectorySaveRefSections = self.pathtodirectoryRead + 'RefSections/'
-        self.pathtodirectorySavehist = self.pathtodirectoryRead + 'hist/'
+        self.savepath = savepath
+
+        self.pathtodirectorySaveRefSections = self.savepath + 'RefSections/'
+        self.pathtodirectorySavehist = self.savepath + 'hist/'
 
         self.pathtodirectoryReadHDF5 = self.pathtodirectoryRead + 'hdf5Data/'
         self.pathtodirectorySaveHDF5 = self.pathtodirectoryReadHDF5
@@ -110,38 +112,52 @@ class Hypmed():
         @return: None
         @rtype:
         """
-
+        print("cogRef")
         with h5py.File("{}cogRef.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cogRef = dset[:]
 
+        print("cog000")
         with h5py.File("{}cog000ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cog000Ref = dset[:]
+
+        print("cog100")
         with h5py.File("{}cog100ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cog100Ref = dset[:]
+
+        print(010)
         with h5py.File("{}cog010ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cog010Ref = dset[:]
+
+        print("cog111")
         with h5py.File("{}cog111ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cog111Ref = dset[:]
 
+        print("pv000")
         with h5py.File("{}pv000ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.pv000Ref = dset[:]
+
+        print("pv100")
         with h5py.File("{}pv100ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.pv100Ref = dset[:]
+
+        print("pv010")
         with h5py.File("{}pv010ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.pv010Ref = dset[:]
+
+        print("pv111")
         with h5py.File("{}pv111ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.pv111Ref = dset[:]
 
-    def valid_events(self):
+    def valid_events(self, n_events):
         """
         Filter events with conditions obtained by HitAnalysis (full neighbours filter)
         Comments: Masked arrays are computationally more expensive than normal arrays
@@ -154,7 +170,10 @@ class Hypmed():
         self.new_cog010 = []
         self.new_cog111 = []
 
-        for i_n in range(len(self.cog000Ref)):
+        for i_n in range(n_events):             # range(len(self.new_cog000))
+            if i_n % (n_events/5) == 0:
+                print(i_n)
+
             if self.cogRef[i_n][0]:
                 self.new_cog000.append(self.cog000Ref[i_n])
             if self.cogRef[i_n][1]:
