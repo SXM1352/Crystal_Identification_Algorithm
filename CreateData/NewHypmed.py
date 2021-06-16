@@ -127,7 +127,7 @@ class Hypmed():
             dset = f["data"]
             self.cog100Ref = dset[:]
 
-        print(010)
+        print("cog010")
         with h5py.File("{}cog010ref.hdf5".format(self.pathtodirectoryReadHDF5), "r") as f:
             dset = f["data"]
             self.cog010Ref = dset[:]
@@ -157,7 +157,7 @@ class Hypmed():
             dset = f["data"]
             self.pv111Ref = dset[:]
 
-    def valid_events(self, n_events):
+    def valid_events(self, n_events= None):
         """
         Filter events with conditions obtained by HitAnalysis (full neighbours filter)
         Comments: Masked arrays are computationally more expensive than normal arrays
@@ -170,10 +170,13 @@ class Hypmed():
         self.new_cog010 = []
         self.new_cog111 = []
 
-        for i_n in range(n_events):             # range(len(self.new_cog000))
-            if i_n % (n_events/5) == 0:
-                print(i_n)
+        # length = len(self.new_cog000)   # range(len(self.new_cog000)) #range(n_events)
+        # length = n_events
+        # length = len(self.cog000Ref)
 
+        for i_n in range(length):             # range(len(self.new_cog000)) #range(n_events)
+            if i_n % (length/5) == 0:
+                print(i_n)
             if self.cogRef[i_n][0]:
                 self.new_cog000.append(self.cog000Ref[i_n])
             if self.cogRef[i_n][1]:
