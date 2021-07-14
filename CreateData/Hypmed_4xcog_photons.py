@@ -107,7 +107,8 @@ def __parallel_apply_line_by_line(input_file_path, chunk_size_factor, num_procs,
     outputs = []
 
     num_parallel = 8
-    for i in range(0, 24, num_parallel): #len(jobs) -> 8
+    print("LENGTH:", len(jobs))
+    for i in range(0, 1040, num_parallel): #len(jobs) -> 8
         print("Chunk start = ", i)
         t1 = time.time()
         chunk_outputs = pool.map(__parallel_apply_line_by_line_chunk, jobs[i: i + num_parallel])
@@ -127,8 +128,10 @@ def __parallel_apply_line_by_line(input_file_path, chunk_size_factor, num_procs,
         del (chunk_outputs)
         gc.collect()
         print("All Done in time ", time.time() - t1)
+        print("Actual number of lines we have = {}".format(lines_counter))
+        print("check check")
 
-    print("Total lines we have = {}".format(lines_counter))
+    print("Total number of lines we have = {}".format(lines_counter))
 
     pool.close()
     pool.terminate()
@@ -167,20 +170,21 @@ pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/20
 # list_save_crt = {"stack_id": [2,3], "dicpos_000": [200, 202], "dicpos_100": [202, 204],
 #                  "dicpos_010": [204, 206], "dicpos_111": [214, 216], "photons": [12,156]}
 
-list_save_crt = {"dicpos_111": [214, 216]}
-
+###############ÄNDERN####################
+list_save_crt = {"photons": [12, 156]}
+#########################################
 # stack_id = {}
 
 # dicpos_000 = {}  # x and y from COG HVD
 # dicpos_100 = {}
 # dicpos_010 = {}
-dicpos_111 = {}
-# photons = {}
+# dicpos_111 = {}
+photons = {}
 
 # list_save_dic_crt = {"stack_id": stack_id, "dicpos_000": dicpos_000, "dicpos_100": dicpos_100,
 #                      "dicpos_010": dicpos_010, "dicpos_111": dicpos_111, "photons": photons}
 
-list_save_dic_crt = {"dicpos_111"}
+list_save_dic_crt = {"photons"}
 
 
 # folder_dir = pathtodirectorySave_pickle
@@ -213,13 +217,13 @@ for i_s in list_save_crt.keys():
 # cog000Ref_cal = []
 # cog100Ref_cal = []
 # cog010Ref_cal = []
-cog111Ref_cal = []
-# photons_cal = []
+# cog111Ref_cal = []
+photons_cal = []
 
 # cog000Ref_coinc = []
 # cog100Ref_coinc = []
 # cog010Ref_coinc = []
-cog111Ref_coinc = []
+# cog111Ref_coinc = []
 # photons_coinc = []
 
 # stack_id_cal = list_save_dic_crt['stack_id'][0]
@@ -248,9 +252,9 @@ print("Arrays ready for time")
 # cog010Ref_cal = np.array(cog010Ref_cal)
 # cog010Ref_cal = np.array(outp)
 # cog111Ref_cal = np.array(cog111Ref_cal)
-cog111Ref_cal = np.array(outp)
+# cog111Ref_cal = np.array(outp)
 # photons_cal = np.array(photons_cal)
-# photons_cal = np.array(outp)
+photons_cal = np.array(outp)
 
 # cog000Ref_coinc = np.array(cog000Ref_coinc)
 # cog000Ref_coinc = np.array(outp)
@@ -259,7 +263,7 @@ cog111Ref_cal = np.array(outp)
 # cog010Ref_coinc = np.array(cog010Ref_coinc)
 # cog010Ref_coinc = np.array(outp)
 # cog111Ref_coinc = np.array(cog111Ref_coinc)
-cog111Ref_coinc = np.array(outp)
+# cog111Ref_coinc = np.array(outp)
 # photons_coinc = np.array(photons_coinc)
 # photons_coinc = np.array(outp)
 print("Arrays ready.")
@@ -273,7 +277,7 @@ if not CHECK_FOLDER:
     os.makedirs(folder_dir)
     print("created folder : ", folder_dir)
 
-n_events = int(len(cog111Ref_coinc))
+# n_events = int(len(cog111Ref_coinc))                #ÄNDERN zB "cog111Ref_coinc"
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
 
 # with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
@@ -294,11 +298,11 @@ n_events = int(len(cog111Ref_coinc))
 #     for i in range(0, n_events, dset.chunks[0]):
 #         dset[i: i + dset.chunks[0]] = cog010Ref_cal[i: i + dset.chunks[0]]
 #
-with h5py.File('{}cog111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, 2), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog111Ref_cal[i: i + dset.chunks[0]]
+# with h5py.File('{}Pos_All_111_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f: #"Test" zu "cog111ref_cal" ändern
+#     dset = f.create_dataset("data", (n_events, 2), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog111Ref_cal[i: i + dset.chunks[0]]
 #
 # with h5py.File('{}cog000ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
 #     dset = f.create_dataset("data", (n_events, 2), chunks=True)
@@ -318,20 +322,20 @@ with h5py.File('{}cog111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f
 #     for i in range(0, n_events, dset.chunks[0]):
 #         dset[i: i + dset.chunks[0]] = cog010Ref_coinc[i: i + dset.chunks[0]]
 #
-with h5py.File('{}cog111ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, 2), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog111Ref_coinc[i: i + dset.chunks[0]]
-#
-# n_events = int(len(photons_cal))
-# n_photon = int(len(photons_cal[0]))
-# # # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
-# with h5py.File('{}photons_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-#     dset = f.create_dataset("data", (n_events, n_photon), chunks=True)
+# with h5py.File('{}Pos_All_111_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f: #"Test" zu "cog111ref_coinc" ändern
+#     dset = f.create_dataset("data", (n_events, 2), chunks=True)
 #
 #     for i in range(0, n_events, dset.chunks[0]):
-#         dset[i: i + dset.chunks[0]] = photons_cal[i: i + dset.chunks[0]]
+#         dset[i: i + dset.chunks[0]] = cog111Ref_coinc[i: i + dset.chunks[0]]
+#
+n_events = int(len(photons_cal))
+n_photon = int(len(photons_cal[0]))
+# # # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
+with h5py.File('{}Photons_All_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+    dset = f.create_dataset("data", (n_events, n_photon), chunks=True)
+
+    for i in range(0, n_events, dset.chunks[0]):
+        dset[i: i + dset.chunks[0]] = photons_cal[i: i + dset.chunks[0]]
 #
 # with h5py.File('{}photons_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
 #     dset = f.create_dataset("data", (n_events, n_photon), chunks=True)
