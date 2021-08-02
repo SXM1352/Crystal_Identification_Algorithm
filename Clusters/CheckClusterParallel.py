@@ -4,6 +4,10 @@ Created on Thu Oct 15 14:57:51 2020
 
 @author: David
 """
+"""
+RunCheckParallel.py provides a routine to iterate over the clusters and
+identify the scintillating crystal.
+"""
 
 import cPickle as pickle
 import numpy as np
@@ -515,44 +519,35 @@ class C_Cluster(object):
                 else:
                     data_cluster_calib_pv['selected_pv'] = dic_Id[dic_cluster[i]["COG"]]['pv']
                     data_cluster_calib_pv['COG'] = dic_cluster[i]["COG"]  # HVD_PV
-                if 'id' in dic_Id["000"].keys(): # cgt[0] == 1 and # if len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
-                    data_cluster_pv_000[dic_cluster[i]["id"]]['pv'].append(dic_Id["000"]['pv'])
 
-                if 'id' in dic_Id["100"].keys(): # cgt[1] == 1 and # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
-                    data_cluster_pv_100[dic_cluster[i]["id"]]['pv'].append(dic_Id["100"]['pv'])
+                #in first layer, not include the photon count in all calib_factor, but only in the selected one
+                #it does not change much the final results, improves Er by 0.2% difference
+                if data_cluster_pv_000[dic_cluster[i]["id"]]['layer'] == 1:
+                    if data_cluster_calib_pv['COG'] == "000":  # cgt[0] == 1 and # if len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
+                        data_cluster_pv_000[dic_cluster[i]["id"]]['pv'].append(dic_Id["000"]['pv'])
 
-                if 'id' in dic_Id["010"].keys(): # cgt[2] == 1 and  # if len(dic_Id["010"].keys()) > 3:  # only the valid ones
-                    data_cluster_pv_010[dic_cluster[i]["id"]]['pv'].append(dic_Id["010"]['pv'])
+                    if data_cluster_calib_pv['COG'] == "100":  # cgt[1] == 1 and # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_100[dic_cluster[i]["id"]]['pv'].append(dic_Id["100"]['pv'])
 
-                if 'id' in dic_Id["111"].keys(): # cgt[3] == 1 and  is already in our condition # if len(dic_Id["111"].keys()) > 3:  # only the valid ones
-                    data_cluster_pv_111[dic_cluster[i]["id"]]['pv'].append(dic_Id["111"]['pv'])
-                    # data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                    # data_cluster_calib_pv['selected_pv'] = dic_Id["111"]['pv']
-                    # data_cluster_calib_pv['COG'] = "111" #HVD_PV
-                # elif cgt[2] == 1: #elif len(dic_Id["010"].keys()) > 3:  # only the valid ones from hitAnalysis
-                #     # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
-                #     #     if dic_Id["100"]['QF'] < dic_Id["010"]['QF']:
-                #     #         data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                #     #         data_cluster_calib_pv['selected_pv'] = dic_Id["100"]['pv']
-                #     #         data_cluster_calib_pv['COG'] = "100"
-                #     #     else:
-                #     #         data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                #     #         data_cluster_calib_pv['selected_pv'] = dic_Id["010"]['pv']
-                #     #         data_cluster_calib_pv['COG'] = "010"
-                #     # else:
-                #     data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                #     data_cluster_calib_pv['selected_pv'] = dic_Id["010"]['pv']
-                #     data_cluster_calib_pv['COG'] = "010"
-                #
-                # elif cgt[1] == 1: #elif len(dic_Id["100"].keys()) > 3:  # only the valid ones
-                #     data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                #     data_cluster_calib_pv['selected_pv'] = dic_Id["100"]['pv']
-                #     data_cluster_calib_pv['COG'] = "100"
-                #
-                # elif cgt[0] == 1: #elif len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
-                #     data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
-                #     data_cluster_calib_pv['selected_pv'] = dic_Id["000"]['pv']
-                #     data_cluster_calib_pv['COG'] = "000"
+                    if data_cluster_calib_pv['COG'] == "010":  # cgt[2] == 1 and  # if len(dic_Id["010"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_010[dic_cluster[i]["id"]]['pv'].append(dic_Id["010"]['pv'])
+
+                    if data_cluster_calib_pv['COG'] == "111":  # cgt[3] == 1 and  is already in our condition # if len(dic_Id["111"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_111[dic_cluster[i]["id"]]['pv'].append(dic_Id["111"]['pv'])
+                else:
+
+                    if 'id' in dic_Id["000"].keys(): # cgt[0] == 1 and # if len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
+                        data_cluster_pv_000[dic_cluster[i]["id"]]['pv'].append(dic_Id["000"]['pv'])
+
+                    if 'id' in dic_Id["100"].keys(): # cgt[1] == 1 and # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_100[dic_cluster[i]["id"]]['pv'].append(dic_Id["100"]['pv'])
+
+                    if 'id' in dic_Id["010"].keys(): # cgt[2] == 1 and  # if len(dic_Id["010"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_010[dic_cluster[i]["id"]]['pv'].append(dic_Id["010"]['pv'])
+
+                    if 'id' in dic_Id["111"].keys(): # cgt[3] == 1 and  is already in our condition # if len(dic_Id["111"].keys()) > 3:  # only the valid ones
+                        data_cluster_pv_111[dic_cluster[i]["id"]]['pv'].append(dic_Id["111"]['pv'])
+
                 data_cluster_calib_pv_all[i] = data_cluster_calib_pv
 
                 for j in self.dic_Events.keys():
@@ -576,63 +571,7 @@ class C_Cluster(object):
 
             i += 1
         return dic_Events_Counts, dic_labels_count, dic_cluster, dic_notSelected_cluster, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111, data_cluster_calib_pv_all
-    # def __Counts_in_layers(self, dic_labels_count): #In other program!!!!!!!!!!!!!!!!!!!!!!!
-    #     dic_labels_count_layer1 = {}
-    #     dic_labels_count_layer2 = {}
-    #     dic_labels_count_layer3 = {}
-    #
-    #     dic_crystal = self.__CrystalDict()
-    #
-    #     for i in dic_crystal.keys():
-    #         if dic_crystal[i]["layer"] == 1:
-    #             dic_labels_count_layer1[i] = dic_labels_count[i]
-    #     for i in dic_crystal.keys():
-    #         if dic_crystal[i]["layer"] == 2:
-    #             dic_labels_count_layer2[i] = dic_labels_count[i]
-    #     for i in dic_crystal.keys():
-    #         if dic_crystal[i]["layer"] == 3:
-    #             dic_labels_count_layer3[i] = dic_labels_count[i]
-    #     with open('{}dic-layer1-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(dic_labels_count_layer1, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-    #     with open('{}dic-layer2-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(dic_labels_count_layer2, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-    #     with open('{}dic-layer3-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(dic_labels_count_layer3, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-    #     data = np.zeros((36,34))
-    #     data2 = np.zeros((36,31))
-    #     data3 = np.zeros((35,31))
-    #     print("svae")
-    #     index = 0
-    #     index2 = 0
-    #     for i in sorted(dic_labels_count_layer1.keys()):
-    #         data[index][index2] = dic_labels_count_layer1[i]
-    #         index2 += 1
-    #         if index2 == 34:
-    #             index2 = 0
-    #             index += 1
-    #     index = 0
-    #     index2 = 0
-    #     for i in sorted(dic_labels_count_layer2.keys()):
-    #         data2[index][index2] = dic_labels_count_layer2[i]
-    #         index2 += 1
-    #         if index2 == 31:
-    #             index2 = 0
-    #             index += 1
-    #     index = 0
-    #     index2 = 0
-    #     for i in sorted(dic_labels_count_layer3.keys()):
-    #         data3[index][index2] = dic_labels_count_layer3[i]
-    #         index2 += 1
-    #         if index2 == 31:
-    #             index2 = 0
-    #             index += 1
-    #     print("pickle")
-    #     with open('{}data-layer1-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-    #     with open('{}data-layer2-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(data2, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-    #     with open('{}data-layer3-all{}-valid.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-    #         pickle.dump(data3, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
+
     def __save_Events_Counts(self, dic_Events_Counts):
         with open('{}dic-Events{}-Counts.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
             pickle.dump(dic_Events_Counts, handle,
@@ -734,35 +673,29 @@ class C_Cluster(object):
 
         self.__log("Counter is over.")
 
-        # try: #not used anymore, we can see how many events per crystal are classified by each HVD algorithm
-        #     self.__Counts_in_layers(dic_labels_count)
-        #     self.__log("dic_labels_count is saved.")
-        # except:
-        #     print("Problem saving dic_labels_count.")
+        try:
+            self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
+            self.__log("PV is saved.")
+        except:
+            print("Problem saving PV.")
 
-        # try:
-        self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
-        #     self.__log("PV is saved.")
-        # except:
-        #     print("Problem saving PV.")
+        try:
+            self.__save_Events_Counts(dic_Events_Counts)
+            self.__log("dic_Events_Counts is saved.")
+        except:
+            print("Problem saving dic_Events_Counts.")
 
-        # try:
-        self.__save_Events_Counts(dic_Events_Counts)
-        #     self.__log("dic_Events_Counts is saved.")
-        # except:
-        #     print("Problem saving dic_Events_Counts.")
+        try:
+            self.__save_Assign_Events()
+            self.__log("AssignE is saved.")
+        except:
+            print("Problem saving AssignE.")
 
-        # try:
-        self.__save_Assign_Events()
-        #     self.__log("AssignE is saved.")
-        # except:
-        #     print("Problem saving AssignE.")
-
-        # try:
-        self.__save_calib_PV(data_cluster_calib_pv_all)
-        #     self.__log("CalibPV is saved.")
-        # except:
-        #     print("Problem saving CalibPV.")
+        try:
+            self.__save_calib_PV(data_cluster_calib_pv_all)
+            self.__log("CalibPV is saved.")
+        except:
+            print("Problem saving CalibPV.")
 
         # try:
         # self.__save_Dic_Cluster(dic_cluster)
