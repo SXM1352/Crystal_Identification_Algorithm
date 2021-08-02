@@ -19,6 +19,7 @@ class PeakPlot():
         self.pathtodirectoryRead = pathtodirectoryRead
         
     def runPeakPlot(self):
+        plt.clf()
         figure2,ax = plt.subplots()
         for kl in range(len(self.x_arr)):
             plt.plot(self.x_arr[kl],self.y_arr[kl], '-ok', mfc='C1', mec='C1')

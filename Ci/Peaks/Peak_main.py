@@ -5,6 +5,14 @@ Created on Sun Jan 10 16:58:11 2021
 
 @author: David
 """
+"""
+Peak_main.py provides a frame to run a peak finder on the corresponding
+given data (flood maps split into regions of interest) by
+looking at the median values of the complete sets of data. 
+
+The plotting routine is deactivated because it was only used to tune
+the parameters.
+"""
 
 #module imports
 import argparse
@@ -18,12 +26,6 @@ from Peak_Labels import PeakLabels
 from Peak_Finder import PeakFinder
 from Peak_Plot import PeakPlot
 from Peak_Helper import PeakHelper
-
-"""
-Peak_main.py provides a frame to run a peak finder on the corresponding
-given data (flood maps split into regions of interest) by
-looking at the median values of the complete sets of data. 
-"""
 
 #-------------Main---------------------------------
 def main():
@@ -41,12 +43,14 @@ def main():
     #adapt to run for all the cog!
     parser = argparse.ArgumentParser()
     parser.add_argument('--HVD N', dest='HVD', help='Specifiy the HVD algorithm to show  \
-                                                     (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL)')
+                                                     (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL).')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-                                                         directory where to read the files from')
+                                                         directory where to read the files from.')
+    parser.add_argument('--plot Opt', dest='plotRows', help='Activate the plot of every referent section   \
+                                                 to show the labelled rows (Opt = "On"). Default is Opt = "Off".', default='Off')
     args = parser.parse_args()
 
-    selected_HVD, pathtodirectoryRead = int(args.HVD), args.fileDirect
+    selected_HVD, pathtodirectoryRead, opt_plot = int(args.HVD), args.fileDirect, args.plotRows
     # dir = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
 
     readdir = pathtodirectoryRead + 'hist/'
@@ -69,16 +73,11 @@ def main():
         n_p_list = [36, 30, 30, 25]
         n_p = n_p_list[cg] #number of pickles
 
-        #ht_list = ["hist0", "hist01", "hist10", "hist1"]
         jr_fixed = None
         #jr_fixed = 5
-        #ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/hist{}_{}.pickle'.format(HVD, p), 'rb')) for p in range(n_p)]
-        #ht = [pickle.load(open('/home/david.perez/Desktop/Pickles/hist{}_{}.pickle'.format(HVD,jr_fixed)))]
 
         ht = [pickle.load(open('{}hist{}_{}.pickle'.format(readdir,
                                                            HVD, p), 'rb')) for p in range(n_p)]
-        #ht = [pickle.load(open('/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/20210303_NEW-2021-02-17_hist/hist{}_{}.pickle'.format(HVD,jr_fixed)))]
-
         x_arr = []
         y_arr = []
         rows, dic_crystal = PeakHelper.CrystalDict()
@@ -156,13 +155,15 @@ def main():
             print("rdefect", dic_rdefect)
             #print("dc_c", dic_crystal[1703])
 
-            # for ij in dic_rows.keys():
-            #     x = np.array(PeakHelper.Extract_x(dic_rows[ij][0]))
-            #     y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))
-            #     x_arr.append(x)
-            #     y_arr.append(y)
-            # pplot = PeakPlot(x_arr, y_arr, jr, HVD, readdir_refSections)
-            # pplot.runPeakPlot()
+            active_area = raw_input('jr (active area): ')
+            if active_area and opt_plot == "On":
+                for ij in dic_rows.keys():
+                    x = np.array(PeakHelper.Extract_x(dic_rows[ij][0]))
+                    y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))
+                    x_arr.append(x)
+                    y_arr.append(y)
+                pplot = PeakPlot(x_arr, y_arr, jr, HVD, readdir_refSections)
+                pplot.runPeakPlot()
 
         with open('{}/dic-crystal-{}.pickle'.format(savedir, HVD), 'wb') as handle:
             pickle.dump(dic_crystal, handle, protocol=pickle.HIGHEST_PROTOCOL)
