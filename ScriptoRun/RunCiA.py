@@ -59,7 +59,6 @@ def __save_Jobs(jobs, pathtodirectorySave):
         pickle.dump(jobs, handle,
                     protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
-
 def main():
     time_init = str(datetime.datetime.now())
     parser = argparse.ArgumentParser()
@@ -79,9 +78,11 @@ def main():
     args = parser.parse_args()
     decimals, n_Procs, selected_HVD, n_Events, pathtodirectory, savePlot = args.decimals, int(args.nCPU), int(args.HVD), int(args.nEvents), args.fileDirect, args.SavePlot
 
+    #Run routine to find peaks
     command_PeakF = 'python /home/david.perez/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
     os.system(command_PeakF)
-    #
+
+    #run routine to label peaks
     command_SanCheck = 'python /home/david.perez/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
     os.system(command_SanCheck)
 
@@ -94,10 +95,11 @@ def main():
         print("created folder : ", pathtodirectory + pathtodirectoryReadLUD)
 
     if selected_HVD == -1:
-        jobs = range(4) # we take all HVD algorithms, if one wants only want: 0 (=000), 1 (=100), 2 (=010), 3 (=111)
+        jobs = range(4) # we take all HVD algorithms, for only one: 0 (=000), 1 (=100), 2 (=010), 3 (=111)
     else:
         jobs = [selected_HVD]
 
+    #Select number of cpu to use
     n_Procs_total = psutil.cpu_count()
     if n_Procs >= n_Procs_total:
         n_Procs = n_Procs_total - 1
@@ -105,6 +107,7 @@ def main():
     print('Number of used CPU: ', n_Procs)
     print('Number of available CPU: ', n_Procs_total)
 
+    #Divide jobs for LUT and speed the process up
     n_Events_LUT = 48
     n_jobs_per_proc = int(n_Events_LUT / n_Procs)
 
@@ -114,17 +117,15 @@ def main():
     list_commands = write_commands(jobs, pathtodirectory, jobs_per_HVD, decimals)
 
     fCommand = create_finalCommand(list_commands)
-
     fCommand = fCommand  + ' & wait'
 
     # print('waiting...')
     # sleep(4000)
-
     os.system(fCommand)  # LUT
 
-    # MAKE COMMAND!!!!
     Group_jobs = LUT_Group(jobs_per_HVD, pathtodirectory) #group pickles
     Group_jobs.runLUTGroup()
+
     precision_grid = len(decimals.split(".")[1])
     command_CheckC = 'python /home/david.perez/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
