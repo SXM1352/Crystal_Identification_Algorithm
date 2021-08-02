@@ -1,8 +1,17 @@
+# -*- coding: utf-8 -*-
+__author__ = 'david.perez.gonzalez'
+"""
+RunCheckParallel.py provides a frame to iterate over the clusters and
+identify the scintillating crystal, find calibration factors of each crystal
+in every ROI, determine the energy of the scintillating event and plot the energy spectra.
+"""
+
 import os
 import argparse
 import psutil
 import cPickle as pickle
 import datetime
+from time import sleep
 
 from GroupPickles import C_Group
 # from CalibPVLoadandPlot import CalibLoadPlot
@@ -32,16 +41,26 @@ def __chunkify_data(n_proc, size):
 
     return chunks
 
-def write_commands(jobs, pathtodirectoryRead, decimals):
+def write_commands(jobs, pathtodirectoryRead, decimals, stack_type):
     list_commands = []
     for j in jobs:
-        command = 'python' + ' ' + '/home/david.perez/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {}'.format(j[0], j[1], pathtodirectoryRead, decimals)
+        if stack_type == '_coinc' or stack_type == '_cal':
+            command = 'python' + ' ' + '/home/david.perez/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {} --typeStack {}'.format(j[0], j[1], pathtodirectoryRead, decimals, stack_type)
+
+        else:
+            command = 'python' + ' ' + '/home/david.perez/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {}'.format(j[0], j[1], pathtodirectoryRead, decimals)
+
         list_commands.append(command)
     return list_commands
-def write_commands_calib(jobs, pathtodirectoryRead):
+def write_commands_calib(jobs, pathtodirectoryRead, stack_type):
     list_commands = []
     for j in jobs:
-        command = 'python' + ' ' + '/home/david.perez/cia/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {}'.format(j[1], pathtodirectoryRead)
+        if stack_type == '_coinc' or stack_type == '_cal':
+            command = 'python' + ' ' + '/home/david.perez/cia/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {} --typeStack {}'.format(j[1], pathtodirectoryRead, stack_type)
+
+        else:
+            command = 'python' + ' ' + '/home/david.perez/cia/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {}'.format(j[1], pathtodirectoryRead)
+
         list_commands.append(command)
     return list_commands
 def create_finalCommand(list_commands):
@@ -77,9 +96,12 @@ def main():
     parser.add_argument('--saveDirectory', dest='SavePlot', help='Specifiy the name of the   \
                                                                  directory where to save the files in.', default='None')
     parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
-                                                             e.g.: "0.01" or "0.1".')
+                                                             e.g.: "2" for 0.01 or "1" for 0.1.')
+    parser.add_argument('--typeStack', dest='typeStack', help='Specifiy if the stack is  \
+                                                                         "_cal" or "_coinc".',
+                        default='')
     args = parser.parse_args()
-    decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot
+    decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
 
     pathtodirectorySaveParallel = 'Parallel/'
     pathtodirectorySavePV = 'PhotonSpectrum/'
@@ -88,7 +110,7 @@ def main():
 
     checkFolder(pathtodirectoryRead + pathtodirectorySaveParallel)
 
-    checkFolder(pathtodirectoryRead + pathtodirectorySavePV)
+    checkFolder(pathtodirectoryRead + pathtodirectorySaveParallel + pathtodirectorySavePV)
 
     n_Procs_total = psutil.cpu_count()
     if n_Procs >= n_Procs_total:
@@ -102,7 +124,7 @@ def main():
     jobs = __chunkify_data(n_Procs, n_jobs_per_proc)
     __save_Jobs(jobs, pathtodirectoryRead + pathtodirectorySaveParallel)
 
-    list_commands = write_commands(jobs, pathtodirectoryRead, decimals)
+    list_commands = write_commands(jobs, pathtodirectoryRead, decimals, stack_type)
 
     fCommand = create_finalCommand(list_commands)
 
@@ -110,17 +132,19 @@ def main():
 
     print('Final Command:', fCommand)
 
+    # print('waiting...')
+    # sleep(4000)
+
     os.system(fCommand) #check clusters
 
-    # MAKE COMMAND!!!!
     Group_jobs = C_Group(jobs, pathtodirectoryRead + pathtodirectorySaveParallel, pathtodirectorySavePV) #group pickles
     Group_jobs.runCGroup()
 
     FitEnSpectrumCommand = 'python' + ' ' + '/home/david.perez/cia/EneRes/FitEnergySpectrumRunAll.py' + ' --fileDirectory {}'.format(pathtodirectoryRead + pathtodirectorySaveParallel + pathtodirectorySavePV) + ' & wait'
 
-    os.system(FitEnSpectrumCommand) #fit crystals
+    os.system(FitEnSpectrumCommand) #fit crystals on HVDs to find calib_factors
 
-    list_commands_calib = write_commands_calib(jobs, pathtodirectoryRead)
+    list_commands_calib = write_commands_calib(jobs, pathtodirectoryRead, stack_type)
 
     fCommand_Calib = create_finalCommand(list_commands_calib)
 
@@ -131,8 +155,13 @@ def main():
     CalibLoadPlotCommand = 'python' + ' ' + '/home/david.perez/cia/EneRes/CalibPVLoadandPlot_main.py' + ' --fileDirectory {}'.format(pathtodirectoryRead) + ' & wait'
     os.system(CalibLoadPlotCommand)  # plot calib detector
 
-    command_Plot = 'python /home/david.perez/cia/ScriptoRun/RunPlot.py --fileDirectory {} --saveDirectory {} --auto On'.format(
-        pathtodirectoryRead + pathtodirectorySaveParallel, savePlot)
+    if stack_type == '_coinc' or stack_type == '_cal':
+        command_Plot = 'python /home/david.perez/cia/ScriptoRun/RunPlot.py --fileDirectory {} --saveDirectory {} --typeStack {}'.format(
+            pathtodirectoryRead, savePlot, stack_type)
+    else:
+        command_Plot = 'python /home/david.perez/cia/ScriptoRun/RunPlot.py --fileDirectory {} --saveDirectory {}'.format(
+            pathtodirectoryRead, savePlot, stack_type)
+
     # from ini file!! nEvents and nCPU
     os.system(command_Plot)
     print(time_init)
