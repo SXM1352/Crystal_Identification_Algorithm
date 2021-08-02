@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'david.perez.gonzalez'
 """
-Created on Fri Jan 15 19:27:39 2021
-
-@author: David
+NewHypmed_main.py provides a frame to run 'NewHypmed.py'.
 """
+
 #module imports
 import argparse
 import logging

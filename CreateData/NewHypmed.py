@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
-__author__ = "david.perez.gonzalez" 
-
+__author__ = 'david.perez.gonzalez'
+"""
+NewHypmed.py provides a class to filter the data in the hdf5 files
+and split it into the referent sections of each ROI and obtain the histogram
+with the coordinates of all clusters.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 #from configparser import ConfigParser
