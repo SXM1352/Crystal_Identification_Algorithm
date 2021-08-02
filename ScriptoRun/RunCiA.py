@@ -1,7 +1,10 @@
-# import sys
-# sys.path.insert(1, 'C:\\Users\\David\\Google Drive\\RWTHDrive\\MasterThesis\\Programs\\ClassificationCluster')
-#
-# from CheckClusters_main import *
+# -*- coding: utf-8 -*-
+__author__ = 'david.perez.gonzalez'
+"""
+RunCiA.py provides a frame to run the different routines to create the 
+Crystal Position Maps out of the hdf5 data files.
+"""
+
 import os
 import argparse
 import psutil
@@ -78,7 +81,7 @@ def main():
 
     command_PeakF = 'python /home/david.perez/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
     os.system(command_PeakF)
-
+    #
     command_SanCheck = 'python /home/david.perez/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
     os.system(command_SanCheck)
 
@@ -114,8 +117,8 @@ def main():
 
     fCommand = fCommand  + ' & wait'
 
-    print('waiting...')
-    sleep(4000)
+    # print('waiting...')
+    # sleep(4000)
 
     os.system(fCommand)  # LUT
 
@@ -124,18 +127,9 @@ def main():
     Group_jobs.runLUTGroup()
     precision_grid = len(decimals.split(".")[1])
     command_CheckC = 'python /home/david.perez/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
-    #from ini file!! nEvents and nCPU
+    # from ini file!! nEvents and nCPU
     os.system(command_CheckC)
 
 if __name__ == '__main__':
     main()
 
-#os.system('python' + ' ' + '/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/LUT.py')
-
-# os.system('python' + ' ' + '/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/CheckClusters_main.py')
-#
-# os.system('python' + ' ' + '/home/david.perez/TestRoot/FitEnergySpectrumRunAll.py')
-#
-# os.system('python' + ' ' + '/home/david.perez/TestRoot/CalibPVSpectrum.py')
-#
-# os.system('python' + ' ' + '/home/david.perez/TestRoot/CalibPVLoadandPlot.py')

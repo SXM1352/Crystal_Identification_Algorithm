@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+__author__ = 'david.perez.gonzalez'
+"""
+Run_CreateDataCRT.py provides a frame to run the different routines to create the 
+hdf5 files out of the raw data in the .DebugCoincidentSingles files.
+"""
+
 import os
 import argparse
 import psutil

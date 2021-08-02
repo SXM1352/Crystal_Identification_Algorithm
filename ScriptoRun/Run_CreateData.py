@@ -1,8 +1,16 @@
+# -*- coding: utf-8 -*-
+__author__ = 'david.perez.gonzalez'
+"""
+Run_CreateData.py provides a frame to run the different routines to create the 
+hdf5 files out of the raw data in the .DebugSingles files.
+"""
+
 import os
 import argparse
 import psutil
 import cPickle as pickle
 import datetime
+from time import sleep
 
 '''
 Directory of files should be in a ini file for future uses of this project, right now it is not needed since it is run always in the same machine
@@ -25,6 +33,9 @@ def main():
     command_RemLin = 'python /home/david.perez/cia/CreateData/RemoveLastLine.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
     os.system(command_RemLin)
 
+    # print('waiting...')
+    # sleep(18000)
+
     command_ReadDB_PV = 'python /home/david.perez/cia/CreateData/ReadDebugSinglesPV.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
     os.system(command_ReadDB_PV)
 
@@ -35,8 +46,8 @@ def main():
     command_NH = 'python /home/david.perez/cia/CreateData/NewHypmed_main.py --fileDirectory {}'.format(pathtodirectory)
     os.system(command_NH)
 
-    # command_CiA = 'python /home/david.perez/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 6 --precision {} --nEvents {}'.format(pathtodirectory, decimals, n_Events)
-    # os.system(command_CiA)
+    command_CiA = 'python /home/david.perez/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 6 --precision {} --nEvents {}'.format(pathtodirectory, decimals, n_Events)
+    os.system(command_CiA)
 
 if __name__ == '__main__':
     main()
