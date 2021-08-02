@@ -23,7 +23,7 @@ import gc  # garbage collector
 
 class C_Cluster(object):
 
-    def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals):
+    def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type):
         self.line = "=" * 40
 
         self.lock = Lock()
@@ -37,6 +37,8 @@ class C_Cluster(object):
 
         self.HVD_list = ["000", "100", "010", "111"]
         self.decimals = int(decimals) # 2 = 0.01
+
+        self.stack_type = stack_type
 
         self.pathtodirectoryRead = pathtodirectoryRead
         # self.pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
@@ -128,12 +130,12 @@ class C_Cluster(object):
             # print("dicLUD not available", HVD)
             ludHVD = {}
 
-        with h5py.File("{}cog{}ref.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD),
+        with h5py.File("{}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type),
                        "r") as f:
             dset = f["data"]
             cogHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
 
-        with h5py.File("{}pv{}ref.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD), "r") as f:
+        with h5py.File("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f:
             dset = f["data"]
             pvHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
 
@@ -513,16 +515,16 @@ class C_Cluster(object):
                 else:
                     data_cluster_calib_pv['selected_pv'] = dic_Id[dic_cluster[i]["COG"]]['pv']
                     data_cluster_calib_pv['COG'] = dic_cluster[i]["COG"]  # HVD_PV
-                if cgt[0] == 1:  # if len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
+                if 'id' in dic_Id["000"].keys(): # cgt[0] == 1 and # if len(dic_Id["000"].keys()) > 3: #only the valid ones from hitAnalysis
                     data_cluster_pv_000[dic_cluster[i]["id"]]['pv'].append(dic_Id["000"]['pv'])
 
-                if cgt[1] == 1:  # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
+                if 'id' in dic_Id["100"].keys(): # cgt[1] == 1 and # if len(dic_Id["100"].keys()) > 3:  # only the valid ones
                     data_cluster_pv_100[dic_cluster[i]["id"]]['pv'].append(dic_Id["100"]['pv'])
 
-                if cgt[2] == 1:  # if len(dic_Id["010"].keys()) > 3:  # only the valid ones
+                if 'id' in dic_Id["010"].keys(): # cgt[2] == 1 and  # if len(dic_Id["010"].keys()) > 3:  # only the valid ones
                     data_cluster_pv_010[dic_cluster[i]["id"]]['pv'].append(dic_Id["010"]['pv'])
 
-                if cgt[3] == 1:  # if len(dic_Id["111"].keys()) > 3:  # only the valid ones
+                if 'id' in dic_Id["111"].keys(): # cgt[3] == 1 and  is already in our condition # if len(dic_Id["111"].keys()) > 3:  # only the valid ones
                     data_cluster_pv_111[dic_cluster[i]["id"]]['pv'].append(dic_Id["111"]['pv'])
                     # data_cluster_calib_pv['id'] = dic_cluster[i]["id"]
                     # data_cluster_calib_pv['selected_pv'] = dic_Id["111"]['pv']
@@ -704,7 +706,7 @@ class C_Cluster(object):
             self.__log("Events are not split into ref and test.")
             cogtest = -1
 
-        with h5py.File("{}cogRef.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5), "r") as f:
+        with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
             dset = f["data"]
             cogref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
         # with open('/home/david.perez/Desktop/cogRef.pickle', 'rb') as handle:

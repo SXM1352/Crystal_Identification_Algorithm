@@ -153,13 +153,14 @@ def __save_data(folder, dic_HVD, name):
         pickle.dump(dic_HVD, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugCoincidentSingles')
+# parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugCoincidentSingles')
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
 parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
 
 args = parser.parse_args()
-file_type, pathtodirectoryRead = args.fType, args.fileDirect
+# file_type, pathtodirectoryRead = args.fType, args.fileDirect
+pathtodirectoryRead = args.fileDirect
 
 # pathtodirectoryRead = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/SplitDebugSingles/"
 
@@ -169,7 +170,7 @@ file_type, pathtodirectoryRead = args.fType, args.fileDirect
 # pathtodirectorySave_pickle = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_PickleData/"
 
 # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2019-09-20_-_15-25-35_-_Hypmed_Coinc/2019-09-20_-_15-25-43_-_first_tests/2019-09-20_-_15-50-00_-_3layersBaSO_08mm/ramdisks_2019-09-20_-_16-34-29/'
-pathtodirectorySave_pickle = pathtodirectoryRead + "PickleData/"
+# pathtodirectorySave_pickle = pathtodirectoryRead + "PickleData/"
 
 
 list_save_crt = {"stack_id": [2,3], "photons": [12,156], "timeStamps": [156,192],
@@ -195,17 +196,17 @@ list_save_dic_crt = {"stack_id": stack_id, "photons": photons, "timeStamps": tim
                      "dicpos_000": dicpos_000, "dicpos_100": dicpos_100,
                      "dicpos_010": dicpos_010, "dicpos_111": dicpos_111}
 
-folder_dir = pathtodirectorySave_pickle
-CHECK_FOLDER = os.path.isdir(folder_dir)
+# folder_dir = pathtodirectorySave_pickle
+# CHECK_FOLDER = os.path.isdir(folder_dir)
 
 file_type = '.DebugCoincidentSingles'
 # Obtain this info from file
 stack_id = 'measurement' #108
 
 # If folder doesn't exist, then create it.
-if not CHECK_FOLDER:
-    os.makedirs(folder_dir)
-    print("created folder : ", folder_dir)
+# if not CHECK_FOLDER:
+#     os.makedirs(folder_dir)
+#     print("created folder : ", folder_dir)
 for i_s in list_save_crt.keys():
     index = list_save_crt[i_s]
     print(index)

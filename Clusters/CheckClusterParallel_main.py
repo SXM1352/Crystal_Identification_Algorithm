@@ -109,9 +109,12 @@ def main():
                                                  directory where to read the files from')
     parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
                                                          e.g.: "0.01" or "0.1".')
+    parser.add_argument('--typeStack', dest='typeStack', help='Specifiy if the stack is  \
+                                                                     "_cal" or "_coinc".',
+                        default='')
     args = parser.parse_args()
 
-    decimals, init_event, final_event, pathtodirectoryRead = args.decimals, int(args.initEvent), int(args.finalEvent), args.fileDirect
+    decimals, init_event, final_event, pathtodirectoryRead, stack_type = args.decimals, int(args.initEvent), int(args.finalEvent), args.fileDirect, args.typeStack
     logging.info('----------------------------------')
     logging.info('NEW RUN OF THE PROGRAM \n')
     # we can use an argparser for the values we use, this is temporary
@@ -163,7 +166,7 @@ def main():
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
 
     Check_Cluster = C_Cluster(init_event, final_event,
-        start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals)
+        start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type)
     Check_Cluster.runCluster()
 
     logging.info('Thanks for using our software. Hope to see you soon. ## (in Check_main)\n')

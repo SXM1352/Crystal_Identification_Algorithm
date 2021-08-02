@@ -13,11 +13,13 @@ import itertools
 import re
 
 class CalibPV():
-    def __init__(self, final_event, pathtodirectoryRead):
+    def __init__(self, final_event, pathtodirectoryRead, stack_type):
         # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
         #self.pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/Parallel/'
         # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
         self.pathtodirectoryRead = pathtodirectoryRead
+
+        self.stack_type = stack_type
 
         # pathtodirectoryRead = "C:\\Users\\David\\Downloads\\"
 
@@ -137,6 +139,11 @@ class CalibPV():
                     E_r_2 = E_r
         return dic_HVD
 
+    def __save_dic_listmode(self, pathtodirectorySave, dic_listmode):
+        with open('{}dic_listmode_{}.pickle'.format(pathtodirectorySave, self.final_event), 'wb') as handle:
+            pickle.dump(dic_listmode, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+
     def __save_calib_FinalPV(self, pathtodirectorySave, hist_array, part):
         with open('{}array_calibFinalPV_{}_{}.pickle'.format(pathtodirectorySave, part, self.final_event), 'wb') as handle:
             pickle.dump(hist_array, handle,
@@ -154,7 +161,7 @@ class CalibPV():
 
 
     def hist_arr(self, event, hist_array, HVD, dic_cFa, dic_calibPVa, dic_cFa_used, dic_crystala, hist_array_layer1,
-                 hist_array_layer2, hist_array_layer3, pv000ref_e, pv100ref_e, pv010ref_e, pv111ref_e, list_orig_clas, valid_HVD):
+                 hist_array_layer2, hist_array_layer3, pv000ref_e, pv100ref_e, pv010ref_e, pv111ref_e, list_orig_clas, valid_HVD, hist_array_crystals, dic_listmode):
         #dic_calFactor_HVD = dic_cFa[HVD]
         calib_value = None
         #E_r = 100.
@@ -165,6 +172,13 @@ class CalibPV():
                 HVD_final = HVD
                 E_r = dic_cFa[HVD][dic_calibPVa[event]['id']]['E_r']
                 list_orig_clas[0] += 1
+
+            elif dic_crystala[dic_calibPVa[event]['id']]['layer'] == 1 and dic_calibPVa[event]['id'] in dic_cFa['000'].keys():
+                calib_value = (pv000ref_e) * (dic_cFa['000'][dic_calibPVa[event]['id']]['cal_factor'])
+
+                HVD_final = '000'
+                E_r = dic_cFa['000'][dic_calibPVa[event]['id']]['E_r']
+                list_orig_clas[4] += 1
 
             elif valid_HVD[3] and dic_calibPVa[event]['id'] in dic_cFa['111'].keys():
                 calib_value = (pv111ref_e) * (dic_cFa['111'][dic_calibPVa[event]['id']]['cal_factor'])
@@ -215,17 +229,20 @@ class CalibPV():
         if calib_value:
             hist_array.append(calib_value)
             dic_cFa_used[HVD_final][dic_calibPVa[event]['id']] = 1
-
+            hist_array_crystals[dic_calibPVa[event]['id']].append(calib_value)
             if dic_crystala[dic_calibPVa[event]['id']]['layer'] == 1:
                 hist_array_layer1.append(calib_value)
             elif dic_crystala[dic_calibPVa[event]['id']]['layer'] == 2:
                 hist_array_layer2.append(calib_value)
             elif dic_crystala[dic_calibPVa[event]['id']]['layer'] == 3:
                 hist_array_layer3.append(calib_value)
-        return hist_array, dic_cFa_used, hist_array_layer1, hist_array_layer2, hist_array_layer3, list_orig_clas
+
+            dic_listmode[event] = {'crystal_id': dic_calibPVa[event]['id'], 'keV': calib_value}
+
+        return hist_array, dic_cFa_used, hist_array_layer1, hist_array_layer2, hist_array_layer3, list_orig_clas, hist_array_crystals, dic_listmode
 
     def load_pv(self, pathtodirectoryRead, pathtodirectoryReadHDF5, HVD):
-        with h5py.File("{}pv{}ref.hdf5".format(pathtodirectoryReadHDF5, HVD), "r") as f: #pathtodirectoryRead +
+        with h5py.File("{}pv{}ref{}.hdf5".format(pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f: #pathtodirectoryRead +
             dset = f["data"]
             pvHVDref = dset[:]  # 000, 100, 010, 111
         return pvHVDref
@@ -270,11 +287,15 @@ class CalibPV():
         dic_used_crystals_010 = {}
         dic_used_crystals_111 = {}
 
+        hist_array_crystals = [[] for i in range(3425)]
+
         hist_array = []
         hist_array_layer1 = []
         hist_array_layer2 = []
         hist_array_layer3 = []
         dic_crystal = self.CrystalDict()
+
+        dic_listmode = {}
 
         dic_checked_000, dic_checked_100, dic_checked_010, dic_checked_111 = self.load_dic_checked()
 
@@ -294,7 +315,7 @@ class CalibPV():
                 valid_010 = dic_checked_010[dic_calibPV[event]['id']]['valid']
             valid_111 = dic_checked_111[dic_calibPV[event]['id']]['valid']
             valid_HVD = [valid_000, valid_100, valid_010, valid_111]
-            hist_array, dic_cF_used, hist_array_layer1, hist_array_layer2, hist_array_layer3, list_orig_clas = self.hist_arr(event, hist_array, dic_calibPV[event]['COG'], dic_cF, dic_calibPV, dic_cF_used, dic_crystal, hist_array_layer1, hist_array_layer2, hist_array_layer3, pv000ref_e, pv100ref_e, pv010ref_e, pv111ref_e, list_orig_clas, valid_HVD)
+            hist_array, dic_cF_used, hist_array_layer1, hist_array_layer2, hist_array_layer3, list_orig_clas, hist_array_crystals, dic_listmode = self.hist_arr(event, hist_array, dic_calibPV[event]['COG'], dic_cF, dic_calibPV, dic_cF_used, dic_crystal, hist_array_layer1, hist_array_layer2, hist_array_layer3, pv000ref_e, pv100ref_e, pv010ref_e, pv111ref_e, list_orig_clas, valid_HVD, hist_array_crystals, dic_listmode)
 
         with open('{}ListUsedHVD{}.txt'.format(self.pathtodirectorySave, self.final_event), 'a') as fout:
             fout.write(str(list_orig_clas))  # we write the dataframe with the index
@@ -327,6 +348,11 @@ class CalibPV():
         self.__save_used_crystalPV(self.pathtodirectorySave, list_used_crystals_010, '010')
         self.__save_used_crystalPV(self.pathtodirectorySave, list_used_crystals_111, '111')
 
+        self.__save_calib_FinalPV(self.pathtodirectorySave, hist_array_crystals, 'Crystals')
 
         print("Array is saved.")
+
+        self.__save_dic_listmode(self.pathtodirectorySave, dic_listmode)
+
+        print('listmode is saved.')
 
