@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$Monocal_Test$/.idea/MonoCal.iml" filepath="$Monocal_Test$/.idea/MonoCal.iml" />
-      <module fileurl="file://$USER_HOME$/PycharmProjects/MonoKas/.idea/MonoKas.iml" filepath="$USER_HOME$/PycharmProjects/MonoKas/.idea/MonoKas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MonoKas2/.idea/MonoKas2.iml" filepath="$PROJECT_DIR$/../MonoKas2/.idea/MonoKas2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/cia.iml" filepath="$PROJECT_DIR$/.idea/cia.iml" />
       <module fileurl="file://$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" filepath="$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../monokas2/.idea/monokas2.iml" filepath="$PROJECT_DIR$/../monokas2/.idea/monokas2.iml" />
     </modules>
   </component>
 </project>

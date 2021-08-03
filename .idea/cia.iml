@@ -6,7 +6,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="MonoCal" />
     <orderEntry type="module" module-name="monocal3" />
-    <orderEntry type="module" module-name="MonoKas" />
+    <orderEntry type="module" module-name="MonoKas2" />
+    <orderEntry type="module" module-name="monokas2" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="EPYTEXT" />
