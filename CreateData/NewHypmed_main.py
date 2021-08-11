@@ -24,13 +24,15 @@ def main():
 
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
+    parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                                 directory where to save the files')
     args = parser.parse_args()
 
-    pathtodirectoryRead = args.fileDirect
+    pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
     logging.info('----------------------------------')
     logging.info('NEW RUN OF THE PROGRAM \n')
 
-    Hyp = Hypmed(pathtodirectoryRead)
+    Hyp = Hypmed(pathtodirectoryRead, pathtodirectorySave)
     Hyp.runHypmed()
 
     logging.info('Thanks for using our software. Hope to see you soon. ## (in NewHypmed_main)\n')

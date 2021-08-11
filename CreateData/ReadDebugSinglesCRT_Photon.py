@@ -159,10 +159,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
 
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                                 directory where to save the files')
+
 args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-# pathtodirectoryRead = args.fileDirect
-pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
+# pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
 
 list_save_crt = {"stack_id": [2,3], "photons": [12,156]}
 stack_id = {}
@@ -185,13 +188,9 @@ list_save_dic_crt = {"stack_id": stack_id, "photons": photons}
 # CHECK_FOLDER = os.path.isdir(folder_dir)
 
 file_type = '.DebugSingles'
-# Obtain this info from file
-stack_id = 'measurement' #108
+stack_id = '108' #108 #measurement
 
-# If folder doesn't exist, then create it.
-# if not CHECK_FOLDER:
-#     os.makedirs(folder_dir)
-#     print("created folder : ", folder_dir)
+
 for i_s in list_save_crt.keys():
     index = list_save_crt[i_s]
     print(index)
@@ -199,10 +198,7 @@ for i_s in list_save_crt.keys():
     outp, list_save_dic_crt[i_s] = __parallel_apply_line_by_line(
         pathtodirectoryRead + "{}{}".format(stack_id, file_type),
         1000, 25, 0, __index_inline_crt, [index[0], index[1]], fout=None)
-    # for name in list_save_dic.keys():
-    #name = i_s
-    #dic_HVD = list_save_dic_crt[name]
-    #__save_data(folder_dir, dic_HVD, name)
+
 
 photons_cal = []
 photons_coinc = []
@@ -222,9 +218,7 @@ photons_coinc = np.array(photons_coinc)
 
 print("Arrays ready.")
 
-# pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"
-# pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
-pathtodirectorySave_hdf = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/hdf5/"
+pathtodirectorySave_hdf = pathtodirectorySave + "hdf5Data/"
 
 folder_dir = pathtodirectorySave_hdf
 CHECK_FOLDER = os.path.isdir(folder_dir)

@@ -414,10 +414,12 @@ parser = argparse.ArgumentParser()
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
 parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
-
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                                 directory where to save the files')
 args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-pathtodirectoryRead = args.fileDirect
+# pathtodirectoryRead = args.fileDirect
+pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
 
 list_save_crt = {"stack_id": [2,3],
                  "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
@@ -441,9 +443,9 @@ list_save_dic_crt = {"stack_id": stack_id,
 # folder_dir = pathtodirectorySave_pickle
 # CHECK_FOLDER = os.path.isdir(folder_dir)
 
-file_type = '.DebugCoincidentSingles'
+file_type = '.DebugSingles'
 # Obtain this info from file
-stack_id = 'measurement' #108
+stack_id = '108' #108
 
 # If folder doesn't exist, then create it.
 # if not CHECK_FOLDER:
@@ -486,7 +488,9 @@ cogRef_coinc = np.array(cogRef_coinc)
 print("Arrays ready.")
 
 # pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"
-pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
+# pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
+pathtodirectorySave_hdf = pathtodirectorySave + "hdf5Data/"
+
 folder_dir = pathtodirectorySave_hdf
 CHECK_FOLDER = os.path.isdir(folder_dir)
 # If folder doesn't exist, then create it.
@@ -510,4 +514,4 @@ with h5py.File('{}cogRef_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = cogRef_coinc[i: i + dset.chunks[0]]
 
->>>>>>> 2a35e28219b58118a8a76b6973ecb35a0edefc58
+# >>>>>>> 2a35e28219b58118a8a76b6973ecb35a0edefc58
