@@ -21,7 +21,7 @@ import psutil  # process and systems utils
 
 class C_Group(object):
     def __init__(self, splits, pathtodirectoryRead, pathtodirectorySavePV):
-
+        print("Diese Splits", splits)
         self.splits = splits
 
         self.HVD_list = ["000", "100", "010", "111"]
@@ -92,21 +92,25 @@ class C_Group(object):
         return data_cluster_pv_list[0], data_cluster_pv_list[1], data_cluster_pv_list[2], data_cluster_pv_list[3]#data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111
 
     def __save_Events_Counts(self, dic_Events_Counts):
+        print('{}dic-Events-Counts.pickle'.format(self.pathtodirectorySave))
         with open('{}dic-Events-Counts.pickle'.format(self.pathtodirectorySave), 'wb') as handle:
             pickle.dump(dic_Events_Counts, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
     def __save_Assign_Events(self, dic_AssignE):
+        print('{}dic_AssignE.pickle'.format(self.pathtodirectorySave))
         with open('{}dic_AssignE.pickle'.format(self.pathtodirectorySave), 'wb') as handle:
             pickle.dump(dic_AssignE, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
     def __save_calib_PV(self, data_cluster_calib_pv_all):
+        print('{}dic_calibPV.pickle'.format(self.pathtodirectorySave))
         with open('{}dic_calibPV.pickle'.format(self.pathtodirectorySave), 'wb') as handle:
             pickle.dump(data_cluster_calib_pv_all, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
     def __save_Crystal_Cluster(self, dic_crystal_cluster):
+        print('{}dic_crystal_cluster.pickle'.format(self.pathtodirectorySave))
         with open('{}dic_crystal_cluster.pickle'.format(self.pathtodirectorySave), 'wb') as handle:
             pickle.dump(dic_crystal_cluster, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
@@ -117,6 +121,7 @@ class C_Group(object):
 
         for cg in range(4):
             HVD = self.HVD_list[cg]
+            print('{}datapv-{}-valid.pickle'.format(self.pathtodirectorySave + self.pathtodirectorySavePV, HVD))
             with open('{}datapv-{}-valid.pickle'.format(self.pathtodirectorySave + self.pathtodirectorySavePV, HVD),
                       'wb') as handle:
                 pickle.dump(data_cluster_pv_list[cg], handle,
@@ -132,8 +137,11 @@ class C_Group(object):
         for i in range(3425):
             dic_crystal_cluster[i] = []
         print('Grouping...')
+        print(self.splits)
+        self.splits = ["2553191", "5106382"] #Meins
         for sp in self.splits:
-            final_event = sp[1]
+            # final_event = sp[1] #MEINS
+            final_event = sp #MEINS
             # try:
             data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111 = self.__group_PV_in_HVD(final_event, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
             # except:
@@ -155,24 +163,24 @@ class C_Group(object):
             #     print("Problem grouping CalibPV.")
         print('Saving...')
         # try:
-        self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
+        # self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
         #     print("PV is saved.")
         # except:
         #     print("Problem saving PV.")
 
         # try:
-        self.__save_Events_Counts(dic_Events_Counts)
+        # self.__save_Events_Counts(dic_Events_Counts)
         #     print("dic_Events_Counts is saved.")
         # except:
         #     print("Problem saving dic_Events_Counts.")
 
         # try:
-        self.__save_Assign_Events(dic_AssignE)
+        # self.__save_Assign_Events(dic_AssignE)
         #     print("AssignE is saved.")
         # except:
         #     print("Problem saving AssignE.")
 
-        self.__save_Crystal_Cluster(dic_crystal_cluster)
+        # self.__save_Crystal_Cluster(dic_crystal_cluster)
 
         # try:
         # self.__save_calib_PV(data_cluster_calib_pv_all)

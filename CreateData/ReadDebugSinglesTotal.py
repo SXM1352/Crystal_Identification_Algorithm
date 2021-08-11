@@ -150,14 +150,14 @@ def __save_data(folder, dic_HVD, name):
         pickle.dump(dic_HVD, handle, protocol=pickle.HIGHEST_PROTOCOL)
     print('saved.')
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
-parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugSingles')
-parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-                                                 directory where to read the files from')
-
-args = parser.parse_args()
-stack_id, file_type, pathtodirectoryRead = args.sID, args.fType, args.fileDirect
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
+# parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugSingles')
+# parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+#                                                  directory where to read the files from')
+#
+# args = parser.parse_args()
+# stack_id, file_type, pathtodirectoryRead = args.sID, args.fType, args.fileDirect
 
 # Obtain this info from file
 #stack_id = 108
@@ -167,10 +167,21 @@ stack_id, file_type, pathtodirectoryRead = args.sID, args.fType, args.fileDirect
 #pathtodirectoryRead = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/"
 
 # pathtodirectorySave_pickle = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_PickleData/"
-pathtodirectorySave_pickle = pathtodirectoryRead + "PickleData/"
-list_save = {"dicval_000": [192], "dicval_100": [193], "dicval_010": [194], "dicval_111": [199],
+# pathtodirectorySave_pickle = pathtodirectoryRead + "PickleData/"
+
+###################EINSTELLEN###################
+stack_id = "108"
+file_type = ".DebugSingles"
+pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+pathtodirectorySave_hdf = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/hdf5_V2/"
+################################################
+
+list_save = {"photons": [12,156], "dicval_000": [192], "dicval_100": [193], "dicval_010": [194], "dicval_111": [199],
              "dicpos_000": [200, 202], "dicpos_100": [202, 204], "dicpos_010": [204, 206],
              "dicpos_111": [214, 216], "dicpv_000": [216], "dicpv_100": [217], "dicpv_010": [218], "dicpv_111": [223]}
+
+photons = {}
+
 dicval_000 = {}
 dicval_100 = {}
 dicval_010 = {}
@@ -187,16 +198,16 @@ dicpv_010 = {}
 dicpv_111 = {}
 
 # list_save_dic_list = [dicval_000, dicval_100, dicval_010, dicval_111, dicpos_000, dicpos_100, dicpos_010, dicpos_111, dicpv_000, dicpv_100, dicpv_010, dicpv_111]
-list_save_dic = {"dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111,
+list_save_dic = {"photons": photons, "dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111,
                  "dicpos_000": dicpos_000, "dicpos_100": dicpos_100, "dicpos_010": dicpos_010, "dicpos_111": dicpos_111,
                  "dicpv_000": dicpv_000, "dicpv_100": dicpv_100, "dicpv_010": dicpv_010, "dicpv_111": dicpv_111}
 
-folder_dir = pathtodirectorySave_pickle
-CHECK_FOLDER = os.path.isdir(folder_dir)
-# If folder doesn't exist, then create it.
-if not CHECK_FOLDER:
-    os.makedirs(folder_dir)
-    print("created folder : ", folder_dir)
+# folder_dir = pathtodirectorySave_pickle
+# CHECK_FOLDER = os.path.isdir(folder_dir)
+# # If folder doesn't exist, then create it.
+# if not CHECK_FOLDER:
+#     os.makedirs(folder_dir)
+#     print("created folder : ", folder_dir)
 for i_s in list_save.keys():
     index = list_save[i_s]
     print(index)
@@ -213,6 +224,8 @@ for i_s in list_save.keys():
     # name = i_s
     # dic_HVD = list_save_dic[name]
     # __save_data(folder_dir, dic_HVD, name)
+
+photons_coinc = []
 
 cogRef = []
 
@@ -247,6 +260,8 @@ for cluster in list_save_dic["dicpv_000"].keys():
     cog010Ref.append(list_save_dic["dicpos_010"][cluster])
     cog111Ref.append(list_save_dic["dicpos_111"][cluster])
 
+    photons_coinc.append(list_save_dic["photons"][cluster])
+
 cogRef = np.array(cogRef)
 
 cog000Ref = np.array(cog000Ref)
@@ -258,10 +273,12 @@ pv000Ref = np.array(pv000Ref)
 pv100Ref = np.array(pv100Ref)
 pv010Ref = np.array(pv010Ref)
 pv111Ref = np.array(pv111Ref)
+
+photons_coinc = np.array(photons_coinc)
 print("Arrays ready")
 
 # pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"
-pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
+# pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
 folder_dir = pathtodirectorySave_hdf
 CHECK_FOLDER = os.path.isdir(folder_dir)
 # If folder doesn't exist, then create it.
@@ -325,3 +342,9 @@ with h5py.File('{}pv111ref.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = pv111Ref[i: i + dset.chunks[0]]
 
+n_photon = int(len(photons_coinc[0]))
+with h5py.File('{}photons_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+    dset = f.create_dataset("data", (n_events, n_photon), chunks=True)
+
+    for i in range(0, n_events, dset.chunks[0]):
+        dset[i: i + dset.chunks[0]] = photons_coinc[i: i + dset.chunks[0]]

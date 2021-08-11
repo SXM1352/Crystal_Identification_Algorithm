@@ -21,8 +21,8 @@ import pandas as pd
 # from multiprocessing import Manager,Pool,Lock
 import psutil  # process and systems utils
 # import multiprocessing as mp
-from multiprocess import Lock
-import pathos.multiprocessing as mp
+# from multiprocess import Lock
+# import pathos.multiprocessing as mp
 import gc  # garbage collector
 
 class C_Cluster(object):
@@ -30,7 +30,7 @@ class C_Cluster(object):
     def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type):
         self.line = "=" * 40
 
-        self.lock = Lock()
+        # self.lock = Lock()
 
         self.start = start
         self.dic_Events = dic_Events
@@ -59,7 +59,7 @@ class C_Cluster(object):
         # self.pathtodirectoryReadHDF5 = '20210315_NEW_hdf5Data/'
 
         self.pathtodirectorySave = self.pathtodirectoryRead + 'Parallel/'
-
+        self.pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Parallel/"
         self.pathtodirectorySavePV = 'PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210304_NEW-2021-02-17_PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210303_NEW-2021-02-17_PhotonSpectrum/'
@@ -115,18 +115,18 @@ class C_Cluster(object):
 
     def __read_data_COG(self, HVD):
         try:
-            with open('/home/david.perez/Desktop/pv{}test.pickle'.format(HVD), 'rb') as handle:
+            with open('/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/hdf5Data/pv{}test.pickle'.format(HVD), 'rb') as handle:
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             pvHVDtest = -1
 
         try:
-            with open('/home/david.perez/Desktop/cog{}test.pickle'.format(HVD), 'rb') as handle:
+            with open('/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/hdf5Data/cog{}test.pickle'.format(HVD), 'rb') as handle:
                 cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             cogHVDtest = -1
-
         try:
+            print("DIESER PATH IST DIC", '{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
             with open('{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD),
                       'rb') as handle:
                 ludHVD = pickle.load(handle)  # 000, 100, 010, 111
@@ -246,6 +246,8 @@ class C_Cluster(object):
 
         qf = {}
         dic_Id = {}
+        # print("First :", self.lud000[0], "Second :", self.lud000[0])
+        # print("First :", self.lud000.keys())
         if self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)] != None and self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)]["CLOP"]["valid"] == True:
             pos000 = self.lud000[round(cog000_i[0], decimals), round(cog000_i[1], decimals)]
             id000 = pos000["CLOP"]["id"]
@@ -406,8 +408,9 @@ class C_Cluster(object):
         i = self.init_event #cluster identification (which event is it)
         
         decimals = self.decimals
-
+        
         for i_cgt, cgt in enumerate(cog):
+            print("i_cgt: ", i_cgt, "        cgt: ", cgt, "         i: ", i)
             data_cluster_calib_pv = {'id': None, 'selected_pv': None,
                                      'COG': None}  # if one needs more pv values, one can go to the respected hdf5 file
             stop = False
@@ -423,6 +426,7 @@ class C_Cluster(object):
             dic_cluster[i]["COG_2"] = -1.
             dic_cluster[i]['Cluster'] = i
             dic_cluster[i]['ROI'] = []
+
             dic_cluster[i]['Order_Coord'] = []
             dic_cluster[i]['ROI_2'] = []
             dic_cluster[i]['Order_Coord_2'] = []
@@ -431,7 +435,18 @@ class C_Cluster(object):
             cog100_i = cog100[i_cgt]
             cog010_i = cog010[i_cgt]
             cog111_i = cog111[i_cgt]
-
+            # print("BIG PROBLEM: ")
+            # print("cgt", cgt)
+            # print("i_cgt:", i_cgt)
+            # print("cog000_i:", cog000_i)
+            # print("cog100_i:", cog100_i)
+            # print("cog010_i:", cog010_i)
+            # print("cog111_i:", cog111_i)
+            # print("pv000:", pv000)
+            # print("pv100:", pv100)
+            # print("pv010:", pv010)
+            # print("pv111:", pv111)
+            # print("decimals:", decimals)
             qf, dictOfElems, dic_Id = self.__Checker(cgt, i_cgt, cog000_i, cog100_i, cog010_i, cog111_i, pv000, pv100, pv010, pv111, decimals)
 
             dic_labels_count, stop, dic_cluster, COG, dic_Events_Counts = self.__multiple_Labels(dic_Id, dictOfElems,
@@ -606,7 +621,7 @@ class C_Cluster(object):
                             columns=['COORDS', 'LUT_000', 'LUT_100', 'LUT_010', 'LUT_111', 'Flag'],
                             orient='index')  # create a dataframe with the data of the current file
         df_dic_notSelectedCluster.to_hdf(self.fout_dic_notSelectedCluster, key='dic_Cluster', mode='a', format='table', append=True,
-                              data_columns=['COORDS', 'LUT_000', 'LUT_100', 'LUT_010', 'LUT_111', 'Flag'],
+                              data_columns=['COORDS', 'LUT_000', 'LUT_100', 'LUT_010', 'LUT_111', 'Flag', ],
                               min_itemsize={'COORDS': 100, 'index': 10, 'Flag': 10, 'LUT_000':100, 'LUT_100':100, 'LUT_010':100, 'LUT_111':100})  # we write the dataframe with the index
 
             # fout.write(df.to_csv(header=False,
@@ -618,15 +633,16 @@ class C_Cluster(object):
         #                   columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2'],
         #                   index=['{}'.format(dic_cluster[i]['Cluster'])])  # create a dataframe with the data of the current file
         df_dic_Cluster = pd.DataFrame.from_dict(dic_cluster,
-                                    columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2'],
+                                    columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2', "Cluster"],
                                     orient='index')  # create a dataframe with the data of the current file
-
+        print("Der PATH!!!", self.fout_dic_Cluster)
         df_dic_Cluster.to_hdf(self.fout_dic_Cluster, key='dic_Cluster', mode='a', format='table', append=True,
-                  data_columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2'], min_itemsize={'Order_Coord':100, 'Order_Coord_2':100, 'ROI':10, 'ROI_2':10, 'index':10})  # we write the dataframe with the index
+                  data_columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2', "Cluster"], min_itemsize={'Order_Coord':100, 'Order_Coord_2':100, 'ROI':10, 'ROI_2':10, 'index':10})  # we write the dataframe with the index
         #
-        # with open('{}dic-{}cluster.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
-        #     pickle.dump(dic_cluster, handle,
-        #                 protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
+        print("Der ZWEITE PATH!!!", '{}dic-{}cluster2.pickle'.format(self.pathtodirectorySave, self.final_event))
+        with open('{}dic-{}cluster2.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
+            pickle.dump(dic_cluster, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
     def runCluster(self):
 
@@ -638,6 +654,15 @@ class C_Cluster(object):
         cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
         cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
 
+        print("HERE IT IS COG000test", cog000test)
+        print("HERE IT IS pv000test", pv000test)
+        # print("HERE IT IS self.lud000", self.lud000)
+        print("HERE IT IS pv000ref", pv000ref)
+        print("HERE IT IS COG000ref", cog000ref)
+
+
+
+
         try:
             with open('/home/david.perez/Desktop/cogTest4.pickle', 'rb') as handle:
                 cogtest = pickle.load(handle)  # 000, 100, 010, 111
@@ -645,6 +670,7 @@ class C_Cluster(object):
             self.__log("Events are not split into ref and test.")
             cogtest = -1
 
+        print("DER ABSOLUT NEUE PATH:", "{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type))
         with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
             dset = f["data"]
             cogref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
@@ -657,6 +683,7 @@ class C_Cluster(object):
         dic_Events_Counts = {}
 
         for j in self.dic_Events.keys():
+            print("KEYS!!! of self.dic_Events: ", j)
             dic_Events_Counts[j] = 0
 
         dic_cluster = {}
@@ -697,17 +724,17 @@ class C_Cluster(object):
         except:
             print("Problem saving CalibPV.")
 
-        # try:
-        # self.__save_Dic_Cluster(dic_cluster)
-        #     self.__log("DicCluster is saved.")
-        # except:
-        #     print("Problem saving DicCluster.")
+        try:
+            self.__save_Dic_Cluster(dic_cluster)
+            self.__log("DicCluster is saved.")
+        except:
+            print("Problem saving DicCluster.")
 
-        # try:
-        # self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
-        #     self.__log("DicnotSelectedCluster is saved.")
-        # except:
-        #     print("Problem saving DicnotSelectedCluster.")
+        try:
+            self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
+            self.__log("DicnotSelectedCluster is saved.")
+        except:
+            print("Problem saving DicnotSelectedCluster.")
 
         self.__log("SAVED")
 
