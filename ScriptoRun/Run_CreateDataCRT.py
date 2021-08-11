@@ -7,10 +7,10 @@ hdf5 files out of the raw data in the .DebugCoincidentSingles files.
 
 import os
 import argparse
-import psutil
-import cPickle as pickle
+# import psutil
+# import cPickle as pickle
 import datetime
-from time import sleep
+# from time import sleep
 
 '''
 Directory of files should be in a ini file for future uses of this project, right now it is not needed since it is run always in the same machine

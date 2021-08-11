@@ -10,7 +10,7 @@ import argparse
 import psutil
 import cPickle as pickle
 import datetime
-from time import sleep
+# from time import sleep
 
 from GroupPickles_LUT import LUT_Group
 

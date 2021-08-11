@@ -14,14 +14,14 @@ The plotting routine is deactivated because it was only used to tune
 the parameters.
 """
 
-#module imports
+# module imports
 import argparse
 import logging
 import logging.config
 import cPickle as pickle
 import numpy as np
 
-#class imports
+# class imports
 from Peak_Labels import PeakLabels
 from Peak_Finder import PeakFinder
 from Peak_Plot import PeakPlot
