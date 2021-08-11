@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6d171-56d9-4745-91b9-ed35903f7e96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ci/Peaks/Peak_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ci/Peaks/Peak_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CreateData/NewHypmed.py" beforeDir="false" afterPath="$PROJECT_DIR$/CreateData/NewHypmed.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CreateData/NewHypmed_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/CreateData/NewHypmed_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ScriptoRun/Run_CreateDataCRT.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/Run_CreateDataCRT.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../monocal3/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../monocal3/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" afterDir="false" />
