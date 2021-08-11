@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+# <<<<<<< HEAD
 # -*- coding: utf-8 -*-
 __author__ = "david.perez.gonzalez"
 
