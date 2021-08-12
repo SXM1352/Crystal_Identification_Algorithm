@@ -7,7 +7,7 @@ INSTALL PATHOS TO BE ABLE TO USE CLASSES'''
 
 import os
 import argparse
-import cPickle as pickle
+import pickle
 import psutil  # process and systems utils
 import time
 import os
