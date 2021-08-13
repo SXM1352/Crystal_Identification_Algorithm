@@ -107,7 +107,7 @@ def __parallel_apply_line_by_line(input_file_path, chunk_size_factor, num_procs,
     dic_HVD = {}
 
     outputs = []
-    for i in range(0, 8, num_parallel): # JANKO 8 > len(jobs)
+    for i in range(0, len(jobs), num_parallel): # JANKO 8 > len(jobs)
         print("Chunk start = ", i)
         t1 = time.time()
         chunk_outputs = pool.map(__parallel_apply_line_by_line_chunk, jobs[i: i + num_parallel])
