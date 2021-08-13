@@ -107,7 +107,7 @@ def __parallel_apply_line_by_line(input_file_path, chunk_size_factor, num_procs,
     dic_HVD = {}
 
     outputs = []
-    for i in range(0, len(jobs), num_parallel):
+    for i in range(0, 8, num_parallel): # JANKO 8 > len(jobs)
         print("Chunk start = ", i)
         t1 = time.time()
         chunk_outputs = pool.map(__parallel_apply_line_by_line_chunk, jobs[i: i + num_parallel])
@@ -254,6 +254,8 @@ if not CHECK_FOLDER:
 
 n_events = int(len(cog000Ref_cal))
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
+
+print("SHAAAAAAAAAPE: ", np.shape(cog000Ref_cal[0]))
 
 with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     dset = f.create_dataset("data", (n_events, 2), chunks=True)

@@ -5,7 +5,7 @@ __author__ = "david.perez.gonzalez"
 INSTALL PATHOS TO BE ABLE TO USE CLASSES'''
 import os
 import argparse
-import cPickle as pickle
+import pickle
 import psutil  # process and systems utils
 import time
 import os
@@ -359,10 +359,10 @@ def create_hdf5(start, stop, cores):
         for i in range(0, n_events, dset.chunks[0]):
             dset[i: i + dset.chunks[0]] = photons_coinc[i: i + dset.chunks[0]]
 
-for i in range(0,2):
+for j in range(0,2):
     cores = 20
     chunks = 2
-    start = i * cores * chunks
+    start = j * cores * chunks
     stop = start + chunks * cores
     print("Actually doing this chunk range: ", start, stop)
     create_hdf5(start, stop, cores)
