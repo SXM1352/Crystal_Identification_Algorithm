@@ -359,9 +359,9 @@ def create_hdf5(start, stop, cores):
         for i in range(0, n_events, dset.chunks[0]):
             dset[i: i + dset.chunks[0]] = photons_coinc[i: i + dset.chunks[0]]
 
-for i in range(20,40):
-    cores = 8
-    chunks = 3
+for i in range(0,2):
+    cores = 20
+    chunks = 2
     start = i * cores * chunks
     stop = start + chunks * cores
     print("Actually doing this chunk range: ", start, stop)
