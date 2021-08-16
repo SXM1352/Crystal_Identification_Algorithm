@@ -255,10 +255,10 @@ if not CHECK_FOLDER:
 n_events = int(len(cog000Ref_cal))
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
 
-print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
-print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
-print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
-print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
+# print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
+# print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
+# print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
+# print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
 
 with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     dset = f.create_dataset("data", (n_events, 2), chunks=True)
