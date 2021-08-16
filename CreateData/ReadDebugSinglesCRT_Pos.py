@@ -261,7 +261,7 @@ n_events = int(len(cog000Ref_cal))
 # print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
 
 with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, 2), chunks=True)
+    dset = f.create_dataset("data", (n_events, 1), chunks=True)
 
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = cog000Ref_cal[i: i + dset.chunks[0]]
@@ -285,7 +285,7 @@ with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f
 #         dset[i: i + dset.chunks[0]] = cog111Ref_cal[i: i + dset.chunks[0]]
 
 with h5py.File('{}cog000ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, 2), chunks=True)
+    dset = f.create_dataset("data", (n_events, 1), chunks=True)
 
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = cog000Ref_coinc[i: i + dset.chunks[0]]
