@@ -165,8 +165,8 @@ args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
 pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
 
-pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
-pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+# pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+# pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
 
 
 # list_save_crt = {"stack_id": [2,3], "dicpos_000": [200, 202], "dicpos_100": [202, 204],
