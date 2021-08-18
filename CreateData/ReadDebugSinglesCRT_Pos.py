@@ -165,6 +165,10 @@ args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
 pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
 
+pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+
+
 # list_save_crt = {"stack_id": [2,3], "dicpos_000": [200, 202], "dicpos_100": [202, 204],
 #                  "dicpos_010": [204, 206], "dicpos_111": [214, 216]}
 list_save_crt = {"stack_id": [2,3], "dicpos_000": [200, 202]}
@@ -212,15 +216,14 @@ cog000Ref_coinc = []
 # cog010Ref_coinc = []
 # cog111Ref_coinc = []
 
-cog000JANKO = []
-
 stack_id_cal = list_save_dic_crt['stack_id'][0]
 stack_id_coinc = list_save_dic_crt['stack_id'][1]
 
 for cluster in list_save_dic_crt['stack_id'].keys():
-    print("CLUSTER::", cluster)
+    # print("CLUSTER::", cluster)
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
-        cog000Ref_cal.append(list_save_dic_crt["dicpos_000"][cluster])
+        cog000Ref_cal.append(np.array(list_save_dic_crt["dicpos_000"][cluster]))
+        print(np.array(list_save_dic_crt["dicpos_000"][cluster]))
         # cog100Ref_cal.append(list_save_dic_crt["dicpos_100"][cluster])
         # cog010Ref_cal.append(list_save_dic_crt["dicpos_010"][cluster])
         # cog111Ref_cal.append(list_save_dic_crt["dicpos_111"][cluster])
@@ -232,11 +235,6 @@ for cluster in list_save_dic_crt['stack_id'].keys():
         # cog111Ref_coinc.append(list_save_dic_crt["dicpos_111"][cluster])
 
 
-###########TEST#################
-cog000JANKO.append(list_save_dic_crt["dicpos_000"])
-cog000JANKO = np.array(cog000JANKO)
-print("JANKO SHAPE:", np.shape(cog000JANKO))
-################################
 #
 print("Arrays ready for time")
 cog000Ref_cal = np.array(cog000Ref_cal)
@@ -267,7 +265,7 @@ print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
 print("SHAAAAAAAAAPE_cal[0]: ", np.shape(cog000Ref_cal[0]))
 
 
-n_events = int(len(cog000Ref_cal))
+n_events = int(len(cog000Ref_cal))-2
 n_values = int(len(cog000Ref_cal[0]))
 print("N_VALUES!!!!", n_values)
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
@@ -276,13 +274,7 @@ print("SHAAAAAAAAAPE_cal: ", np.shape(cog000Ref_cal))
 print("SHAAAAAAAAAPE_cal[0]: ", np.shape(cog000Ref_cal[0]))
 # print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
 # print("SHAAAAAAAAAPE_coinc: ", np.shape(cog000Ref_coinc[0]))
-###################TEST###############
-with h5py.File('{}cog000JANKO.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
 
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog000JANKO[i: i + dset.chunks[0]]
-######################################
 with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
 
