@@ -222,27 +222,27 @@ stack_id_coinc = list_save_dic_crt['stack_id'][1]
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
         cog000Ref_cal.append(np.array(list_save_dic_crt["dicpos_000"][cluster]))
-        cog100Ref_cal.append(list_save_dic_crt["dicpos_100"][cluster])
-        cog010Ref_cal.append(list_save_dic_crt["dicpos_010"][cluster])
-        cog111Ref_cal.append(list_save_dic_crt["dicpos_111"][cluster])
+        # cog100Ref_cal.append(np.array(list_save_dic_crt["dicpos_100"][cluster]))
+        # cog010Ref_cal.append(np.array(list_save_dic_crt["dicpos_010"][cluster]))
+        # cog111Ref_cal.append(np.array(list_save_dic_crt["dicpos_111"][cluster]))
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        cog000Ref_coinc.append(list_save_dic_crt["dicpos_000"][cluster])
-        cog100Ref_coinc.append(list_save_dic_crt["dicpos_100"][cluster])
-        cog010Ref_coinc.append(list_save_dic_crt["dicpos_010"][cluster])
-        cog111Ref_coinc.append(list_save_dic_crt["dicpos_111"][cluster])
+        cog000Ref_coinc.append(np.array(list_save_dic_crt["dicpos_000"][cluster]))
+        # cog100Ref_coinc.append(np.array(list_save_dic_crt["dicpos_100"][cluster]))
+        # cog010Ref_coinc.append(np.array(list_save_dic_crt["dicpos_010"][cluster]))
+        # cog111Ref_coinc.append(np.array(list_save_dic_crt["dicpos_111"][cluster]))
 
 
-#
+
 print("Arrays ready for time")
 cog000Ref_cal = np.array(cog000Ref_cal[:len(cog000Ref_cal)-3])
-cog100Ref_cal = np.array(cog100Ref_cal[:len(cog100Ref_cal)-3])
-cog010Ref_cal = np.array(cog010Ref_cal[:len(cog010Ref_cal)-3])
-cog111Ref_cal = np.array(cog111Ref_cal[:len(cog111Ref_cal)-3])
+# cog100Ref_cal = np.array(cog100Ref_cal[:len(cog100Ref_cal)-3])
+# cog010Ref_cal = np.array(cog010Ref_cal[:len(cog010Ref_cal)-3])
+# cog111Ref_cal = np.array(cog111Ref_cal[:len(cog111Ref_cal)-3])
 cog000Ref_coinc = np.array(cog000Ref_coinc[:len(cog000Ref_coinc)-3])
-cog100Ref_coinc = np.array(cog100Ref_coinc[:len(cog100Ref_coinc)-3])
-cog010Ref_coinc = np.array(cog010Ref_coinc[:len(cog010Ref_coinc)-3])
-cog111Ref_coinc = np.array(cog111Ref_coinc[:len(cog111Ref_coinc)-3])
+# cog100Ref_coinc = np.array(cog100Ref_coinc[:len(cog100Ref_coinc)-3])
+# cog010Ref_coinc = np.array(cog010Ref_coinc[:len(cog010Ref_coinc)-3])
+# cog111Ref_coinc = np.array(cog111Ref_coinc[:len(cog111Ref_coinc)-3])
 print("Arrays ready.")
 
 # pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"
@@ -272,23 +272,23 @@ with h5py.File('{}cog000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = cog000Ref_cal[i: i + dset.chunks[0]]
 
-with h5py.File('{}cog100ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog100Ref_cal[i: i + dset.chunks[0]]
-
-with h5py.File('{}cog010ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog010Ref_cal[i: i + dset.chunks[0]]
-
-with h5py.File('{}cog111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog111Ref_cal[i: i + dset.chunks[0]]
+# with h5py.File('{}cog100ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog100Ref_cal[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}cog010ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog010Ref_cal[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}cog111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog111Ref_cal[i: i + dset.chunks[0]]
 
 with h5py.File('{}cog000ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
@@ -296,23 +296,23 @@ with h5py.File('{}cog000ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = cog000Ref_coinc[i: i + dset.chunks[0]]
 
-with h5py.File('{}cog100ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog100Ref_coinc[i: i + dset.chunks[0]]
-
-with h5py.File('{}cog010ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog010Ref_coinc[i: i + dset.chunks[0]]
-
-with h5py.File('{}cog111ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = cog111Ref_coinc[i: i + dset.chunks[0]]
+# with h5py.File('{}cog100ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog100Ref_coinc[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}cog010ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog010Ref_coinc[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}cog111ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = cog111Ref_coinc[i: i + dset.chunks[0]]
 
 # =======
 # # -*- coding: utf-8 -*-
