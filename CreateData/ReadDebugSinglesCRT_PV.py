@@ -158,10 +158,11 @@ parser = argparse.ArgumentParser()
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
 parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
                                                  directory where to read the files from')
-
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                                 directory where to save the files')
 args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-pathtodirectoryRead = args.fileDirect
+pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
 
 # pathtodirectoryRead = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/SplitDebugSingles/"
 
@@ -174,21 +175,24 @@ pathtodirectoryRead = args.fileDirect
 # pathtodirectorySave_pickle = pathtodirectoryRead + "PickleData/"
 
 
-list_save_crt = {"stack_id": [2,3], "dicpv_000": [216, 217], "dicpv_100": [217, 218], "dicpv_010": [218, 219], "dicpv_111": [223, 224]}
+# list_save_crt = {"stack_id": [2,3], "dicpv_000": [216, 217], "dicpv_100": [217, 218], "dicpv_010": [218, 219], "dicpv_111": [223, 224]}
+list_save_crt = {"stack_id": [2,3], "dicpv_000": [216, 217]}
+
 stack_id = {}
 dicpv_000 = {}  # photon values from COG HVD
 dicpv_100 = {}
 dicpv_010 = {}
 dicpv_111 = {}
 
-list_save_dic_crt = {"stack_id": stack_id, "dicpv_000": dicpv_000, "dicpv_100": dicpv_100, "dicpv_010": dicpv_010, "dicpv_111": dicpv_111}
+# list_save_dic_crt = {"stack_id": stack_id, "dicpv_000": dicpv_000, "dicpv_100": dicpv_100, "dicpv_010": dicpv_010, "dicpv_111": dicpv_111}
+list_save_dic_crt = {"stack_id": stack_id, "dicpv_000": dicpv_000}
 
 # folder_dir = pathtodirectorySave_pickle
 # CHECK_FOLDER = os.path.isdir(folder_dir)
 
-file_type = '.DebugCoincidentSingles'
+file_type = '.DebugSingles'
 # Obtain this info from file
-stack_id = 'measurement' #108
+stack_id = '108' #108
 
 # If folder doesn't exist, then create it.
 # if not CHECK_FOLDER:
@@ -207,14 +211,14 @@ for i_s in list_save_crt.keys():
     #__save_data(folder_dir, dic_HVD, name)
 
 pv000Ref_cal = []
-pv100Ref_cal = []
-pv010Ref_cal = []
-pv111Ref_cal = []
+# pv100Ref_cal = []
+# pv010Ref_cal = []
+# pv111Ref_cal = []
 
 pv000Ref_coinc = []
-pv100Ref_coinc = []
-pv010Ref_coinc = []
-pv111Ref_coinc = []
+# pv100Ref_coinc = []
+# pv010Ref_coinc = []
+# pv111Ref_coinc = []
 
 stack_id_cal = list_save_dic_crt['stack_id'][0]
 stack_id_coinc = list_save_dic_crt['stack_id'][1]
@@ -222,29 +226,29 @@ stack_id_coinc = list_save_dic_crt['stack_id'][1]
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
         pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
-        pv100Ref_cal.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
-        pv010Ref_cal.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
-        pv111Ref_cal.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
+        # pv100Ref_cal.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
+        # pv010Ref_cal.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
+        # pv111Ref_cal.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
         pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
-        pv100Ref_coinc.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
-        pv010Ref_coinc.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
-        pv111Ref_coinc.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
+        # pv100Ref_coinc.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
+        # pv010Ref_coinc.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
+        # pv111Ref_coinc.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
 #
-pv000Ref_cal = np.array(pv000Ref_cal)
-pv100Ref_cal = np.array(pv100Ref_cal)
-pv010Ref_cal = np.array(pv010Ref_cal)
-pv111Ref_cal = np.array(pv111Ref_cal)
+pv000Ref_cal = np.array(pv000Ref_cal[:len(pv000Ref_cal)-3])
+# pv100Ref_cal = np.array(pv100Ref_cal[:len(pv100Ref_cal)-3])
+# pv010Ref_cal = np.array(pv010Ref_cal[:len(pv010Ref_cal)-3])
+# pv111Ref_cal = np.array(pv111Ref_cal[:len(pv111Ref_cal)-3])
 print("Arrays ready")
-pv000Ref_coinc = np.array(pv000Ref_coinc)
-pv100Ref_coinc = np.array(pv100Ref_coinc)
-pv010Ref_coinc = np.array(pv010Ref_coinc)
-pv111Ref_coinc = np.array(pv111Ref_coinc)
+pv000Ref_coinc = np.array(pv000Ref_coinc[:len(pv000Ref_coinc)-3])
+# pv100Ref_coinc = np.array(pv100Ref_coinc[:len(pv100Ref_coinc)-3])
+# pv010Ref_coinc = np.array(pv010Ref_coinc[:len(pv010Ref_coinc)-3])
+# pv111Ref_coinc = np.array(pv111Ref_coinc[:len(pv111Ref_coinc)-3])
 print("Arrays ready")
 
 # pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"
-pathtodirectorySave_hdf = pathtodirectoryRead + 'hdf5Data/'
+pathtodirectorySave_hdf = pathtodirectorySave + 'hdf5Data/'
 folder_dir = pathtodirectorySave_hdf
 CHECK_FOLDER = os.path.isdir(folder_dir)
 # If folder doesn't exist, then create it.
@@ -253,55 +257,56 @@ if not CHECK_FOLDER:
     print("created folder : ", folder_dir)
 
 n_events = int(len(pv000Ref_cal))
+n_values = int(len(pv000Ref_cal[0]))
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
 
 with h5py.File('{}pv000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
+    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
 
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = pv000Ref_cal[i: i + dset.chunks[0]]
 
-with h5py.File('{}pv100ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv100Ref_cal[i: i + dset.chunks[0]]
-
-with h5py.File('{}pv010ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv010Ref_cal[i: i + dset.chunks[0]]
-
-with h5py.File('{}pv111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv111Ref_cal[i: i + dset.chunks[0]]
+# with h5py.File('{}pv100ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv100Ref_cal[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}pv010ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv010Ref_cal[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}pv111ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv111Ref_cal[i: i + dset.chunks[0]]
 
 with h5py.File('{}pv000ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
+    dset = f.create_dataset("data", (n_events, n_values), chunks=True)
 
     for i in range(0, n_events, dset.chunks[0]):
         dset[i: i + dset.chunks[0]] = pv000Ref_coinc[i: i + dset.chunks[0]]
-
-with h5py.File('{}pv100ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv100Ref_coinc[i: i + dset.chunks[0]]
-
-with h5py.File('{}pv010ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv010Ref_coinc[i: i + dset.chunks[0]]
-
-with h5py.File('{}pv111ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
-    dset = f.create_dataset("data", (n_events,), chunks=True)
-
-    for i in range(0, n_events, dset.chunks[0]):
-        dset[i: i + dset.chunks[0]] = pv111Ref_coinc[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}pv100ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv100Ref_coinc[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}pv010ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv010Ref_coinc[i: i + dset.chunks[0]]
+#
+# with h5py.File('{}pv111ref_coinc.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
+#     dset = f.create_dataset("data", (n_events, n_values), chunks=True)
+#
+#     for i in range(0, n_events, dset.chunks[0]):
+#         dset[i: i + dset.chunks[0]] = pv111Ref_coinc[i: i + dset.chunks[0]]
 # =======
 # # -*- coding: utf-8 -*-
 # __author__ = "david.perez.gonzalez"

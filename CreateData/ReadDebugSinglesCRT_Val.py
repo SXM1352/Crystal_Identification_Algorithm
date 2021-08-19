@@ -214,15 +214,25 @@ cogRef_coinc = []
 stack_id_cal = list_save_dic_crt['stack_id'][0]
 stack_id_coinc = list_save_dic_crt['stack_id'][1]
 
+# for cluster in list_save_dic_crt['stack_id'].keys():
+#     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
+#         print(cluster)
+#         cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
+#                        int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
+#
+#     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
+#         cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
+#                        int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
+
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
         print(cluster)
-        cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
-                       int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
+        cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
+                       int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
-                       int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
+        cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
+                       int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
 
 print("Arrays ready for time")
 
