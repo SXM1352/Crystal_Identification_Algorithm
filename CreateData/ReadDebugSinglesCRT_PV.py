@@ -222,16 +222,30 @@ pv000Ref_coinc = []
 
 stack_id_cal = list_save_dic_crt['stack_id'][0]
 stack_id_coinc = list_save_dic_crt['stack_id'][1]
+#
+# for cluster in list_save_dic_crt['stack_id'].keys():
+#     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
+#         pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
+#         # pv100Ref_cal.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
+#         # pv010Ref_cal.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
+#         # pv111Ref_cal.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
+#
+#     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
+#         pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
+#         # pv100Ref_coinc.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
+#         # pv010Ref_coinc.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
+#         # pv111Ref_coinc.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
+# #
 
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
-        pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
+        pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster]))
         # pv100Ref_cal.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
         # pv010Ref_cal.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
         # pv111Ref_cal.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
+        pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster]))
         # pv100Ref_coinc.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
         # pv010Ref_coinc.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
         # pv111Ref_coinc.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))

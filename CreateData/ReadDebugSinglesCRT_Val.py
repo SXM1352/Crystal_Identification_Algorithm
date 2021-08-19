@@ -165,24 +165,28 @@ def __save_data(folder, dic_HVD, name):
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
 # pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
 pathtodirectoryRead, pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/", "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+# list_save_crt = {"stack_id": [2,3],
+#                  "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
 list_save_crt = {"stack_id": [2,3],
-                 "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
+                 "dicval_000": [192, 193]}
 stack_id = {}
 photons = {}
 timeStamps = {}
 
 dicval_000 = {}
-dicval_100 = {}
-dicval_010 = {}
-dicval_111 = {}
+# dicval_100 = {}
+# dicval_010 = {}
+# dicval_111 = {}
 
 dicpos_000 = {}  # x and y from COG HVD
-dicpos_100 = {}
-dicpos_010 = {}
-dicpos_111 = {}
+# dicpos_100 = {}
+# dicpos_010 = {}
+# dicpos_111 = {}
 
+# list_save_dic_crt = {"stack_id": stack_id,
+#                      "dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111}
 list_save_dic_crt = {"stack_id": stack_id,
-                     "dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111}
+                     "dicval_000": dicval_000}
 
 # folder_dir = pathtodirectorySave_pickle
 # CHECK_FOLDER = os.path.isdir(folder_dir)
@@ -227,12 +231,14 @@ stack_id_coinc = list_save_dic_crt['stack_id'][1]
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
         print(cluster)
-        cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
-                       int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
+        # cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
+        #                int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
+        cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster])])
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
-                       int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
+        # cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
+        #                int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
+        cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster])])
 
 print("Arrays ready for time")
 
