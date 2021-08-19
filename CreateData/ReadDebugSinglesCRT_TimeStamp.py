@@ -217,8 +217,8 @@ for cluster in list_save_dic_crt['stack_id'].keys():
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
         timeStamps_coinc.append(list_save_dic_crt["timeStamps"][cluster])
 
-timeStamps_cal = np.array(timeStamps_cal)
-timeStamps_coinc = np.array(timeStamps_coinc)
+timeStamps_cal = np.array(timeStamps_cal[:len(timeStamps_cal)-3])
+timeStamps_coinc = np.array(timeStamps_coinc[:len(timeStamps_coinc)-3])
 print("Arrays ready for time")
 
 # pathtodirectorySave_hdf = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/20210315_NEW_hdf5Data/"

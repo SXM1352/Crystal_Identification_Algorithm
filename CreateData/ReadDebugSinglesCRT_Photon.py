@@ -213,8 +213,8 @@ for cluster in list_save_dic_crt['stack_id'].keys():
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
         photons_coinc.append(list_save_dic_crt["photons"][cluster])
 #
-photons_cal = np.array(photons_cal)
-photons_coinc = np.array(photons_coinc)
+photons_cal = np.array(photons_cal[:len(photons_cal)-3])
+photons_coinc = np.array(photons_coinc[:len(photons_coinc)-3])
 
 print("Arrays ready.")
 
