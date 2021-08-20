@@ -233,7 +233,7 @@ for cluster in list_save_dic_crt['stack_id'].keys():
         # print(cluster)
         try:
             cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
-                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster])][0])
+                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
         except:
             print("Fehler in Cluster/Event:", cluster)
         # cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0])])
@@ -241,7 +241,7 @@ for cluster in list_save_dic_crt['stack_id'].keys():
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
         try:
             cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
-                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster])][0])
+                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster][0])])
         except:
             print("Fehler in Cluster/Event:", cluster)
         # cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0])])
