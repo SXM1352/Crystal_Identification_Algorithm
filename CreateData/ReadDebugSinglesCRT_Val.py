@@ -153,40 +153,40 @@ def __save_data(folder, dic_HVD, name):
     with open('{}/{}.pickle'.format(folder, name), 'wb') as handle:
         pickle.dump(dic_HVD, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-# parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()
 # parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugCoincidentSingles')
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
-# parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-#                                                  directory where to read the files from')
-# parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
-#                                                  directory where to save the files')
+parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+                                                 directory where to read the files from')
+parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+                                                 directory where to save the files')
 #
-# args = parser.parse_args()
+args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-# pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
-pathtodirectoryRead, pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/", "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
-# list_save_crt = {"stack_id": [2,3],
-#                  "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
+pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
+# pathtodirectoryRead, pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/", "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
 list_save_crt = {"stack_id": [2,3],
-                 "dicval_000": [192, 193]}
+                 "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
+# list_save_crt = {"stack_id": [2,3],
+#                  "dicval_000": [192, 193]}
 stack_id = {}
 photons = {}
 timeStamps = {}
 
 dicval_000 = {}
-# dicval_100 = {}
-# dicval_010 = {}
-# dicval_111 = {}
+dicval_100 = {}
+dicval_010 = {}
+dicval_111 = {}
 
 dicpos_000 = {}  # x and y from COG HVD
-# dicpos_100 = {}
-# dicpos_010 = {}
-# dicpos_111 = {}
+dicpos_100 = {}
+dicpos_010 = {}
+dicpos_111 = {}
 
-# list_save_dic_crt = {"stack_id": stack_id,
-#                      "dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111}
 list_save_dic_crt = {"stack_id": stack_id,
-                     "dicval_000": dicval_000}
+                     "dicval_000": dicval_000, "dicval_100": dicval_100, "dicval_010": dicval_010, "dicval_111": dicval_111}
+# list_save_dic_crt = {"stack_id": stack_id,
+#                      "dicval_000": dicval_000}
 
 # folder_dir = pathtodirectorySave_pickle
 # CHECK_FOLDER = os.path.isdir(folder_dir)
@@ -230,20 +230,26 @@ stack_id_coinc = list_save_dic_crt['stack_id'][1]
 
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
-        print(cluster)
-        # cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
-        #                int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
-        cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster])])
+        # print(cluster)
+        try:
+            cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
+                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster])][0])
+        except:
+            print("Fehler in Cluster/Event:", cluster)
+        # cogRef_cal.append([int(list_save_dic_crt["dicval_000"][cluster][0])])
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        # cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster]), int(list_save_dic_crt["dicval_100"][cluster]),
-        #                int(list_save_dic_crt["dicval_010"][cluster]), int(list_save_dic_crt["dicval_111"][cluster])])
-        cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster])])
+        try:
+            cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0]), int(list_save_dic_crt["dicval_100"][cluster][0]),
+                           int(list_save_dic_crt["dicval_010"][cluster][0]), int(list_save_dic_crt["dicval_111"][cluster])][0])
+        except:
+            print("Fehler in Cluster/Event:", cluster)
+        # cogRef_coinc.append([int(list_save_dic_crt["dicval_000"][cluster][0])])
 
 print("Arrays ready for time")
 
-cogRef_cal = np.array(cogRef_cal[:len(cogRef_cal)-3])
-cogRef_coinc = np.array(cogRef_coinc[:len(cogRef_coinc)-3])
+cogRef_cal = np.array(cogRef_cal[:len(cogRef_cal)-2])
+cogRef_coinc = np.array(cogRef_coinc[:len(cogRef_coinc)-2])
 
 print("Arrays ready.")
 
