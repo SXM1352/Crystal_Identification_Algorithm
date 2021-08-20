@@ -153,18 +153,18 @@ def __save_data(folder, dic_HVD, name):
     with open('{}/{}.pickle'.format(folder, name), 'wb') as handle:
         pickle.dump(dic_HVD, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-parser = argparse.ArgumentParser()
+# parser = argparse.ArgumentParser()
 # parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugCoincidentSingles')
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
-parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-                                                 directory where to read the files from')
-parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+# parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+#                                                  directory where to read the files from')
+# parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
                                                  directory where to save the files')
 #
-args = parser.parse_args()
+# args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
-# pathtodirectoryRead, pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/", "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+# pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
+pathtodirectoryRead, pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/", "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
 list_save_crt = {"stack_id": [2,3],
                  "dicval_000": [192, 193], "dicval_100": [193, 194], "dicval_010": [194, 195], "dicval_111": [199, 200]}
 # list_save_crt = {"stack_id": [2,3],
@@ -263,7 +263,10 @@ if not CHECK_FOLDER:
     print("created folder : ", folder_dir)
 
 n_events = int(len(cogRef_cal))
-n_values = int(len(cogRef_cal[0]))
+try:
+    n_values = int(len(cogRef_cal[0]))
+except:
+    n_values = 1
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
 
 with h5py.File('{}cogRef_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
