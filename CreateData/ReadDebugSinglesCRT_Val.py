@@ -159,7 +159,7 @@ def __save_data(folder, dic_HVD, name):
 # parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
 #                                                  directory where to read the files from')
 # parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
-                                                 directory where to save the files')
+#                                                  directory where to save the files')
 #
 # args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
