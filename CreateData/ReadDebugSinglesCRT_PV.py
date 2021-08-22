@@ -153,16 +153,18 @@ def __save_data(folder, dic_HVD, name):
     with open('{}/{}.pickle'.format(folder, name), 'wb') as handle:
         pickle.dump(dic_HVD, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-parser = argparse.ArgumentParser()
+# parser = argparse.ArgumentParser()
 # parser.add_argument('--fileType', dest='fType', help='Specifiy which type of file to be read', default='.DebugCoincidentSingles')
 # parser.add_argument('--stackID', dest='sID', help='Specifiy the stackID to be read')
-parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-                                                 directory where to read the files from')
-parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
-                                                 directory where to save the files')
-args = parser.parse_args()
+# parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+#                                                  directory where to read the files from')
+# parser.add_argument('--saveDirectory', dest='saveDirect', help='Specifiy the name of the   \
+#                                                  directory where to save the files')
+# args = parser.parse_args()
 # file_type, pathtodirectoryRead = args.fType, args.fileDirect
-pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
+# pathtodirectoryRead, pathtodirectorySave = args.fileDirect, args.saveDirect
+pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
 
 # pathtodirectoryRead = "/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/SplitDebugSingles/"
 
@@ -239,13 +241,13 @@ stack_id_coinc = list_save_dic_crt['stack_id'][1]
 
 for cluster in list_save_dic_crt['stack_id'].keys():
     if list_save_dic_crt['stack_id'][cluster] == stack_id_cal:
-        pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster]))
+        pv000Ref_cal.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
         # pv100Ref_cal.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
         # pv010Ref_cal.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
         # pv111Ref_cal.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
 
     elif list_save_dic_crt['stack_id'][cluster] == stack_id_coinc:
-        pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster]))
+        pv000Ref_coinc.append(int(list_save_dic_crt["dicpv_000"][cluster][0]))
         # pv100Ref_coinc.append(int(list_save_dic_crt["dicpv_100"][cluster][0]))
         # pv010Ref_coinc.append(int(list_save_dic_crt["dicpv_010"][cluster][0]))
         # pv111Ref_coinc.append(int(list_save_dic_crt["dicpv_111"][cluster][0]))
@@ -271,7 +273,10 @@ if not CHECK_FOLDER:
     print("created folder : ", folder_dir)
 
 n_events = int(len(pv000Ref_cal))
-n_values = int(len(pv000Ref_cal[0]))
+try:
+    n_values = int(len(pv000Ref_cal[0]))
+except:
+    n_values = 1
 # MODIFY NUMBER OF EVENTS FOR ALL POSSIBLE FILES
 
 with h5py.File('{}pv000ref_cal.hdf5'.format(pathtodirectorySave_hdf), 'w') as f:
