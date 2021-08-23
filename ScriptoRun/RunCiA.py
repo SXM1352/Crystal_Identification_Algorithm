@@ -43,7 +43,7 @@ def write_commands(jobs, pathtodirectory, jobs_per_HVD, precision):
     list_commands = []
     for j in jobs:
         for j_HVD in jobs_per_HVD:
-            command = 'python' + ' ' + '/home/david.perez/cia/LUT/LUT.py' + ' --HVD {} --fileDirectory {} --initEvent {} --finalEvent {} --precision {}'.format(j, pathtodirectory, j_HVD[0], j_HVD[1], precision) #/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/
+            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/LUT/LUT.py' + ' --HVD {} --fileDirectory {} --initEvent {} --finalEvent {} --precision {}'.format(j, pathtodirectory, j_HVD[0], j_HVD[1], precision) #/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/
             list_commands.append(command)
     return list_commands
 def create_finalCommand(list_commands):
@@ -79,11 +79,11 @@ def main():
     decimals, n_Procs, selected_HVD, n_Events, pathtodirectory, savePlot = args.decimals, int(args.nCPU), int(args.HVD), int(args.nEvents), args.fileDirect, args.SavePlot
 
     #Run routine to find peaks
-    command_PeakF = 'python /home/david.perez/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
+    command_PeakF = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
     os.system(command_PeakF)
 
     #run routine to label peaks
-    command_SanCheck = 'python /home/david.perez/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
+    command_SanCheck = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
     os.system(command_SanCheck)
 
     pathtodirectoryReadLUD = 'dic-LUD/'
@@ -127,7 +127,7 @@ def main():
     Group_jobs.runLUTGroup()
 
     precision_grid = len(decimals.split(".")[1])
-    command_CheckC = 'python /home/david.perez/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
+    command_CheckC = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
     os.system(command_CheckC)
 

@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6d171-56d9-4745-91b9-ed35903f7e96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CreateData/ReadDebugSinglesCRT_PV.py" beforeDir="false" afterPath="$PROJECT_DIR$/CreateData/ReadDebugSinglesCRT_PV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CreateData/NewHypmed_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/CreateData/NewHypmed_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../monocal3/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../monocal3/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../monocal3/.idea/monocal3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../monocal3/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../monocal3/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,17 +45,5 @@
       <updated>1627977931289</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
