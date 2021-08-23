@@ -138,7 +138,7 @@ class C_Group(object):
             dic_crystal_cluster[i] = []
         print('Grouping...')
         print(self.splits)
-        self.splits = ["2553191", "5106382"] #Meins
+        # self.splits = ["2553191", "5106382"] #Meins
         for sp in self.splits:
             # final_event = sp[1] #MEINS
             final_event = sp #MEINS
