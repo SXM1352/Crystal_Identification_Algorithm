@@ -138,6 +138,8 @@ def main():
 
         lenmin_edge = 1 #always
         lenmax_edge = 5 #always
+        
+        print("HHHHTTTTTTTTTTT", ht)
 
         for jr,roi_hist in enumerate(ht):
             pFinder = PeakFinder(cg, roi_hist, bins,sigma[cg],threshold[cg],rmBackground,convIter,markov,mIter)
@@ -154,7 +156,6 @@ def main():
             print("palone",dic_palone)
             print("rdefect", dic_rdefect)
             #print("dc_c", dic_crystal[1703])
-
             active_area = raw_input('jr (active area): ')
             if active_area and opt_plot == "On":
                 for ij in dic_rows.keys():
