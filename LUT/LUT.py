@@ -57,15 +57,13 @@ class LUD():
         for roi_nr in range(self.n_roi[cg]):
             points_roi = []
             for id in dic_crystal_roi.keys():
-                try:
 
-                    if dic_crystal_roi[id]["valid"] and dic_crystal_roi[id]["center"]:
-                        if len(dic_crystal_roi[id]['roi']) > 1 or len(dic_crystal_roi[id]["center"].keys()) > 1:
-                            pass
-                        elif dic_crystal_roi[id]['roi'][0] == roi_nr:
-                            points_roi.append(dic_crystal_roi[id]['center'][dic_crystal_roi[id]['center'].keys()[0]][0])
-                except:
-                    # print("HIER IST ES!:", dic_crystal_roi[id])
+                if dic_crystal_roi[id]["valid"] and dic_crystal_roi[id]["center"]:
+                    if len(dic_crystal_roi[id]['roi']) > 1 or len(dic_crystal_roi[id]["center"].keys()) > 1:
+                        pass
+                    elif dic_crystal_roi[id]['roi'][0] == roi_nr:
+                        points_roi.append(dic_crystal_roi[id]['center'][dic_crystal_roi[id]['center'].keys()[0]][0])
+
             hull_list.append(self.__hull_ROI(np.array(points_roi)))
         return hull_list
 
