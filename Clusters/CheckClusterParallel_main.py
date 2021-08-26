@@ -98,7 +98,7 @@ def __CrystalDict_AssignEvents():
 
 
 def main():
-    print("funktioniert der scheiß?")
+    print("funktioniert der scheiss?")
     """
     Runs the checks on the cluster, plot the results and save them into a file
     """
