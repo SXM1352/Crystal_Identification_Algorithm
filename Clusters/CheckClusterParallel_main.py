@@ -174,5 +174,7 @@ def main():
 
 if __name__ == '__main__':
     print(str(datetime.datetime.now()))
+    print("HALOHALLOaaa")
     main()
+    print("Das ist nach dem MAIN BUMS!!!")
     print(str(datetime.datetime.now()))

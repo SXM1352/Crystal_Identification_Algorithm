@@ -143,7 +143,7 @@ def main():
     print("RUNCECKHHHHHHHHHHHHH")
 
     fCommand = create_finalCommand(list_commands)
-    print("RUNCECKIIIIIIIIIIIII")
+    print("RUNCECKIIIIIIIIIIIIIOOOOOOOOOOOOO")
 
     fCommand = fCommand  + ' & wait'
 
@@ -152,6 +152,7 @@ def main():
     # # print('waiting...')
     # # sleep(4000)
     print("RUNCECKIIIIIII")
+    print("REALY FINAL COMMAND!!!:", fCommand)
     os.system(fCommand) #check clusters
     print("RUNCECKJJJJJJJJ")
 

@@ -140,8 +140,9 @@ class C_Group(object):
         print(self.splits)
         # self.splits = ["2553191", "5106382"] #Meins
         for sp in self.splits:
-            # final_event = sp[1] #MEINS
-            final_event = sp #MEINS
+            final_event = sp[1] #MEINS
+            print("SPSPSPSP:", sp)
+            # final_event = sp #MEINS
             try:
                 data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111 = self.__group_PV_in_HVD(final_event, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
             except:
