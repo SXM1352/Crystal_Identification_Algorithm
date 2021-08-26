@@ -367,7 +367,7 @@ class SanCheckInv(object):
                         # print("works9label765")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
             else:
-                # print("mist2567")
+                print("mist2567")
         return dic_crystal
     
     def __f_checkdouble(self, dic_double, dic_crystal):
