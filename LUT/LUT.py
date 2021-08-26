@@ -144,7 +144,9 @@ class LUD():
 
     def __f_lud(self, cg, dic_crystal, val_region, dic_label, lud, precision_grid, decimals):
         n_lud = 0
+        print("DAMDAMN")
         hull_list = self.__calculate_Hull(dic_crystal, cg)
+        print("DAMDAMN111111")
         for i in np.arange(self.init_event, self.final_event, -decimals):#24,-24.1,-decimals): #change depends on cog
 
             for j in np.arange(-24,24+decimals,decimals):
@@ -185,6 +187,7 @@ class LUD():
                     lud[round(i, precision_grid), round(j, precision_grid)] = None
                 n_lud += 1
             #i_lud += 1
+        print("DAMDAMN22222222")
         return lud
 
     def runLUD(self):
