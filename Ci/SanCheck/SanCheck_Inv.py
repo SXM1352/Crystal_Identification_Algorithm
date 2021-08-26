@@ -229,8 +229,8 @@ class SanCheckInv(object):
 #                        dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
                         # print("works9label")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
-            else:
-                print("mist2")
+            # else:
+            #     print("mist2")
             
         return dic_crystal, dic_inv
     
@@ -366,8 +366,8 @@ class SanCheckInv(object):
                         dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck_col[j].keys()[0]] = dic_recheck_col[j][dic_recheck_col[j].keys()[0]]
                         # print("works9label765")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
-            else:
-                print("mist2567")
+            # else:
+                # print("mist2567")
         return dic_crystal
     
     def __f_checkdouble(self, dic_double, dic_crystal):
