@@ -213,7 +213,7 @@ class LUD():
             lud_HVD = {}
             dic_label_HVD = {}
             print("Ist heir ein Bugg?")
-            print(dic_crystal_HVD.keys())
+            # print(dic_crystal_HVD.keys())
             lud_HVD = self.__f_lud(cg, dic_crystal_HVD, val_region_HVD, dic_label_HVD, lud_HVD, precision_grid, decimals)
             print("Anscheinend nicht :)")
             CHECK_FOLDER = os.path.isdir(self.pathtodirectorySave)
