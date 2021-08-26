@@ -33,8 +33,8 @@ def main():
     Runs the peak finder, assign the first labels on the peaks, 
     plot the results and save them into a files (dictionaries)
     """
-    logging.config.fileConfig('/home/janko.lambertus/Git/cia/ini-files/logging.ini')
-    logging.getLogger('cia')    
+    logging.config.fileConfig('/home/janko.lambertus/Masterarbeit/Git/cia/ini-files/logging.ini')
+    logging.getLogger('cia')
 
     logging.info('----------------------------------')
     logging.info('NEW RUN OF THE PROGRAM \n')   
