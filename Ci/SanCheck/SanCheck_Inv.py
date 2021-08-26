@@ -151,7 +151,7 @@ class SanCheckInv(object):
                 closest_col_orig = closest_col
                 if closest_row%2 != 0:
                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                        print("mmmm")
+                        # print("mmmm")
                         dic_inv[np.max(dic_inv.keys())+1] = {dic_recheck[j].keys()[0]: dic_recheck[j][dic_recheck[j].keys()[0]][0]}
                         continue
                     else:
@@ -161,28 +161,28 @@ class SanCheckInv(object):
                     dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
                     #we set them as valid because the lines are only from valid columns and rows
                     dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
-                #    print("cry",rows[closest_row][closest_col])
-                    print("Tworks8")                     
+                #    # print("cry",rows[closest_row][closest_col])
+                    # print("Tworks8")                     
                 else: #there is already a peak, nearby free labels are searched and it comes from recheck, from peaks that were with rows, but wrong ones, so possible to find empty labels in the nearby
                     if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
-                        print("mist")
-                        print("cry",self.rows[closest_row][closest_col])
+                        # print("mist")
+                        # print("cry",self.rows[closest_row][closest_col])
                         closest2_row = self.__clo2_rs(dic_recheck[j][dic_recheck[j].keys()[0]][0][1], self.median_rows, self.dist_min_y_list)
                         closest2_col = self.__clo2_rs(dic_recheck[j][dic_recheck[j].keys()[0]][0][0], self.median_columns, self.dist_min_x_list)
-                        print("cry",closest2_row,closest2_col)
+                        # print("cry",closest2_row,closest2_col)
                         
                         try:
                             if closest2_row != None and closest2_col != None:
                                 if closest2_row%2 != 0:
                                     if closest2_col%2 != 0 or closest2_col == 64 or closest2_col == 0:
-                                        print("mmmm")
+                                        # print("mmmm")
                                         dic_inv[np.max(dic_inv.keys())+1] = {dic_recheck[j].keys()[0]: dic_recheck[j][dic_recheck[j].keys()[0]][0]}
                                         continue
                                     else:
                                         closest2_col = (closest2_col-2)/2
                                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
                                         dic_inv[np.max(dic_inv.keys())+1] = {dic_recheck[j].keys()[0]: dic_recheck[j][dic_recheck[j].keys()[0]][0]}
-                                        print("mmmm")
+                                        # print("mmmm")
                                         continue
                                     else:
                                         closest_col = (closest_col-2)/2
@@ -193,31 +193,31 @@ class SanCheckInv(object):
                                 dic_crystal[self.rows[closest2_row][closest_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
                         #we set them as valid because the lines are only from valid columns and rows
                                 dic_crystal[self.rows[closest2_row][closest_col]]["valid"] = True
-                                print("cry",self.rows[closest2_row][closest_col])
-                                print("works8_cryrow")
+                                # print("cry",self.rows[closest2_row][closest_col])
+                                # print("works8_cryrow")
                             elif not dic_crystal[self.rows[closest_row][closest2_col]]["center"]: #no peak
                                 dic_crystal[self.rows[closest_row][closest2_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
                         #we set them as valid because the lines are only from valid columns and rows
                                 dic_crystal[self.rows[closest_row][closest2_col]]["valid"] = True
-                                print("cry",self.rows[closest_row][closest2_col])
-                                print("works8_crycol")
+                                # print("cry",self.rows[closest_row][closest2_col])
+                                # print("works8_crycol")
                             elif not dic_crystal[self.rows[closest2_row][closest2_col]]["center"]: #no peak
                                 dic_crystal[self.rows[closest2_row][closest2_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
                         #we set them as valid because the lines are only from valid columns and rows
                                 dic_crystal[self.rows[closest2_row][closest2_col]]["valid"] = True
-                                print("cry",self.rows[closest2_row][closest2_col])
-                                print("works8_crycolrow")
+                                # print("cry",self.rows[closest2_row][closest2_col])
+                                # print("works8_crycolrow")
                         except:
-                            print("Not work, problem with second row/column")
+                            # print("Not work, problem with second row/column")
                         #pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                     else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
                         peaks_to_compare = {"valid":dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0], "new":dic_recheck[j][dic_recheck[j].keys()[0]][0]}
-                        print(peaks_to_compare)
-                        print(self.median_columns[closest_col_orig])
-                        print(self.median_rows[closest_row])
+                        # print(peaks_to_compare)
+                        # print(self.median_columns[closest_col_orig])
+                        # print(self.median_rows[closest_row])
                         coordinate = [self.median_columns[closest_col_orig], self.median_rows[closest_row]]
                         clo_p, clo_p2 = self.__closest_peak_comp(coordinate,peaks_to_compare)
-                        print("clop_recheck",clo_p,clo_p2)
+                        # print("clop_recheck",clo_p,clo_p2)
                         #clo_p2 must be plotted
                         dic_inv[np.max(dic_inv.keys())+1] = {dic_recheck[j].keys()[0]: clo_p2}
                         
@@ -227,31 +227,31 @@ class SanCheckInv(object):
                 #we set them as valid because the lines are only from valid columns and rows
                         
 #                        dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
-                        print("works9label")
+                        # print("works9label")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
             else:
-                print("mist2")
+                # print("mist2")
             
         return dic_crystal, dic_inv
     
     def __f_palone(self, dic_palone, dic_inv, dic_crystal):
         for ij in dic_palone.keys():
             for j in dic_palone[ij].keys():
-                print(dic_palone)
-                print(dic_palone[ij], ij)
-                print(dic_palone[ij][j][0][1])
-                print(dic_palone[ij][j][0][0])
+                # print(dic_palone)
+                # print(dic_palone[ij], ij)
+                # print(dic_palone[ij][j][0][1])
+                # print(dic_palone[ij][j][0][0])
                 for joker in dic_palone[ij][j]:
-                    print(joker)
+                    # print(joker)
                     closest_row = self.__clo_rs(joker[1], self.median_rows, self.dist_min_y_list)
                     closest_col = self.__clo_rs(joker[0], self.median_columns, self.dist_min_x_list)
-                    print(closest_row)
-                    print(closest_col)
+                    # print(closest_row)
+                    # print(closest_col)
                     if closest_row != None and closest_col != None:
                         closest_col_orig = closest_col
                         if closest_row%2 != 0:
                                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                                        print("mmmm24")
+                                        # print("mmmm24")
                                         dic_inv[np.max(dic_inv.keys())+1] = {ij: joker}
                                         continue
                                     else:
@@ -263,18 +263,18 @@ class SanCheckInv(object):
                             #we set them as valid because the lines are only from valid columns and rows
                             dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
                             
-                            print("AA")                            
+                            # print("AA")                            
                         else: #there is already a peak
                             if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
  
-                                print("secondPEAK943") 
+                                # print("secondPEAK943") 
                                 peaks_to_compare = {"valid":dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0], "new":joker}
-                                print(peaks_to_compare)
-                                print(self.median_columns[closest_col_orig])
-                                print(self.median_rows[closest_row])
+                                # print(peaks_to_compare)
+                                # print(self.median_columns[closest_col_orig])
+                                # print(self.median_rows[closest_row])
                                 coordinate = [self.median_columns[closest_col_orig], self.median_rows[closest_row]]
                                 clo_p, clo_p2 = self.__closest_peak_comp(coordinate,peaks_to_compare)
-                                print("clop_alone",clo_p,clo_p2)
+                                # print("clop_alone",clo_p,clo_p2)
                                 #clo_p2 must be plotted
                                 dic_inv[np.max(dic_inv.keys())+1] = {ij: clo_p2}
                                 
@@ -284,7 +284,7 @@ class SanCheckInv(object):
                         #we set them as valid because the lines are only from valid columns and rows
 
         #                        dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck[j].keys()[0]] = dic_recheck[j][dic_recheck[j].keys()[0]]
-                                print("works9label")
+                                # print("works9label")
                                 dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
         #                      
                                 pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
@@ -300,34 +300,34 @@ class SanCheckInv(object):
     def __f_rdefect(self, dic_rdefect, dic_crystal):
         for ij in dic_rdefect.keys():
             for j in dic_rdefect[ij].keys():
-                print("RDFECT",dic_rdefect[ij][j][0][1])
-                print("RDFECT2",dic_rdefect[ij][j][0][0])
+                # print("RDFECT",dic_rdefect[ij][j][0][1])
+                # print("RDFECT2",dic_rdefect[ij][j][0][0])
                 for joker in dic_rdefect[ij][j]:
-                    print("RDFECTj",joker)
+                    # print("RDFECTj",joker)
                     closest_row = self.__clo_rs(joker[1], self.median_rows, self.dist_min_y_list)
                     closest_col = self.__clo_rs(joker[0], self.median_columns, self.dist_min_x_list)
-                    print(closest_row)
-                    print(closest_col)
+                    # print(closest_row)
+                    # print(closest_col)
                     
                     if closest_row != None and closest_col != None:
                         if closest_row%2 != 0:
                                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                                        print("mmmm24")
+                                        # print("mmmm24")
                                         continue
                                     else:
                                         closest_col = (closest_col-2)/2
                                         
-                        print("dic_C",dic_crystal[self.rows[closest_row][closest_col]])
+                        # print("dic_C",dic_crystal[self.rows[closest_row][closest_col]])
                         if not dic_crystal[self.rows[closest_row][closest_col]]["center"]: #no peak
                     
                             dic_crystal[self.rows[closest_row][closest_col]]["center"][ij] = [joker]
                             #we set them as valid because the lines are only from valid columns and rows
                             dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
                             
-                            print("AA")                        
+                            # print("AA")                        
                         else: #there is already a peak
                             if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
-                                print("secondPEAK982") #it does not happen at all
+                                # print("secondPEAK982") #it does not happen at all
                                 pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                             else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
                                 dic_crystal[self.rows[closest_row][closest_col]]["center"][ij] = [joker]              
@@ -345,36 +345,36 @@ class SanCheckInv(object):
             if closest_row != None and closest_col != None:
                 if closest_row%2 != 0:
                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                        print("mmmm657")
+                        # print("mmmm657")
                         continue
                     else:
                         closest_col = (closest_col-2)/2 
-                print(dic_recheck_col[j])
+                # print(dic_recheck_col[j])
              
                 if not dic_crystal[self.rows[closest_row][closest_col]]["center"]: #no peak
             
                     dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck_col[j].keys()[0]] = dic_recheck_col[j][dic_recheck_col[j].keys()[0]]
                     #we set them as valid because the lines are only from valid columns and rows
                     dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
-                    print("works8567")                       
+                    # print("works8567")                       
                 else: #there is already a peak
                     if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
-                        print("secondPEAK1014") #it does not happen at all
+                        # print("secondPEAK1014") #it does not happen at all
                         pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                     else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
                         
                         dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_recheck_col[j].keys()[0]] = dic_recheck_col[j][dic_recheck_col[j].keys()[0]]
-                        print("works9label765")
+                        # print("works9label765")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
             else:
-                print("mist2567")
+                # print("mist2567")
         return dic_crystal
     
     def __f_checkdouble(self, dic_double, dic_crystal):
         for i in dic_crystal.keys(): 
             if dic_crystal[i]["center"]:
                 if len(dic_crystal[i]["center"].keys()) > 1:
-                    print(dic_crystal[i])
+                    # print(dic_crystal[i])
                     for j in dic_crystal[i]["center"].keys():
                         closest_row = self.__clo_rs(dic_crystal[i]["center"][j][0][1], self.median_rows, self.dist_min_y_list)
                         closest_col = self.__clo_rs(dic_crystal[i]["center"][j][0][0], self.median_columns, self.dist_min_x_list)
@@ -382,7 +382,7 @@ class SanCheckInv(object):
                         if closest_row != None and closest_col != None:
                             if closest_row%2 != 0:
                                 if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                                    print("mmmm24")
+                                    # print("mmmm24")
                                     for i_cr2 in dic_crystal[i]["center"].keys():
                                         if i_cr2 != j:
                                             if np.abs(np.diff([dic_crystal[i]["center"][j][0][0],dic_crystal[i]["center"][i_cr2][0][0]])) > 3:                                        
@@ -396,14 +396,14 @@ class SanCheckInv(object):
                                     closest_col = (closest_col-2)/2
                             if self.rows[closest_row][closest_col] != i:
                                         
-                                print(dic_crystal[i]["center"][j])
+                                # print(dic_crystal[i]["center"][j])
                              
                                 if not dic_crystal[self.rows[closest_row][closest_col]]["center"]: #no peak
                             
                                     dic_crystal[self.rows[closest_row][closest_col]]["center"][j] = dic_crystal[i]["center"][j]
                                     #we set them as valid because the lines are only from valid columns and rows
                                     dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
-                                    print("works24")
+                                    # print("works24")
                                     for i_cr2 in dic_crystal[i]["center"].keys():
                                         if i_cr2 != j:
                                             
@@ -413,7 +413,7 @@ class SanCheckInv(object):
                                     dic_double = {}                    
                                 else: #there is already a peak
                                     if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
-                                        print("secondPEAK1074") #it does not happen at all
+                                        # print("secondPEAK1074") #it does not happen at all
                                         pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                                     else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks, but in valid zone, so valid!)
                                         dic_crystal[self.rows[closest_row][closest_col]]["center"][j] = dic_crystal[i]["center"][j]
@@ -424,12 +424,12 @@ class SanCheckInv(object):
                                                 dic_double[i_cr2] = dic_crystal[i]["center"][i_cr2] 
                                         dic_crystal[i]["center"] = dic_double
                                         dic_double = {}
-                                        print("works25")
+                                        # print("works25")
                             else:
                                 dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
                         else:
-                            print("mist25")
-                            print(dic_crystal[i]["center"][j])
+                            # print("mist25")
+                            # print(dic_crystal[i]["center"][j])
                             for i_cr2 in dic_crystal[i]["center"].keys():
                                 if i_cr2 != j:
                                     if np.abs(np.diff([dic_crystal[i]["center"][j][0][0],dic_crystal[i]["center"][i_cr2][0][0]])) > 3:                                        
@@ -445,7 +445,7 @@ class SanCheckInv(object):
         for i in dic_crystal.keys():
             if dic_crystal[i]["center"]:
                 if not dic_crystal[i]["valid"]:
-                    print(dic_crystal[i])
+                    # print(dic_crystal[i])
                     
                     if len(dic_crystal[i]["center"].keys()) > 1:
                         for cr in dic_crystal[i]["center"].keys():
@@ -455,9 +455,9 @@ class SanCheckInv(object):
                             except:
                                 closest_row = None
                                 closest_col = None
-                                print("Peak was already analised.")
+                                # print("Peak was already analised.")
                             if closest_row != None and closest_col != None:
-                                print("HEY")
+                                # print("HEY")
                                 if closest_row%2 != 0:
                                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
                                         continue
@@ -476,15 +476,15 @@ class SanCheckInv(object):
                                     dic_crystal[i]["center"] = dic_double
                                     dic_double = {}
                                     
-                                    print("works")                                  
+                                    # print("works")                                  
                                 else: #there is already a peak
                                     if rows[closest_row][closest_col] != i: #we need to check that it is not the same label
                                         if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
                                             #we should inlcude it as a second peak
-                                            print("secondPEAK656") #it does not happen at all
+                                            # print("secondPEAK656") #it does not happen at all
                                             pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                                         else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
-                                            #print(i,closest_row,closest_col)
+                                            ## print(i,closest_row,closest_col)
                                             if len(dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()) > 1:
                                                 for cr_rch in dic_crystal[self.rows[closest_row][closest_col]]["center"].keys():
                                                     dic_nrch[cr_rch] = dic_crystal[self.rows[closest_row][closest_col]]["center"][cr_rch]        
@@ -512,10 +512,10 @@ class SanCheckInv(object):
                                             else:
                                                 dic_crystal[i]["center"] = {}
                                             
-                                            print("works2")
+                                            # print("works2")
                                     else: #if it is the same label, we could set it as valid 
-                                        print("i_row")
-                                        print(dic_crystal[self.rows[closest_row][closest_col]])
+                                        # print("i_row")
+                                        # print(dic_crystal[self.rows[closest_row][closest_col]])
                                         if len(dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()) > 1:
                                             if np.abs(np.diff([dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0][0],dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[1]][0][0]])) > 10:
                                                 for i_cr2 in dic_crystal[self.rows[closest_row][closest_col]]["center"].keys():
@@ -530,12 +530,12 @@ class SanCheckInv(object):
                                                 dic_double = {}
                                         
                                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True  
-                                        print("works3")
+                                        # print("works3")
                     else:
                         closest_row = self.__clo_rs(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], self.median_rows, self.dist_min_y_list)
                         closest_col = self.__clo_rs(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], self.median_columns, self.dist_min_x_list)
-                        print(closest_row)
-                        print(closest_col)
+                        # print(closest_row)
+                        # print(closest_col)
                         
                         if closest_row != None and closest_col != None:
                             closest_col_orig = closest_col
@@ -547,8 +547,8 @@ class SanCheckInv(object):
                                 else:
                                     closest_col = (closest_col-2)/2
                                     valid_new = False
-                            print("HEY2")
-                            print(dic_crystal[i])
+                            # print("HEY2")
+                            # print(dic_crystal[i])
                      
                             if not dic_crystal[self.rows[closest_row][closest_col]]["center"]: #no peak
     
@@ -557,20 +557,20 @@ class SanCheckInv(object):
                                 dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
                                 
                                 dic_crystal[i]["center"] = {}
-                                print(dic_crystal[self.rows[closest_row][closest_col]])
-                                print("works4")
+                                # print(dic_crystal[self.rows[closest_row][closest_col]])
+                                # print("works4")
                             else: #there is already a peak
                                 if rows[closest_row][closest_col] != i: #we need to check that it is not the same label
                                     if dic_crystal[self.rows[closest_row][closest_col]]["valid"]:
-                                        print("secondPEAK738") 
+                                        # print("secondPEAK738") 
                                         if valid_new:
                                             peaks_to_compare = {"valid":dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0], "new":dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0]}
-                                            print(peaks_to_compare)
-                                            print(self.median_columns[closest_col_orig])
-                                            print(self.median_rows[closest_row])
+                                            # print(peaks_to_compare)
+                                            # print(self.median_columns[closest_col_orig])
+                                            # print(self.median_rows[closest_row])
                                             coordinate = [self.median_columns[closest_col_orig], self.median_rows[closest_row]]
                                             clo_p, clo_p2 = self.__closest_peak_comp(coordinate,peaks_to_compare)
-                                            print("clop_check_inv",clo_p,clo_p2)
+                                            # print("clop_check_inv",clo_p,clo_p2)
                                             dic_nrch[dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]] = [clo_p2]
                                             dic_recheck[n_rechecks] = dic_nrch
                                             dic_nrch = {}
@@ -586,7 +586,7 @@ class SanCheckInv(object):
                                             dic_inv[np.max(dic_inv.keys())+1] = {dic_crystal[i]["center"].keys()[0]: dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0]}
                                          #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                                     else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
-                                        #print(closest_row,closest_col,i)
+                                        ## print(closest_row,closest_col,i)
                                         if len(dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()) > 1:
                                             for cr_rch in dic_crystal[self.rows[closest_row][closest_col]]["center"].keys():
                                                 dic_nrch[cr_rch] = dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]]        
@@ -607,10 +607,10 @@ class SanCheckInv(object):
                                         
                                         dic_crystal[i]["center"] = {}
                                         
-                                        print("works5") 
+                                        # print("works5") 
                                 else: #if it is the same label, we could set it as valid 
-                                    print("i_row")
-                                    print(dic_crystal[self.rows[closest_row][closest_col]])
+                                    # print("i_row")
+                                    # print(dic_crystal[self.rows[closest_row][closest_col]])
                                     if len(dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()) > 1:
                                         if np.abs(np.diff([dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0][0],dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[1]][0][0]])) > 10:
                                             for i_cr2 in dic_crystal[self.rows[closest_row][closest_col]]["center"].keys():
@@ -625,21 +625,21 @@ class SanCheckInv(object):
                                             dic_double = {}
                                     
                                     dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True  
-                                    print("works7")
+                                    # print("works7")
 
         return dic_crystal, dic_recheck, dic_inv
     
     def __f_inv(self, dic_crystal, dic_inv, dic_inv_plot):
-        print("diccc", dic_inv)
+        # print("diccc", dic_inv)
         for j in dic_inv.keys():
-            print(dic_inv[j])
+            # print(dic_inv[j])
             closest_row = self.__clo_rs(dic_inv[j][dic_inv[j].keys()[0]][1], self.median_rows, self.dist_min_y_list)
             closest_col = self.__clo_rs(dic_inv[j][dic_inv[j].keys()[0]][0], self.median_columns, self.dist_min_x_list)
             if closest_row != None and closest_col != None:
                 closest_col_orig = closest_col
                 if closest_row%2 != 0:
                     if closest_col%2 != 0 or closest_col == 64 or closest_col == 0:
-                        print("mmmm")
+                        # print("mmmm")
                         dic_inv_plot[np.max(dic_inv_plot.keys())+1] = {dic_inv[j].keys()[0]: dic_inv[j][dic_inv[j].keys()[0]]}
                         continue
                     else:
@@ -650,23 +650,23 @@ class SanCheckInv(object):
                     dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_inv[j].keys()[0]] = [dic_inv[j][dic_inv[j].keys()[0]]]
                     #we set them as valid because the lines are only from valid columns and rows
                     dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
-                #    print("cry",rows[closest_row][closest_col])
-                    print("Tworks8")                             
+                #    # print("cry",rows[closest_row][closest_col])
+                    # print("Tworks8")                             
                 else:
-                    print("H")
-                    print(dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0])
-                    print(dic_inv[j][dic_inv[j].keys()[0]])
+                    # print("H")
+                    # print(dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0])
+                    # print(dic_inv[j][dic_inv[j].keys()[0]])
                     if dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0] == dic_inv[j][dic_inv[j].keys()[0]]:
-                        print("AY")
+                        # print("AY")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True
                     else:
                         peaks_to_compare = {"valid":dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0], "new":dic_inv[j][dic_inv[j].keys()[0]]}
-                        print(peaks_to_compare)
-                        print(self.median_columns[closest_col_orig])
-                        print(self.median_rows[closest_row])
+                        # print(peaks_to_compare)
+                        # print(self.median_columns[closest_col_orig])
+                        # print(self.median_rows[closest_row])
                         coordinate = [self.median_columns[closest_col_orig], self.median_rows[closest_row]]
                         clo_p, clo_p2 = self.__closest_peak_comp(coordinate,peaks_to_compare)
-                        print("clop_f_inv",clo_p,clo_p2)
+                        # print("clop_f_inv",clo_p,clo_p2)
                         
                         #dic_crystal[self.rows[closest_row][closest_col]]["center"] = {}
                         
@@ -681,28 +681,28 @@ class SanCheckInv(object):
         for i in dic_crystal.keys():
             if dic_crystal[i]["center"]:
                 if not dic_crystal[i]["valid"]:
-                    print(dic_crystal[i])
+                    # print(dic_crystal[i])
                     for n_c, c in enumerate(self.rows[dic_crystal[i]["row"]][:]):
                         if c == dic_crystal[i]["id"]:
                             col = n_c
                             if dic_crystal[i]["row"]%2 != 0:
                                 col = (n_c*2)+2
-                            print(col)
-                            print(dic_crystal[i]["row"])
+                            # print(col)
+                            # print(dic_crystal[i]["row"])
                             if (col in self.median_columns.keys()):
                                 if (dic_crystal[i]["row"] in self.median_rows.keys()):
-                                    print(self.median_columns[col])
+                                    # print(self.median_columns[col])
                                     closest_row = self.__clo_rs_app(dic_inv[j][dic_inv[j].keys()[0]][1], self.median_rows[dic_crystal[i]["row"]], self.dist_min_y_list)
                                     closest_col = self.__clo_rs_app(dic_inv[j][dic_inv[j].keys()[0]][0], self.median_columns[col], self.dist_min_x_list)
                                     if closest_row and closest_col:
-                                        print("BINGO")
+                                        # print("BINGO")
                                         dic_crystal[self.rows[dic_crystal[i]["row"]][n_c]]["valid"] = True
-                                        print(dic_crystal[self.rows[dic_crystal[i]["row"]][n_c]])
+                                        # print(dic_crystal[self.rows[dic_crystal[i]["row"]][n_c]])
                     
         return dic_crystal, dic_inv_plot
     
     def check_def(self, dic_crystal, dic_inv):
-        print("TN", dic_inv)
+        # print("TN", dic_inv)
         for r_n, r in enumerate(self.rows[:]):
             for c_n, c in enumerate(self.rows[r_n][:]):
                 col = c_n
@@ -718,18 +718,18 @@ class SanCheckInv(object):
                                 dic_crystal[self.rows[r_n][c_n]]["valid"] = False
                                 continue
                         if not dic_crystal[self.rows[r_n][c_n]]["center"]:
-                                print(self.median_columns[col])
-                                print(self.median_rows[r_n])
+                                # print(self.median_columns[col])
+                                # print(self.median_rows[r_n])
                                 dist_1 = self.__euqli_dist([-13.257852, 15.744], [self.median_columns[col], self.median_rows[r_n]])
                                 dist_2 = self.__euqli_dist([-12.815904, 15.666], [self.median_columns[col], self.median_rows[r_n]])
-                                print("dist_1", dist_1)
-                                print("dist_2", dist_2)
+                                # print("dist_1", dist_1)
+                                # print("dist_2", dist_2)
                                 closest_peak, c_roi, dic_inv = self.__clo_rs_app_Peak(dic_inv, [self.median_columns[col], self.median_rows[r_n]], self.dist_min_xy_list[self.cg])
                 if closest_peak:
-                    print("BINGO2")
+                    # print("BINGO2")
                     dic_crystal[self.rows[r_n][c_n]]["center"][c_roi] = [closest_peak]
                     dic_crystal[self.rows[r_n][c_n]]["valid"] = True
-                    print(dic_crystal[self.rows[r_n][c_n]])
+                    # print(dic_crystal[self.rows[r_n][c_n]])
                     
         return dic_crystal, dic_inv
                     

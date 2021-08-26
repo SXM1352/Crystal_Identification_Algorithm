@@ -255,17 +255,17 @@ class SanCheckCol(object):
                 col_main, low_dist = self.__closest(pos_col[i_n], median_x)
                 #if low_dist < 1.5:
                 median_columns[col] = col_main
-                print("col_main", col_main)
-                print(median_x)
-                print(len(median_x))
+                # print("col_main", col_main)
+                # print(median_x)
+                # print(len(median_x))
                 median_x.remove(col_main)
-                print(median_x)
-                print(len(median_x))
+                # print(median_x)
+                # print(len(median_x))
                 j_pos = 0
                 j_neg = 0
                 for j in range(2+n_cols_2):
                     col_i, low_dist = self.__closest(pos_col[i_n], median_x)
-                    print("col_i", col_i)
+                    # print("col_i", col_i)
                     if low_dist > low_dist_min:
                         pass
                     elif col_i > col_main:
@@ -353,11 +353,11 @@ class SanCheckCol(object):
                 if len(all_row_x_c[kl]) > 5:
                     median_x.append(np.median(all_row_x_c[kl]))
             median_columns = self.__left_side(median_columns, median_x, columnn) #check they are close enough to reference
-            print("left",median_columns)
+            # print("left",median_columns)
             median_columns = self.__inner_side(median_columns, median_x, col_list, columnn, pos_col)
-            print("in",median_columns)
+            # print("in",median_columns)
             median_columns = self.__right_side(median_columns, median_x, columnn)
-            print("right", median_columns)
+            # print("right", median_columns)
             #median_columns = self.__order_median(median_columns)
         elif self.cg == 0:
             col_list = [14, 26, 38, 50]
@@ -368,11 +368,11 @@ class SanCheckCol(object):
                 if len(all_row_x_c[kl]) > 5:
                     median_x.append(np.median(all_row_x_c[kl]))
             median_columns = self.__left_side(median_columns, median_x, columnn) #check they are close enough to reference
-            print("left",median_columns)
+            # print("left",median_columns)
             median_columns = self.__inner_side(median_columns, median_x, col_list, columnn, pos_col)
-            print("in",median_columns)
+            # print("in",median_columns)
             median_columns = self.__right_side(median_columns, median_x, columnn)
-            print("right", median_columns)
+            # print("right", median_columns)
             #median_columns = self.__order_median(median_columns)
         elif self.cg == 3:
             col_list = [8, 20, 32, 44, 56]
@@ -382,9 +382,9 @@ class SanCheckCol(object):
             for kl in range(len(all_row_y_c)):
                 if len(all_row_x_c[kl]) > 5:
                     median_x.append(np.median(all_row_x_c[kl]))
-            print("med", median_x)
+            # print("med", median_x)
             median_columns = self.__inner_side(median_columns, median_x, col_list, columnn, pos_col)
-            print("in", median_columns)
+            # print("in", median_columns)
 
         return median_columns
     

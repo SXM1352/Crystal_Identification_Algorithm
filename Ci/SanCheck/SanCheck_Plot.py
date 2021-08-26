@@ -33,7 +33,7 @@ class SanCheckPlot(object):
             # If folder doesn't exist, then create it.
             if not CHECK_FOLDER:
                 os.makedirs(self.pathtodirectorySave)
-                print("created folder : ", self.pathtodirectorySave)
+                # print("created folder : ", self.pathtodirectorySave)
 
     def __clo_rs(self, cur_peak_xy, median_rc, dist_min): #find the closest position to the point given from a dict
 
@@ -53,7 +53,7 @@ class SanCheckPlot(object):
         # If folder doesn't exist, then create it.
         if not CHECK_FOLDER:
             os.makedirs(pathDirectory)
-            print("created folder : ", pathDirectory)
+            # print("created folder : ", pathDirectory)
     
     def __final_check_plot(self, dic_crystal, median_columns, dic_inv_plot):
         
@@ -101,7 +101,7 @@ class SanCheckPlot(object):
                         if len(dic_crystal[i]["roi"]) > 1:
                             pass
                         else:
-                            # print(dic_crystal[i])
+                            # # print(dic_crystal[i])
                             x_arr_all.append(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0])
                             y_arr_all.append(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1])
 
@@ -216,7 +216,7 @@ class SanCheckPlot(object):
 
 
             for inv in dic_inv_plot.keys():
-                print(dic_inv_plot[inv], inv)
+                # print(dic_inv_plot[inv], inv)
                 plt.plot(dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][0],dic_inv_plot[inv][dic_inv_plot[inv].keys()[0]][1], ".", color="r")
 
             for i in dic_crystal.keys(): #check where there are two or more, one color, if invalid, but points, red, one point and valid, green, all the rows connected
@@ -231,10 +231,10 @@ class SanCheckPlot(object):
                             plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
                                      color="dodgerblue")  # mfc="C1")
                         else:
-                            print(dic_crystal[i])
+                            # print(dic_crystal[i])
                             plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0], dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".", color="g")#mfc="C1")
                     except:
-                        print(dic_crystal[i])
+                        # print(dic_crystal[i])
                         plt.plot(dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][0],
                                  dic_crystal[i]["center"][dic_crystal[i]["center"].keys()[0]][0][1], ".",
                                  color="g")  # mfc="C1")
@@ -268,7 +268,7 @@ class SanCheckPlot(object):
             else:
                 plt.show()
         except:
-            print('Not possible to plot.')
+            # print('Not possible to plot.')
         return dic_crystal
         
     def runSanCheckPlot(self, dic_crystal, median_columns, dic_inv):

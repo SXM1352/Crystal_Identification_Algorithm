@@ -67,11 +67,11 @@ class SanCheckRow(object):
                     if not np.isnan(median_y):
                         median_rows[roww] = median_y
                     for jl in y_arr_all:
-                      #  print(np.abs(np.diff([jl,median_x])))
+                      #  # print(np.abs(np.diff([jl,median_x])))
                         if np.abs(np.diff([jl,median_y])) > self.dist_y_v:
-                     #       print("jl",jl)
+                     #       # print("jl",jl)
                             for kk in dic_y_arr_all.keys():
-                     #           print("kk",dic_all_row_x_c_1[kl][kk])
+                     #           # print("kk",dic_all_row_x_c_1[kl][kk])
                                 if dic_y_arr_all[kk] == jl:
                                     #invalid_cr = kk
                                     dic_crystal[kk]["valid"] = False
@@ -80,7 +80,7 @@ class SanCheckRow(object):
                                     inv_peaks_col_x_1.append(jl_x)
                                     
                     for rmm in range(len(inv_peaks_col_y_1)):
-                        #print(rmm)
+                        ## print(rmm)
                         try:
                             x_arr_all.remove(inv_peaks_col_x_1[rmm])
                             y_arr_all.remove(inv_peaks_col_y_1[rmm])
@@ -114,11 +114,11 @@ class SanCheckRow(object):
         median_y = np.median(y_arr_all)
         median_rows[roww] = median_y
         for jl in y_arr_all:
-          #  print(np.abs(np.diff([jl,median_x])))
+          #  # print(np.abs(np.diff([jl,median_x])))
             if np.abs(np.diff([jl,median_y])) > self.dist_y_v:
-         #       print("jl",jl)
+         #       # print("jl",jl)
                 for kk in dic_y_arr_all.keys():
-         #           print("kk",dic_all_row_x_c_1[kl][kk])
+         #           # print("kk",dic_all_row_x_c_1[kl][kk])
                     if dic_y_arr_all[kk] == jl:
                         #invalid_cr = kk
                         dic_crystal[kk]["valid"] = False
@@ -126,7 +126,7 @@ class SanCheckRow(object):
                         inv_peaks_col_y_1.append(jl)
                         inv_peaks_col_x_1.append(jl_x)
         for rmm in range(len(inv_peaks_col_y_1)):
-                #print(rmm)
+                ## print(rmm)
                 try:
                     x_arr_all.remove(inv_peaks_col_x_1[rmm])
                     y_arr_all.remove(inv_peaks_col_y_1[rmm])
