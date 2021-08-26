@@ -57,6 +57,10 @@ class LUD():
         for roi_nr in range(self.n_roi[cg]):
             points_roi = []
             for id in dic_crystal_roi.keys():
+                try:
+                    print("DER BUMS HIER IST REAL:", dic_crystal_roi[id]["roi"])
+                except:
+                    print("DEN BUMS GIBT ES NICHT!!!!")
                 if dic_crystal_roi[id]["valid"] and dic_crystal_roi[id]["center"]:
                     if len(dic_crystal_roi[id]['roi']) > 1 or len(dic_crystal_roi[id]["center"].keys()) > 1:
                         pass
