@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6d171-56d9-4745-91b9-ed35903f7e96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ci/SanCheck/SanCheck_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ci/SanCheck/SanCheck_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clusters/CheckClusterParallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Clusters/CheckClusterParallel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clusters/CheckClusterParallel_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Clusters/CheckClusterParallel_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LUT/LUT.py" beforeDir="false" afterPath="$PROJECT_DIR$/LUT/LUT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScriptoRun/GroupPickles.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/GroupPickles.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

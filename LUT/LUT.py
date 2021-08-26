@@ -65,7 +65,7 @@ class LUD():
                         elif dic_crystal_roi[id]['roi'][0] == roi_nr:
                             points_roi.append(dic_crystal_roi[id]['center'][dic_crystal_roi[id]['center'].keys()[0]][0])
                 except:
-                    print("HIER IST ES!:", dic_crystal_roi[id])
+                    # print("HIER IST ES!:", dic_crystal_roi[id])
             hull_list.append(self.__hull_ROI(np.array(points_roi)))
         return hull_list
 
@@ -148,9 +148,9 @@ class LUD():
 
     def __f_lud(self, cg, dic_crystal, val_region, dic_label, lud, precision_grid, decimals):
         n_lud = 0
-        print("DAMDAMN")
+        # print("DAMDAMN")
         hull_list = self.__calculate_Hull(dic_crystal, cg)
-        print("DAMDAMN111111")
+        # print("DAMDAMN111111")
         for i in np.arange(self.init_event, self.final_event, -decimals):#24,-24.1,-decimals): #change depends on cog
 
             for j in np.arange(-24,24+decimals,decimals):
@@ -191,7 +191,7 @@ class LUD():
                     lud[round(i, precision_grid), round(j, precision_grid)] = None
                 n_lud += 1
             #i_lud += 1
-        print("DAMDAMN22222222")
+        # print("DAMDAMN22222222")
         return lud
 
     def runLUD(self):
@@ -216,10 +216,10 @@ class LUD():
 
             lud_HVD = {}
             dic_label_HVD = {}
-            print("Ist heir ein Bugg?")
+            # print("Ist heir ein Bugg?")
             # print(dic_crystal_HVD.keys())
             lud_HVD = self.__f_lud(cg, dic_crystal_HVD, val_region_HVD, dic_label_HVD, lud_HVD, precision_grid, decimals)
-            print("Anscheinend nicht :)")
+            # print("Anscheinend nicht :)")
             CHECK_FOLDER = os.path.isdir(self.pathtodirectorySave)
             # If folder doesn't exist, then create it.
             if not CHECK_FOLDER:
@@ -235,9 +235,9 @@ class LUD():
             print("done.")
 
 def main():
-    print("333333333333")
+    # print("333333333333")
     parser = argparse.ArgumentParser()
-    print("4444444444444")
+    # print("4444444444444")
     parser.add_argument('--HVD N', dest='HVD', help='Specifiy the HVD algorithm to show  \
                                                          (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL)')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
@@ -248,17 +248,17 @@ def main():
                                                  (N where N=0,1,2,..., finalEvent)')
     parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
                                                      e.g.: "0.01" or "0.1".')
-    print("55555555555555555555")
+    # print("55555555555555555555")
     args = parser.parse_args()
-    print("6666666666666")
+    # print("6666666666666")
     decimals, init_event, final_event, selected_HVD, pathtodirectory = args.decimals, int(args.initEvent), int(args.finalEvent), int(args.HVD), args.fileDirect
-    print("777777777777777")
+    # print("777777777777777")
     LUT = LUD(decimals, init_event, final_event, selected_HVD, pathtodirectory)
-    print("888888888888888")
+    # print("888888888888888")
     LUT.runLUD()
-    print("99999999999999999999")
+    # print("99999999999999999999")
 
 if __name__=='__main__':
-    print("11111111")
+    # print("11111111")
     main()
-    print("222222222")
+    # print("222222222")

@@ -126,7 +126,7 @@ class C_Cluster(object):
         except:
             cogHVDtest = -1
         try:
-            print("DIESER PATH IST DIC", '{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
+            # print("DIESER PATH IST DIC", '{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
             with open('{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD),
                       'rb') as handle:
                 ludHVD = pickle.load(handle)  # 000, 100, 010, 111
@@ -410,7 +410,7 @@ class C_Cluster(object):
         decimals = self.decimals
         
         for i_cgt, cgt in enumerate(cog):
-            print("i_cgt: ", i_cgt, "        cgt: ", cgt, "         i: ", i)
+            # print("i_cgt: ", i_cgt, "        cgt: ", cgt, "         i: ", i)
             data_cluster_calib_pv = {'id': None, 'selected_pv': None,
                                      'COG': None}  # if one needs more pv values, one can go to the respected hdf5 file
             stop = False
@@ -635,11 +635,11 @@ class C_Cluster(object):
         df_dic_Cluster = pd.DataFrame.from_dict(dic_cluster,
                                     columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2', "Cluster"],
                                     orient='index')  # create a dataframe with the data of the current file
-        print("Der PATH!!!", self.fout_dic_Cluster)
+        # print("Der PATH!!!", self.fout_dic_Cluster)
         df_dic_Cluster.to_hdf(self.fout_dic_Cluster, key='dic_Cluster', mode='a', format='table', append=True,
                   data_columns=['id', 'Order_Coord', 'ROI', 'QF', 'id_2', 'Order_Coord_2', 'ROI_2', 'QF_2', "Cluster"], min_itemsize={'Order_Coord':100, 'Order_Coord_2':100, 'ROI':10, 'ROI_2':10, 'index':10})  # we write the dataframe with the index
         #
-        print("Der ZWEITE PATH!!!", '{}dic-{}cluster2.pickle'.format(self.pathtodirectorySave, self.final_event))
+        # print("Der ZWEITE PATH!!!", '{}dic-{}cluster2.pickle'.format(self.pathtodirectorySave, self.final_event))
         with open('{}dic-{}cluster2.pickle'.format(self.pathtodirectorySave, self.final_event), 'wb') as handle:
             pickle.dump(dic_cluster, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
@@ -654,11 +654,11 @@ class C_Cluster(object):
         cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
         cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
 
-        print("HERE IT IS COG000test", cog000test)
-        print("HERE IT IS pv000test", pv000test)
+        # print("HERE IT IS COG000test", cog000test)
+        # print("HERE IT IS pv000test", pv000test)
         # print("HERE IT IS self.lud000", self.lud000)
-        print("HERE IT IS pv000ref", pv000ref)
-        print("HERE IT IS COG000ref", cog000ref)
+        # print("HERE IT IS pv000ref", pv000ref)
+        # print("HERE IT IS COG000ref", cog000ref)
 
 
 
@@ -670,7 +670,7 @@ class C_Cluster(object):
             self.__log("Events are not split into ref and test.")
             cogtest = -1
 
-        print("DER ABSOLUT NEUE PATH:", "{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type))
+        # print("DER ABSOLUT NEUE PATH:", "{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type))
         with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
             dset = f["data"]
             cogref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
@@ -683,7 +683,7 @@ class C_Cluster(object):
         dic_Events_Counts = {}
 
         for j in self.dic_Events.keys():
-            print("KEYS!!! of self.dic_Events: ", j)
+            # print("KEYS!!! of self.dic_Events: ", j)
             dic_Events_Counts[j] = 0
 
         dic_cluster = {}

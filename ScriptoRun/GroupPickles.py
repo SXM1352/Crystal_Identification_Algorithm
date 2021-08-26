@@ -21,7 +21,7 @@ import psutil  # process and systems utils
 
 class C_Group(object):
     def __init__(self, splits, pathtodirectoryRead, pathtodirectorySavePV):
-        print("Diese Splits", splits)
+        # print("Diese Splits", splits)
         self.splits = splits
 
         self.HVD_list = ["000", "100", "010", "111"]
@@ -137,11 +137,11 @@ class C_Group(object):
         for i in range(3425):
             dic_crystal_cluster[i] = []
         print('Grouping...')
-        print(self.splits)
+        # print(self.splits)
         # self.splits = ["2553191", "5106382"] #Meins
         for sp in self.splits:
             final_event = sp[1] #MEINS
-            print("SPSPSPSP:", sp)
+            # print("SPSPSPSP:", sp)
             # final_event = sp #MEINS
             try:
                 data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111 = self.__group_PV_in_HVD(final_event, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
