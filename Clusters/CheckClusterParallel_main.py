@@ -17,8 +17,9 @@ import logging
 import logging.config
 
 # class imports
+print("TADA HIER IST ES")
 from CheckClusterParallel import C_Cluster
-
+print("BUMBUM")
 
 def __CrystalDict_AssignEvents():
     """!
@@ -97,6 +98,7 @@ def __CrystalDict_AssignEvents():
 
 
 def main():
+    print("funktioniert der scheiß?")
     """
     Runs the checks on the cluster, plot the results and save them into a file
     """
