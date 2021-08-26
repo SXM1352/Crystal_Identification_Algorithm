@@ -208,7 +208,7 @@ class SanCheckInv(object):
                                 # print("cry",self.rows[closest2_row][closest2_col])
                                 # print("works8_crycolrow")
                         except:
-                            # print("Not work, problem with second row/column")
+                            print("Not work, problem with second row/column")
                         #pass #there is already a peak with this label and it is valid from the restrictions, that is why the new peak cannot change its label
                     else: #this would be not that probable, because it is invalid, with center and it is not the same peak (most likely double peaks)
                         peaks_to_compare = {"valid":dic_crystal[self.rows[closest_row][closest_col]]["center"][dic_crystal[self.rows[closest_row][closest_col]]["center"].keys()[0]][0], "new":dic_recheck[j][dic_recheck[j].keys()[0]][0]}
