@@ -209,8 +209,9 @@ class LUD():
 
             lud_HVD = {}
             dic_label_HVD = {}
+            print("Ist heir ein Bugg?")
             lud_HVD = self.__f_lud(cg, dic_crystal_HVD, val_region_HVD, dic_label_HVD, lud_HVD, precision_grid, decimals)
-
+            print("Anscheinend nicht :)")
             CHECK_FOLDER = os.path.isdir(self.pathtodirectorySave)
             # If folder doesn't exist, then create it.
             if not CHECK_FOLDER:
@@ -226,7 +227,9 @@ class LUD():
             print("done.")
 
 def main():
+    print("333333333333")
     parser = argparse.ArgumentParser()
+    print("4444444444444")
     parser.add_argument('--HVD N', dest='HVD', help='Specifiy the HVD algorithm to show  \
                                                          (N where N= 0 (=000), 1 (=100), 2 (=010), 3 (=111) or -1 for ALL)')
     parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
@@ -237,12 +240,17 @@ def main():
                                                  (N where N=0,1,2,..., finalEvent)')
     parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
                                                      e.g.: "0.01" or "0.1".')
-
+    print("55555555555555555555")
     args = parser.parse_args()
+    print("6666666666666")
     decimals, init_event, final_event, selected_HVD, pathtodirectory = args.decimals, int(args.initEvent), int(args.finalEvent), int(args.HVD), args.fileDirect
-
+    print("777777777777777")
     LUT = LUD(decimals, init_event, final_event, selected_HVD, pathtodirectory)
+    print("888888888888888")
     LUT.runLUD()
+    print("99999999999999999999")
 
 if __name__=='__main__':
+    print("11111111")
     main()
+    print("222222222")
