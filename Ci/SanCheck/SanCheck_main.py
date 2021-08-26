@@ -194,7 +194,7 @@ def main():
         rows_HVD_ROI = rows_ROI[cg]
         cols_HVD_ROI_12 = cols_ROI_12[cg]
         cols_HVD_ROI_3 = cols_ROI_3[cg]
-
+        print("FEHLER?!222222222")
         dic_crystal, dic_palone, dic_rdefect, RefHVD_Sections, ludHVD = read_data_COG(HVD, pathtodirectoryRead)
         
         dist_x = [0.15,0.25,0.2,0.3] #range for the interval of accepted peaks for columns in different COG
@@ -205,34 +205,39 @@ def main():
         dist_min_y = [0.25,0.185,0.3,0.4]
         
         dist_min_xy_list = [0.3,0.35,0.2,0.4]
-    
+        print("Fehler3333333333")
         CheckCol = SanCheckCol(cg, dist_x)
         dic_crystal, m_cols, dic_recheck_col = CheckCol.runSanCheckCol(dic_crystal)
         # print("m_col",m_cols)
-        
+        print("Fehler4444444444")
         CheckRow = SanCheckRow(cg, dist_y)
         dic_crystal, m_rows = CheckRow.runSanCheckRow(dic_crystal)
         # print("m_rows",m_rows)
-            
+        print("Fehler555555555")
         rows, no_use_dic = PeakHelper.CrystalDict()
         CheckInv = SanCheckInv(dist_min_x, dist_min_y, dist_min_xy_list, m_rows, m_cols, rows, cg)
         dic_crystal, dic_inv = CheckInv.runSanCheckInv(dic_crystal, dic_palone, dic_rdefect, dic_recheck_col)
     
-            
+        print("Fehler6666666666666")
+
         onlyCheckCol = SanCheckCol(cg, dist_x)
         m_cols_def = onlyCheckCol.runCheckCol(dic_crystal)
         # print("m_col_def",m_cols_def)
+        print("Fehler77777777777")
 
         onlyCheckRow = SanCheckRow(cg, dist_y)
         m_rows_def = onlyCheckRow.runCheckRow(dic_crystal)
+        print("Fehler8888888888")
 
         # print("m_rows_def",m_rows_def)
 
         CheckInv_def = SanCheckInv(dist_min_x, dist_min_y, dist_min_xy_list, m_rows_def, m_cols_def, rows, cg)
         dic_crystal, dic_inv = CheckInv_def.check_def(dic_crystal, dic_inv)
+        print("Fehler9999999999")
 
         dic_crystal_ROI = dic_HVD_ROI(rows_HVD_ROI, cols_HVD_ROI_12, cols_HVD_ROI_3, dic_crystal, rows)
-        
+        print("Fehler9 aber mehr")
+
         CheckPlot = SanCheckPlot(cg, RefHVD_Sections, ludHVD, dist_min_x, dist_min_y, HVD, pathtodirectorySavePlot)
         dic_crystal_f = CheckPlot.runSanCheckPlot(dic_crystal_ROI, m_cols_def, dic_inv)
         print("BUUUUMSSS11111111111")
