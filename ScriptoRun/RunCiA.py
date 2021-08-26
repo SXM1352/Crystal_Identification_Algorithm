@@ -79,57 +79,77 @@ def main():
     decimals, n_Procs, selected_HVD, n_Events, pathtodirectory, savePlot = args.decimals, int(args.nCPU), int(args.HVD), int(args.nEvents), args.fileDirect, args.SavePlot
 
     #Run routine to find peaks
+    print("AAAAAAAAAAAAAAAAAAAAA")
     command_PeakF = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
+    print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
     os.system(command_PeakF)
 
     #run routine to label peaks
+    print("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
     command_SanCheck = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
+    print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
     os.system(command_SanCheck)
-
+    print("EEEEEEEEEEEEEEEEEEEEEEEEEEE")
     pathtodirectoryReadLUD = 'dic-LUD/'
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
 
     CHECK_FOLDER = os.path.isdir(pathtodirectory + pathtodirectoryReadLUD)
+    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
     # If folder doesn't exist, then create it.
     if not CHECK_FOLDER:
         os.makedirs(pathtodirectory + pathtodirectoryReadLUD)
         print("created folder : ", pathtodirectory + pathtodirectoryReadLUD)
-
+    print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
     if selected_HVD == -1:
+        print("IIIIIIIIIIIIIIIIIIIIIIIII")
         jobs = range(4) # we take all HVD algorithms, for only one: 0 (=000), 1 (=100), 2 (=010), 3 (=111)
+        print("JJJJJJJJJJJJJJJJJJJJJJJJJ")
     else:
+        print("KKKKKKKKKKKKKKKKKKKKKKKKKK")
         jobs = [selected_HVD]
-
+    print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
     #Select number of cpu to use
     n_Procs_total = psutil.cpu_count()
+    print("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
     if n_Procs >= n_Procs_total:
+        print("NNNNNNNNNNNNNNNNNNNNNNNNNNN")
         n_Procs = n_Procs_total - 1
-
+    print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     print('Number of used CPU: ', n_Procs)
     print('Number of available CPU: ', n_Procs_total)
 
     #Divide jobs for LUT and speed the process up
     n_Events_LUT = 48
     n_jobs_per_proc = int(n_Events_LUT / n_Procs)
+    print("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
 
     jobs_per_HVD = __chunkify_data(n_jobs_per_proc)
+    print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
     __save_Jobs(jobs_per_HVD, pathtodirectory)
+    print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
 
     list_commands = write_commands(jobs, pathtodirectory, jobs_per_HVD, decimals)
-
+    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs")
     fCommand = create_finalCommand(list_commands)
+    print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
     fCommand = fCommand  + ' & wait'
-
+    print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
     # print('waiting...')
     # sleep(4000)
     os.system(fCommand)  # LUT
-
+    print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
     Group_jobs = LUT_Group(jobs_per_HVD, pathtodirectory) #group pickles
+    print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
     Group_jobs.runLUTGroup()
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 
     precision_grid = len(decimals.split(".")[1])
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
     command_CheckC = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
+    print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
     os.system(command_CheckC)
+    print("FINISHED!!!!")
 
 if __name__ == '__main__':
     main()
