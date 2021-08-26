@@ -127,6 +127,10 @@ def main():
     print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
     __save_Jobs(jobs_per_HVD, pathtodirectory)
     print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
+    print(jobs)
+    print(pathtodirectory)
+    print(jobs_per_HVD)
+    print(decimals)
 
     list_commands = write_commands(jobs, pathtodirectory, jobs_per_HVD, decimals)
     print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs")
