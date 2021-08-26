@@ -142,6 +142,7 @@ def main():
     print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
     # print('waiting...')
     # sleep(4000)
+    print("COMANDO!!!:", fCommand)
     os.system(fCommand)  # LUT
     print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
     Group_jobs = LUT_Group(jobs_per_HVD, pathtodirectory) #group pickles
