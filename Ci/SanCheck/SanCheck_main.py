@@ -147,7 +147,7 @@ def main():
     # If folder doesn't exist, then create it.
     if not CHECK_FOLDER:
         os.makedirs(pathtodirectoryRead + pathtodirectorySave)
-        print("created folder : ", pathtodirectoryRead + pathtodirectorySave)
+        # print("created folder : ", pathtodirectoryRead + pathtodirectorySave)
 
     # cols_111_ROI_12 = [[2, 15], [14, 27], [26, 39], [38, 51], [50, 63]]
     # cols_111_ROI_3 = [[0, 7], [6, 13], [12, 19], [18, 25], [24, 31]]
@@ -208,11 +208,11 @@ def main():
     
         CheckCol = SanCheckCol(cg, dist_x)
         dic_crystal, m_cols, dic_recheck_col = CheckCol.runSanCheckCol(dic_crystal)
-        print("m_col",m_cols)
+        # print("m_col",m_cols)
         
         CheckRow = SanCheckRow(cg, dist_y)
         dic_crystal, m_rows = CheckRow.runSanCheckRow(dic_crystal)
-        print("m_rows",m_rows)
+        # print("m_rows",m_rows)
             
         rows, no_use_dic = PeakHelper.CrystalDict()
         CheckInv = SanCheckInv(dist_min_x, dist_min_y, dist_min_xy_list, m_rows, m_cols, rows, cg)
@@ -221,12 +221,12 @@ def main():
             
         onlyCheckCol = SanCheckCol(cg, dist_x)
         m_cols_def = onlyCheckCol.runCheckCol(dic_crystal)
-        print("m_col_def",m_cols_def)
+        # print("m_col_def",m_cols_def)
 
         onlyCheckRow = SanCheckRow(cg, dist_y)
         m_rows_def = onlyCheckRow.runCheckRow(dic_crystal)
 
-        print("m_rows_def",m_rows_def)
+        # print("m_rows_def",m_rows_def)
 
         CheckInv_def = SanCheckInv(dist_min_x, dist_min_y, dist_min_xy_list, m_rows_def, m_cols_def, rows, cg)
         dic_crystal, dic_inv = CheckInv_def.check_def(dic_crystal, dic_inv)

@@ -153,8 +153,8 @@ def main():
             pLabels = PeakLabels(cg, pclosest, c_roi, rows, dop_columns_accepted_edge, dop_min_edge, dop_max_edge, lenmin_edge, lenmax_edge, rows_accepted, dop_columns_accepted, len_columns_accepted, dop_min_cent, dop_max_cent, lenmin_cent, lenmax_cent)
             dic_crystal, dic_palone, dic_rdefect = pLabels.label(dic_palone, dic_rdefect, dic_crystal, dic_rows, dic_c[cg]) #auch global!!!
 
-            print("palone",dic_palone)
-            print("rdefect", dic_rdefect)
+            # print("palone",dic_palone)
+            # print("rdefect", dic_rdefect)
             #print("dc_c", dic_crystal[1703])
             # active_area = raw_input('jr (active area): ')
             active_area = "On"
