@@ -180,7 +180,7 @@ def main():
                     [[5, 18], [17, 30], [29, 42], [41, 54], [53, 66]]]
 
     HVD_list = ["000", "100", "010", "111"]
-
+    print("FEHLER?!11111")
     if selected_HVD == -1:
         n_HVD = 4
         fixed_cg = False
@@ -194,7 +194,7 @@ def main():
         rows_HVD_ROI = rows_ROI[cg]
         cols_HVD_ROI_12 = cols_ROI_12[cg]
         cols_HVD_ROI_3 = cols_ROI_3[cg]
-        
+
         dic_crystal, dic_palone, dic_rdefect, RefHVD_Sections, ludHVD = read_data_COG(HVD, pathtodirectoryRead)
         
         dist_x = [0.15,0.25,0.2,0.3] #range for the interval of accepted peaks for columns in different COG
@@ -235,11 +235,11 @@ def main():
         
         CheckPlot = SanCheckPlot(cg, RefHVD_Sections, ludHVD, dist_min_x, dist_min_y, HVD, pathtodirectorySavePlot)
         dic_crystal_f = CheckPlot.runSanCheckPlot(dic_crystal_ROI, m_cols_def, dic_inv)
-        
+        print("BUUUUMSSS11111111111")
         #Extract result
         with open('{}dic-crystal-{}-checked.pickle'.format(pathtodirectoryRead + pathtodirectorySave, HVD), 'wb') as handle:
             pickle.dump(dic_crystal_f, handle, protocol=pickle.HIGHEST_PROTOCOL)   #protocol to make it faster it selects last protocol available for current python version (important in py27)
-
+        print("BUUUUUUMSSSSS222222222222")
         logging.info('Dictionary containing checked labels of peaks saved in ' + pathtodirectoryRead + pathtodirectorySave + '/ \n')
         
     logging.info('Thanks for using our software. Hope to see you soon. ## (in Peak_main)\n')
