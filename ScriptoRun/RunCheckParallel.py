@@ -106,9 +106,9 @@ def main():
     # decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
     decimals= 1
     n_Procs = 1
-    n_Events = 5
-    pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/"
-    savePlot = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/"
+    n_Events = 30
+    pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+    savePlot = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
     stack_type = 8
     # n_Procs = int(args.nCPU)
     # print(args.nCPU, args.nEvents)
@@ -151,7 +151,7 @@ def main():
     #
     # # print('waiting...')
     # # sleep(4000)
-    print("RUNCECKIIIIIII""""""""""""""")
+    print("RUNCECKIIIIIII")
     os.system(fCommand) #check clusters
     print("RUNCECKJJJJJJJJ")
 

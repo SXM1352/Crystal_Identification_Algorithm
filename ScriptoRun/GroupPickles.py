@@ -138,54 +138,54 @@ class C_Group(object):
             dic_crystal_cluster[i] = []
         print('Grouping...')
         print(self.splits)
-        self.splits = ["2553191", "5106382"] #Meins
+        # self.splits = ["2553191", "5106382"] #Meins
         for sp in self.splits:
             # final_event = sp[1] #MEINS
             final_event = sp #MEINS
-            # try:
-            data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111 = self.__group_PV_in_HVD(final_event, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
-            # except:
-            #     print("Problem grouping PV.")
+            try:
+                data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111 = self.__group_PV_in_HVD(final_event, data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
+            except:
+                print("Problem grouping PV.")
 
-            # try:
-            dic_Events_Counts = self.__group_Events_Counts(final_event, dic_Events_Counts)
-            # except:
-            #     print("Problem grouping dic_Events_Counts.")
+            try:
+                dic_Events_Counts = self.__group_Events_Counts(final_event, dic_Events_Counts)
+            except:
+                print("Problem grouping dic_Events_Counts.")
 
-            # try:
-            dic_AssignE = self.__group_Assign_Events(final_event, dic_AssignE)
-            # except:
-            #     print("Problem grouping AssignE.")
+            try:
+                dic_AssignE = self.__group_Assign_Events(final_event, dic_AssignE)
+            except:
+                print("Problem grouping AssignE.")
 
-            # try:
-            data_cluster_calib_pv_all, dic_crystal_cluster = self.__group_calib_PV(final_event, data_cluster_calib_pv_all, dic_crystal_cluster)
-            # except:
-            #     print("Problem grouping CalibPV.")
+            try:
+                data_cluster_calib_pv_all, dic_crystal_cluster = self.__group_calib_PV(final_event, data_cluster_calib_pv_all, dic_crystal_cluster)
+            except:
+                print("Problem grouping CalibPV.")
         print('Saving...')
-        # try:
-        # self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
-        #     print("PV is saved.")
-        # except:
-        #     print("Problem saving PV.")
+        try:
+            self.__PV_in_HVD(data_cluster_pv_000, data_cluster_pv_100, data_cluster_pv_010, data_cluster_pv_111)
+            print("PV is saved.")
+        except:
+            print("Problem saving PV.")
 
-        # try:
-        # self.__save_Events_Counts(dic_Events_Counts)
-        #     print("dic_Events_Counts is saved.")
-        # except:
-        #     print("Problem saving dic_Events_Counts.")
+        try:
+            self.__save_Events_Counts(dic_Events_Counts)
+            print("dic_Events_Counts is saved.")
+        except:
+            print("Problem saving dic_Events_Counts.")
 
-        # try:
-        # self.__save_Assign_Events(dic_AssignE)
-        #     print("AssignE is saved.")
-        # except:
-        #     print("Problem saving AssignE.")
+        try:
+            self.__save_Assign_Events(dic_AssignE)
+            print("AssignE is saved.")
+        except:
+            print("Problem saving AssignE.")
 
-        # self.__save_Crystal_Cluster(dic_crystal_cluster)
+        self.__save_Crystal_Cluster(dic_crystal_cluster)
 
-        # try:
-        # self.__save_calib_PV(data_cluster_calib_pv_all)
-        #     print("CalibPV is saved.")
-        # except:
-        #     print("Problem saving CalibPV.")
+        try:
+            self.__save_calib_PV(data_cluster_calib_pv_all)
+            print("CalibPV is saved.")
+        except:
+            print("Problem saving CalibPV.")
         print('Saved.')
 
