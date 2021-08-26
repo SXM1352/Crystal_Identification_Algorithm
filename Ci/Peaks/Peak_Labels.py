@@ -71,20 +71,20 @@ class PeakLabels(object):
         dic_palo = {} # a joker dictionary
         n_rdefect = 0
         
-        print("self.c_roi is: ", self.c_roi)
+        # print("self.c_roi is: ", self.c_roi)
         for i in dic_rows.keys(): #we need to remove those rows that are classified and then loop again the rest
             i_crystal = i
 
             ch = np.where(np.abs(np.subtract(np.array(PeakHelper.Extract_x(dic_rows[i][0])),self.pclosest[0]))==np.min(np.abs(np.subtract(np.array(PeakHelper.Extract_x(dic_rows[i][0])),self.pclosest[0]))))
             ch = ch[0]
-            print(dic_rows[i])
+            # print(dic_rows[i])
             if not found:
                 ch = np.where(np.array(dic_rows[i][0])==self.pclosest) #closest peak to the reference from each row
                 ch = np.array([key for key,group in groupby(ch[0]) if len(list(group)) > 1])
                 ch_cent = np.where(np.array(dic_rows[i][0])==self.pclosest) #peak at the center to take reference
                 ch_cent = np.array([key for key,group in groupby(ch_cent[0]) if len(list(group)) > 1])
-                print("ch_cent is: ",ch_cent)
-                print(dic_rows[i])
+                # print("ch_cent is: ",ch_cent)
+                # print(dic_rows[i])
                 i_clo = i
             
             if ch_cent.size>0: #the peak is found (we need one to assure we have found the peak with x,y values and not only with x or y)
@@ -120,8 +120,8 @@ class PeakLabels(object):
                         i_change = True
                         
                         peaks_alone.append(dic_rows[i][0])
-                        print("Alone st.")
-                        print(dic_rows[i][0])
+                        # print("Alone st.")
+                        # print(dic_rows[i][0])
                         dic_palo[n_alone] = dic_rows[i][0]
                         if (self.c_roi in dic_palone.keys()):
                             dic_palo[dic_palone[self.c_roi].keys()[0]] = dic_palone[self.c_roi].values()[0]
@@ -132,7 +132,7 @@ class PeakLabels(object):
                         n_alone += 1
                         continue        
                 if dop == 1: 
-                    #print("A sanity check is also needed in case of missing the reference peak. On the edges is less probable")
+                    ## print("A sanity check is also needed in case of missing the reference peak. On the edges is less probable")
                     if ch_cent[0] == 0:
                         for en_j, j in enumerate(dic_rows[i][0]):
                             dic_crystal[self.rows[dic_c[self.c_roi][1]+(i_crystal-i_clo)][dic_c[self.c_roi][0]+en_j]]["center"][self.c_roi] = [j]
@@ -148,7 +148,7 @@ class PeakLabels(object):
                                 if i_crystal <= i_clo+self.rows_accepted and en_j >= ch[0]-self.dop_columns_accepted_edge and en_j <= ch[0]+self.dop_columns_accepted_edge: #with the numbers of peaks we play with the peak in the middle (reference fomr main ref)
                                     dic_crystal[self.rows[dic_c[self.c_roi][1]+(i_crystal-i_clo)][((dic_c[self.c_roi][0]*2)+4)-one_three[en_j]]]["valid"] = True
                     else: 
-                        #print("#row with 1st and 2nd peaks when we are not at the edges, we need to find also reference peaks (in the middle? those closest to x=12,etcc) for these rows")
+                        ## print("#row with 1st and 2nd peaks when we are not at the edges, we need to find also reference peaks (in the middle? those closest to x=12,etcc) for these rows")
                         for en_j, j in enumerate(dic_rows[i][0]):
                             try:
                                 dic_crystal[self.rows[dic_c[self.c_roi][1]+(i_crystal-i_clo)][((dic_c[self.c_roi][0]*2)+2)+(en_j-ch[0])]]["center"][self.c_roi] = [j]
@@ -157,26 +157,26 @@ class PeakLabels(object):
                                     if i_crystal <= i_clo+self.rows_accepted and en_j >= ch[0]-(self.dop_columns_accepted) and en_j <= ch[0]+(self.dop_columns_accepted): #we want to take the column under the last column from 3rd layer
                                         dic_crystal[self.rows[dic_c[self.c_roi][1]+(i_crystal-i_clo)][((dic_c[self.c_roi][0]*2)+2)+(en_j-ch[0])]]["valid"] = True
                             except:
-                      #          print("Problem choosing the correct row.")
+                      #          # print("Problem choosing the correct row.")
                                 row_defect = True       
                     dop = 0
                 else: # dop == 0: 
                     for en_j, j in enumerate(dic_rows[i][0]):
                         if dic_c[self.c_roi][0] == 0 or dic_c[self.c_roi][0] == 30: #we check whether we are at the edges
                             if dic_c[self.c_roi][0] == 0 and ch_cent[0] != 0:
-                                #print("Problem finding reference. Sanity check activated.")
+                                ## print("Problem finding reference. Sanity check activated.")
                                 self.c_roi_defect = self.c_roi
                                 row_defect = True
                             elif dic_c[self.c_roi][0] == 30 and dic_rows[i_clo][0][ch_cent[0]] != dic_rows[i_clo][0][-1]: #right side edge
-                                #print("Problem finding reference. Sanity check activated.")
+                                ## print("Problem finding reference. Sanity check activated.")
                                 self.c_roi_defect = self.c_roi
                                 row_defect = True
                             elif dic_c[self.c_roi][0] == 30 and dic_rows[i][0][ch[0]] != dic_rows[i][0][-1]:
-                                #print("Problem finding reference for a secondary row. Information not valid?")
+                                ## print("Problem finding reference for a secondary row. Information not valid?")
                                 #pass
                                 row_defect = True
                             elif dic_c[self.c_roi][0] == 0 and ch[0] != 0: #right side edge
-                                #print("Problem finding reference for a secondary row. Information not valid?")
+                                ## print("Problem finding reference for a secondary row. Information not valid?")
                                 #pass
                                 row_defect = True
                             else:
@@ -199,7 +199,7 @@ class PeakLabels(object):
                                     if i_crystal <= i_clo+self.rows_accepted and en_j >= ch[0]-(self.len_columns_accepted-1) and en_j <= ch[0]+(self.len_columns_accepted-1): #we deal with less columns when peaks from 3rd layer
                                         dic_crystal[self.rows[dic_c[self.c_roi][1]+(i_crystal-i_clo)][dic_c[self.c_roi][0]+(en_j-ch[0])]]["valid"] = True
                             except:
-                            #    print("Problem choosing the correct row.")
+                            #    # print("Problem choosing the correct row.")
                                 row_defect = True
                     dop = 1
                 if row_defect:
@@ -273,7 +273,7 @@ class PeakLabels(object):
                                 if h_crystal >= i_clo-self.rows_accepted and en_j >= ch[0]-self.dop_columns_accepted_edge and en_j <= ch[0]+self.dop_columns_accepted_edge:
                                     dic_crystal[self.rows[dic_c[self.c_roi][1]+(h_crystal-i_clo)][((dic_c[self.c_roi][0]*2)+4)-one_three[en_j]]]["valid"] = True
                         except:
-                            #print("Problem choosing the correct row.")
+                            ## print("Problem choosing the correct row.")
                             row_defect = True
                 else: 
                     one_three = range(2,len(dic_rows[h][0])+2)#[2,3,4,5,6,7,8]
@@ -285,34 +285,34 @@ class PeakLabels(object):
                                 if h_crystal >= i_clo-self.rows_accepted and en_j >= ch[0]-(self.dop_columns_accepted) and en_j <= ch[0]+(self.dop_columns_accepted):
                                     dic_crystal[self.rows[dic_c[self.c_roi][1]+(h_crystal-i_clo)][((dic_c[self.c_roi][0]*2)+2)+(en_j-ch[0])]]["valid"] = True 
                         except:
-                            #print("Problem choosing the correct row.")
+                            ## print("Problem choosing the correct row.")
                             row_defect = True         
                 dop = 0
             else: # dop == 0: 
                 for en_j, j in enumerate(dic_rows[h][0]):
                     if dic_c[self.c_roi][0] == 0 or dic_c[self.c_roi][0] == 30:
                         if dic_c[self.c_roi][0] == 0 and ch_cent[0] != 0:
-                            #print("Problem finding reference. Sanity check activated.")
+                            ## print("Problem finding reference. Sanity check activated.")
                             self.c_roi_defect = self.c_roi
                             row_defect = True
                         elif dic_c[self.c_roi][0] == 30 and dic_rows[i_clo][0][ch_cent[0]] != dic_rows[i_clo][0][-1]: #right side edge
-                            #print("Problem finding reference. Sanity check activated.")
+                            ## print("Problem finding reference. Sanity check activated.")
                             self.c_roi_defect = self.c_roi
                             row_defect = True
                         elif dic_c[self.c_roi][0] == 30 and dic_rows[h][0][ch[0]] != dic_rows[h][0][-1]:
                             #pass
                             row_defect = True
-                            #print("Problem finding reference for a secondary row. Information not valid?")
+                            ## print("Problem finding reference for a secondary row. Information not valid?")
                         elif dic_c[self.c_roi][0] == 0 and ch[0] != 0: #left side edge
                             #pass
                             row_defect = True
-                            #print("Problem finding reference for a secondary row. Information not valid?")
+                            ## print("Problem finding reference for a secondary row. Information not valid?")
                         else:
-                            #print(dic_rows[h][0])
+                            ## print(dic_rows[h][0])
                             dic_crystal[self.rows[dic_c[self.c_roi][1]+(h_crystal-i_clo)][dic_c[self.c_roi][0]+(en_j-ch[0])]]["center"][self.c_roi] = [j]
     
                             if len(dic_rows[h][0]) > self.lenmin_edge and len(dic_rows[h][0]) < self.lenmax_edge:
-            #                    print("LEN")
+            #                    # print("LEN")
                                 if self.cg == 1:
                                         self.len_columns_accepted = self.len_columns_accepted-1
                                 if dic_c[self.c_roi][0] == 30: #we are at the right side
@@ -330,7 +330,7 @@ class PeakLabels(object):
                                 if h_crystal >= i_clo-self.rows_accepted and en_j >= ch[0]-(self.len_columns_accepted-1) and en_j <= ch[0]+(self.len_columns_accepted-1):
                                     dic_crystal[self.rows[dic_c[self.c_roi][1]+(h_crystal-i_clo)][dic_c[self.c_roi][0]+(en_j-ch[0])]]["valid"] = True
                         except:
-                            #print("Problem choosing the correct row.")
+                            ## print("Problem choosing the correct row.")
                             row_defect = True
                 dop = 1
                 if row_defect:

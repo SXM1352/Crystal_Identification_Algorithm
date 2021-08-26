@@ -89,12 +89,12 @@ class PeakFinder(object):
         posx = spectrum.GetPositionX()
         posy = spectrum.GetPositionY()
         xycoord_arr = []
-        print(npeaks)
+        # print(npeaks)
         for kl in range(npeaks):
             xcoord = self.hist[1][int(posx[kl])]
             ycoord = self.hist[2][int(posy[kl])]
             xycoord_arr.append([xcoord,ycoord])
-        print("Peaks are: ", xycoord_arr)
+        # print("Peaks are: ", xycoord_arr)
         return xycoord_arr
 
     def __closest(self, cur_pos, positions): 
@@ -178,7 +178,7 @@ class PeakFinder(object):
                         positions.pop(indx) 
             except ValueError:
                 pass
-                #print("Positions is empty or if it is not running fine, check for problem.")
+                ## print("Positions is empty or if it is not running fine, check for problem.")
             #calculate averaged dist in x,y to have a checker for the row and a possible interpolation in case of missing point
             """with 000 and 010 15 is enough, with 100 we need 20"""
             if self.cg == 0 or self.cg == 1:
@@ -192,7 +192,7 @@ class PeakFinder(object):
                     dist = abs(cur_pos[1]-pos[1])
                 if dist < low_dist and cur_pos[0] != pos[0]:
                     cur_pos = pos #to modify the limits while changing the position instead of a single horizontal band 
-                    #print(np.where(np.array(positions)==pos)) #it says where x OR y are the same
+                    ## print(np.where(np.array(positions)==pos)) #it says where x OR y are the same
                     stop = False
                     for indx in np.where(np.array(positions)==pos)[0]: #to check that we have x AND y the same (always together)
                         if not stop:
@@ -246,6 +246,6 @@ class PeakFinder(object):
         list1 = sorted(list1, key=lambda x:x[1], reverse=True) #sorted according to "y"
     
         dic_rows,positionss = self.__closest_y(list1)
-        print(positionss)
+        # print(positionss)
         
         return dic_rows
