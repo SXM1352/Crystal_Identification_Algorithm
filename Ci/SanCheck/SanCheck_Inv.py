@@ -230,7 +230,7 @@ class SanCheckInv(object):
                         # print("works9label")
                         dic_crystal[self.rows[closest_row][closest_col]]["valid"] = True # we set them as valid because the lines are only from valid columns and rows
             else:
-                # print("mist2")
+                print("mist2")
             
         return dic_crystal, dic_inv
     
