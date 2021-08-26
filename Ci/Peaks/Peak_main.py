@@ -167,20 +167,20 @@ def main():
                 pplot = PeakPlot(x_arr, y_arr, jr, HVD, readdir_refSections)
                 pplot.runPeakPlot()
 
-        with open('{}/dic-crystal-{}.pickle'.format(savedir, HVD), 'wb') as handle:
+        with open('{}dic-crystal-{}.pickle'.format(savedir, HVD), 'wb') as handle:
             pickle.dump(dic_crystal, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-        logging.info('Dictionary containing labels of crystals saved in ' + savedir + '/ \n')
+        logging.info('Dictionary containing labels of crystals saved in ' + savedir + ' \n')
 
-        with open('{}/dic_pAlone-{}.pickle'.format(savedir, HVD), 'wb') as handle:
+        with open('{}dic_pAlone-{}.pickle'.format(savedir, HVD), 'wb') as handle:
             pickle.dump(dic_palone, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-        logging.info('Dictionary containing peaks which were not assigned to any row saved in ' + savedir + '/ \n')
+        logging.info('Dictionary containing peaks which were not assigned to any row saved in ' + savedir + ' \n')
 
-        with open('{}/dic_rDefect-{}.pickle'.format(savedir, HVD), 'wb') as handle:
+        with open('{}dic_rDefect-{}.pickle'.format(savedir, HVD), 'wb') as handle:
             pickle.dump(dic_rdefect, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-        logging.info('Dictionary containing wrongly assigned rows of peaks saved in ' + savedir + '/ \n')
+        logging.info('Dictionary containing wrongly assigned rows of peaks saved in ' + savedir + ' \n')
         
     logging.info('Thanks for using our software. Hope to see you soon. ## (in Peak_main)\n')
 
