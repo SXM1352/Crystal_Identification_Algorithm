@@ -29,7 +29,7 @@ class C_Cluster(object):
 
     def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type):
         self.line = "=" * 40
-
+        print("Oder startet direkt der Bums hier?")
         # self.lock = Lock()
 
         self.start = start

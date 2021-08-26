@@ -117,10 +117,12 @@ def main():
     args = parser.parse_args()
 
     decimals, init_event, final_event, pathtodirectoryRead, stack_type = args.decimals, int(args.initEvent), int(args.finalEvent), args.fileDirect, args.typeStack
+    print("Auch bis hier?")
     logging.info('----------------------------------')
     logging.info('NEW RUN OF THE PROGRAM \n')
     # we can use an argparser for the values we use, this is temporary
     start = clock()
+    print("oder hier?")
     # Events_list = ["Events_with_all", "Events_100_111_010", "Events_000_010_100", "Events_100_111_000", "Events_010_111_000", "Events_010_100", "Events_010_111", "Events_100_111", "Events_000_111", "Events_000_010", "Events_000_100", "Events_000", "Events_100", "Events_010", "Events_111"]
     dic_Events = {}
     dic_Events["ALL"] = {"000": True, "100": True, "010": True, "111": True}
@@ -166,13 +168,13 @@ def main():
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-02-17_-_15-20-39_-_2011002000_A41B0821-034_2021-02-05/2021-02-17_-_16-17-01_-_floodmapWithSources/ramdisks_2021-02-17_-_16-37-36/'
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-01_-_13-29-22_-_2011002000_A41B069400001_2021-02-25/2021-03-01_-_16-27-02_-_floodmapWithSources2/ramdisks_2021-03-01_-_16-53-55/'
     # pathtodirectoryRead = '/media/david.perez/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/'
-
+    print("oder hier hier???")
     Check_Cluster = C_Cluster(init_event, final_event,
         start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type)
     Check_Cluster.runCluster()
-
+    print("Oder sogar auch hier?")
     logging.info('Thanks for using our software. Hope to see you soon. ## (in Check_main)\n')
-
+    print("Was ist mit hier?")
 
 if __name__ == '__main__':
     print(str(datetime.datetime.now()))
