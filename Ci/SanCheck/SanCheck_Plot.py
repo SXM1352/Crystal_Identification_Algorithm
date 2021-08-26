@@ -268,7 +268,7 @@ class SanCheckPlot(object):
             else:
                 plt.show()
         except:
-            # print('Not possible to plot.')
+            print('Not possible to plot.')
         return dic_crystal
         
     def runSanCheckPlot(self, dic_crystal, median_columns, dic_inv):
