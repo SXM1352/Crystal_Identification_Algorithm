@@ -118,6 +118,7 @@ class C_Cluster(object):
             print("Read: {}hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD))
             with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
+                print(pvHVDtest)
         except:
             "{}hdf5Data/pv{}test.pickle doesn work".format(self.pathtodirectoryRead, HVD)
 
