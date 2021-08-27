@@ -59,7 +59,7 @@ class C_Cluster(object):
         # self.pathtodirectoryReadHDF5 = '20210315_NEW_hdf5Data/'
 
         self.pathtodirectorySave = self.pathtodirectoryRead + 'Parallel/'
-        self.pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Parallel/"
+        # self.pathtodirectorySave = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Parallel/"
         self.pathtodirectorySavePV = 'PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210304_NEW-2021-02-17_PhotonSpectrum/'
         # self.pathtodirectorySavePV = '20210303_NEW-2021-02-17_PhotonSpectrum/'
@@ -69,6 +69,7 @@ class C_Cluster(object):
         # self.pathtodirectorySavePV = 'PV/'
 
         self.fout_dic_Cluster = '{}dic_Cluster{}.hdf5'.format(self.pathtodirectorySave, self.final_event)
+        print("SELF.FOUT_DIC_CLUSTER: ", self.fout_dic_Cluster)
 
         self.fout_dic_notSelectedCluster = '{}dic-notSelected-Cluster{}.hdf5'.format(self.pathtodirectorySave, self.final_event)
 
@@ -98,12 +99,11 @@ class C_Cluster(object):
                       [(t * 1000,), 1000, 60, 60])
 
     def __log(self, s, elapsed=None):
-        print self.line
-        print self.__secondsToStr(clock()), '-', s
+        print(self.line)
+        print(self.__secondsToStr(clock()), '-', s)
         if elapsed:
-            print "Elapsed time:", elapsed
-        print self.line
-        print
+            print("Elapsed time:", elapsed)
+        print(self.line)
 
     def __endlog(self):
         end = clock()
@@ -115,13 +115,13 @@ class C_Cluster(object):
 
     def __read_data_COG(self, HVD):
         try:
-            with open('/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/hdf5Data/pv{}test.pickle'.format(HVD), 'rb') as handle:
+            with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             pvHVDtest = -1
 
         try:
-            with open('/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ramdisks_2021-03-15_-_13-06-48/hdf5Data/cog{}test.pickle'.format(HVD), 'rb') as handle:
+            with open('{}/hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             cogHVDtest = -1
@@ -654,21 +654,21 @@ class C_Cluster(object):
         cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
         cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
 
-        # print("HERE IT IS COG000test", cog000test)
-        # print("HERE IT IS pv000test", pv000test)
-        # print("HERE IT IS self.lud000", self.lud000)
-        # print("HERE IT IS pv000ref", pv000ref)
-        # print("HERE IT IS COG000ref", cog000ref)
+        print("HERE IT IS COG000test", cog000test)
+        print("HERE IT IS pv000test", pv000test)
+        print("HERE IT IS self.lud000", self.lud000)
+        print("HERE IT IS pv000ref", pv000ref)
+        print("HERE IT IS COG000ref", cog000ref)
 
 
 
 
-        try:
-            with open('/home/david.perez/Desktop/cogTest4.pickle', 'rb') as handle:
-                cogtest = pickle.load(handle)  # 000, 100, 010, 111
-        except:
-            self.__log("Events are not split into ref and test.")
-            cogtest = -1
+        # try:
+        #     with open('/home/david.perez/Desktop/cogTest4.pickle', 'rb') as handle:
+        #         cogtest = pickle.load(handle)  # 000, 100, 010, 111
+        # except:
+        #     self.__log("Events are not split into ref and test.")
+        #     cogtest = -1
 
         # print("DER ABSOLUT NEUE PATH:", "{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type))
         with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
@@ -724,17 +724,18 @@ class C_Cluster(object):
         except:
             print("Problem saving CalibPV.")
 
-        try:
-            self.__save_Dic_Cluster(dic_cluster)
-            self.__log("DicCluster is saved.")
-        except:
-            print("Problem saving DicCluster.")
-
-        try:
-            self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
-            self.__log("DicnotSelectedCluster is saved.")
-        except:
-            print("Problem saving DicnotSelectedCluster.")
+        # try:
+        #     self.__save_Dic_Cluster(dic_cluster)
+        #     self.__log("DicCluster is saved.")
+        # except:
+        #     print("Problem saving DicCluster.")
+        self.__save_Dic_Cluster(dic_cluster)
+        # try:
+        #     self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
+        #     self.__log("DicnotSelectedCluster is saved.")
+        # except:
+        #     print("Problem saving DicnotSelectedCluster.")
+        self.__save_Dic_notSelected_Cluster(dic_notSelected_cluster)
 
         self.__log("SAVED")
 
