@@ -115,17 +115,16 @@ class C_Cluster(object):
 
     def __read_data_COG(self, HVD):
         try:
-            print("hdf5 path dingsbums", self.pathtodirectoryRead)
             with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
-            pvHVDtest = -1
+            "{}/hdf5Data/pv{}test.pickle doesn work".format(self.pathtodirectoryRead, HVD)
 
         try:
             with open('{}/hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
-            cogHVDtest = -1
+            print('{}/hdf5Data/cog{}test.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
         try:
             # print("DIESER PATH IST DIC", '{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
             with open('{}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD),
@@ -133,16 +132,23 @@ class C_Cluster(object):
                 ludHVD = pickle.load(handle)  # 000, 100, 010, 111
         except:
             # print("dicLUD not available", HVD)
-            ludHVD = {}
+            print('{}dic-LUD-{}.pickle doesn \'t work'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
 
-        with h5py.File("{}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type),
-                       "r") as f:
-            dset = f["data"]
-            cogHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        try:
 
-        with h5py.File("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f:
-            dset = f["data"]
-            pvHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+            with h5py.File("{}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type),
+                           "r") as f:
+                dset = f["data"]
+                cogHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        except:
+            print('{}cog{}ref{}.hdf5 doesn\'t work'.format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
+
+        try:
+            with h5py.File("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f:
+                dset = f["data"]
+                pvHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        except:
+            print("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
 
         # with open('/home/david.perez/Desktop/pv{}ref.pickle'.format(HVD), 'rb') as handle:
         #     pvHVDref = pickle.load(handle) # 000, 100, 010, 111
