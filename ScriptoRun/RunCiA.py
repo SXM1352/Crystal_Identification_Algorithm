@@ -161,3 +161,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+# python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents 150 --precision 0.1 --fileDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/ --saveDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/
