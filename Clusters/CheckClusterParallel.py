@@ -127,6 +127,7 @@ class C_Cluster(object):
                 cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             print('{}hdf5Data/cog{}test.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
+            cogHVDtest = -1
 
         try:
             print('Read: {}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
