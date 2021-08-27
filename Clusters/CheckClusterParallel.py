@@ -120,6 +120,7 @@ class C_Cluster(object):
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
             "{}hdf5Data/pv{}ref.pickle doesn work".format(self.pathtodirectoryRead, HVD)
+            pvHVDtest = -1
 
 
         try:
