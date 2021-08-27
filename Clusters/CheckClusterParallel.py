@@ -656,7 +656,7 @@ class C_Cluster(object):
         cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
 
         print("HERE IT IS COG000test", cog000test)
-        print("HERE IT IS pv000test", len(pv000test))
+        print("HERE IT IS pv000test", pv000test)
         print("HERE IT IS self.lud000", len(self.lud000))
         print("HERE IT IS pv000ref", pv000ref)
         print("HERE IT IS COG000ref", cog000ref)
