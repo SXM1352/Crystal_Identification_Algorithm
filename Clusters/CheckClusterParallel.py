@@ -114,21 +114,21 @@ class C_Cluster(object):
         return self.__secondsToStr(clock())
 
     def __read_data_COG(self, HVD):
-        try:
-            print("Read: {}hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD))
-            with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
-                pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
-        except:
-            "{}hdf5Data/pv{}test.pickle doesn work".format(self.pathtodirectoryRead, HVD)
-            pvHVDtest = -1
-
-        try:
-            print('Read: {}hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD))
-            with open('{}/hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
-                cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
-        except:
-            print('{}hdf5Data/cog{}test.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
-            cogHVDtest = -1
+        # try:
+        #     print("Read: {}hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD))
+        #     with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
+        #         pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
+        # except:
+        #     "{}hdf5Data/pv{}test.pickle doesn work".format(self.pathtodirectoryRead, HVD)
+        #     pvHVDtest = -1
+        #
+        # try:
+        #     print('Read: {}hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD))
+        #     with open('{}/hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
+        #         cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
+        # except:
+        #     print('{}hdf5Data/cog{}test.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
+        #     cogHVDtest = -1
 
         try:
             print('Read: {}dic-LUD-{}.pickle'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
@@ -139,22 +139,22 @@ class C_Cluster(object):
             # print("dicLUD not available", HVD)
             print('{}dic-LUD-{}.pickle doesn \'t work'.format(self.pathtodirectoryRead + self.pathtodirectoryReadLUD, HVD))
 
-        try:
-            print("Read: {}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
-            with h5py.File("{}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type),
-                           "r") as f:
-                dset = f["data"]
-                cogHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
-        except:
-            print('{}cog{}ref{}.hdf5 doesn\'t work'.format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
-
-        try:
-            print("Read: {}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
-            with h5py.File("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f:
-                dset = f["data"]
-                pvHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
-        except:
-            print("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
+        # try:
+        #     print("Read: {}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
+        #     with h5py.File("{}cog{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type),
+        #                    "r") as f:
+        #         dset = f["data"]
+        #         cogHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        # except:
+        #     print('{}cog{}ref{}.hdf5 doesn\'t work'.format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
+        #
+        # try:
+        #     print("Read: {}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
+        #     with h5py.File("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type), "r") as f:
+        #         dset = f["data"]
+        #         pvHVDref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        # except:
+        #     print("{}pv{}ref{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, HVD, self.stack_type))
 
         # with open('/home/david.perez/Desktop/pv{}ref.pickle'.format(HVD), 'rb') as handle:
         #     pvHVDref = pickle.load(handle) # 000, 100, 010, 111
@@ -162,7 +162,9 @@ class C_Cluster(object):
         # with open('/home/david.perez/Desktop/cog{}ref.pickle'.format(HVD), 'rb') as handle:
         #     cogHVDref = pickle.load(handle) # 000, 100, 010, 111
 
-        return cogHVDtest, pvHVDtest, ludHVD, pvHVDref, cogHVDref
+        # return cogHVDtest, pvHVDtest, ludHVD, pvHVDref, cogHVDref
+
+        return ludHVD
 
     def __CrystalDict(self):
         """
@@ -662,16 +664,29 @@ class C_Cluster(object):
         atexit.register(self.__endlog)
         self.__log(self.line, "Start Program")
 
-        cog000test, pv000test, self.lud000, pv000ref, cog000ref = self.__read_data_COG("000")
-        cog100test, pv100test, self.lud100, pv100ref, cog100ref = self.__read_data_COG("100")
-        cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
-        cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
+        # cog000test, pv000test, self.lud000, pv000ref, cog000ref = self.__read_data_COG("000")
+        # cog100test, pv100test, self.lud100, pv100ref, cog100ref = self.__read_data_COG("100")
+        # cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
+        # cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
+        data = h5py.File("/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/hdf5Data/new_cog.hdf5", "r")
+        pv000ref, cog000ref = data["pv000"], data["cog000"]
+        pv100ref, cog100ref = data["pv100"], data["cog100"]
+        pv010ref, cog010ref = data["pv010"], data["cog010"]
+        pv111ref, cog111ref = data["pv111"], data["cog111"]
+        cogref = data["cog"] #das hier ersetzt Zeile 701, 702, 703
+        data.close()
 
-        print("HERE IT IS COG000test", cog000test)
-        print("HERE IT IS pv000test", pv000test)
-        print("HERE IT IS self.lud000", len(self.lud000))
-        print("HERE IT IS pv000ref", pv000ref)
-        print("HERE IT IS COG000ref", cog000ref)
+        self.lud000 = self.__read_data_COG("000")
+        self.lud100 = self.__read_data_COG("100")
+        self.lud010 = self.__read_data_COG("010")
+        self.lud111 = self.__read_data_COG("111")
+
+        # print("HERE IT IS COG000test", cog000test)
+        # print("HERE IT IS pv000test", pv000test)
+        print("HERE IT IS: self.lud000", len(self.lud000))
+        print("HERE IT IS: pv000ref", pv000ref)
+        print("HERE IT IS: COG000ref", cog000ref)
+        print("HERE IT IS: COG", cogref)
 
 
 
@@ -684,9 +699,9 @@ class C_Cluster(object):
         #     cogtest = -1
 
         # print("DER ABSOLUT NEUE PATH:", "{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type))
-        with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
-            dset = f["data"]
-            cogref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
+        # with h5py.File("{}cogRef{}.hdf5".format(self.pathtodirectoryRead + self.pathtodirectoryReadHDF5, self.stack_type), "r") as f:
+        #     dset = f["data"]
+        #     cogref = dset[self.init_event:self.final_event]  # 000, 100, 010, 111
         # with open('/home/david.perez/Desktop/cogRef.pickle', 'rb') as handle:
         #     cogref = pickle.load(handle) # 000, 100, 010, 111
 
