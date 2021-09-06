@@ -669,11 +669,11 @@ class C_Cluster(object):
         # cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
         # cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
         data = h5py.File("/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/hdf5Data/new_cog.hdf5", "r")
-        pv000ref, cog000ref = data["pv000"], data["cog000"]
-        pv100ref, cog100ref = data["pv100"], data["cog100"]
-        pv010ref, cog010ref = data["pv010"], data["cog010"]
-        pv111ref, cog111ref = data["pv111"], data["cog111"]
-        cogref = data["cog"] #das hier ersetzt Zeile 701, 702, 703
+        pv000ref, cog000ref = np.array(data["pv000"]), np.array(data["cog000"])
+        pv100ref, cog100ref = np.array(data["pv100"]), np.array(data["cog100"])
+        pv010ref, cog010ref = np.array(data["pv010"]), np.array(data["cog010"])
+        pv111ref, cog111ref = np.array(data["pv111"]), np.array(data["cog111"])
+        cogref = np.array(data["cog"]) #das hier ersetzt Zeile 701, 702, 703
         data.close()
 
         self.lud000 = self.__read_data_COG("000")
