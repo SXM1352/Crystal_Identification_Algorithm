@@ -423,7 +423,7 @@ class C_Cluster(object):
         i = self.init_event #cluster identification (which event is it)
         
         decimals = self.decimals
-        
+        print("HIER IST COG:", cog)
         for i_cgt, cgt in enumerate(cog):
             # print("i_cgt: ", i_cgt, "        cgt: ", cgt, "         i: ", i)
             data_cluster_calib_pv = {'id': None, 'selected_pv': None,
