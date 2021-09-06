@@ -115,20 +115,19 @@ class C_Cluster(object):
 
     def __read_data_COG(self, HVD):
         try:
-            print("Read: {}hdf5Data/pv{}ref.pickle".format(self.pathtodirectoryRead, HVD))
-            with open("{}/hdf5Data/pv{}ref.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
+            print("Read: {}hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD))
+            with open("{}/hdf5Data/pv{}test.pickle".format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 pvHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
-            "{}hdf5Data/pv{}ref.pickle doesn work".format(self.pathtodirectoryRead, HVD)
+            "{}hdf5Data/pv{}test.pickle doesn work".format(self.pathtodirectoryRead, HVD)
             pvHVDtest = -1
 
-
         try:
-            print('Read: {}hdf5Data/cog{}ref.pickle'.format(self.pathtodirectoryRead, HVD))
-            with open('{}/hdf5Data/cog{}ref.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
+            print('Read: {}hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD))
+            with open('{}/hdf5Data/cog{}test.pickle'.format(self.pathtodirectoryRead, HVD), 'rb') as handle:
                 cogHVDtest = pickle.load(handle)  # 000, 100, 010, 111 order of columns!!!
         except:
-            print('{}hdf5Data/cog{}ref.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
+            print('{}hdf5Data/cog{}test.pickle doesn work'.format(self.pathtodirectoryRead, HVD))
             cogHVDtest = -1
 
         try:
