@@ -83,7 +83,7 @@ class PeakFinder(object):
         for j in range(1,binsx):
             for k in range(1,binsy):
                 source1[j][k] = self.hist[0][j-1][k-1]
-        spectrum = r.TSpectrum2(300) #we need to set the maximum amount of peaks it can find!!!!!
+        spectrum = r.TSpectrum2(250) #we need to set the maximum amount of peaks it can find!!!!!
         npeaks = spectrum.SearchHighRes(c_source, c_dest, binsx, binsy, self.sigma, self.threshold, self.rmBackground, self.convIter, self.markov, self.mIter) #sigma,thrs,bckg, thrs to 4 if we want all peaks in 111, sonst 6 for 111, 7 for 100
         
         posx = spectrum.GetPositionX()
