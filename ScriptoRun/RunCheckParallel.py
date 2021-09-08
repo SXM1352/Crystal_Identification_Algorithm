@@ -93,23 +93,23 @@ def main():
                                              (N where N=1,2,...)')
     parser.add_argument('--nEvents', dest='nEvents', help='Specifiy the number of events  \
                                                  (N where N=0,1,2,..., finalEvent)')
-    # parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
-    #                                                  directory where to read the files from')
-    # parser.add_argument('--saveDirectory', dest='SavePlot', help='Specifiy the name of the   \
-    #                                                              directory where to save the files in.', default='None')
-    # parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
-    #                                                          e.g.: "2" for 0.01 or "1" for 0.1.')
-    # parser.add_argument('--typeStack', dest='typeStack', help='Specifiy if the stack is  \
-    #                                                                      "_cal" or "_coinc".',
-    #                     default='')
-    # args = parser.parse_args()
-    # decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
-    decimals= 1
-    n_Procs = 1
-    n_Events = 30
-    pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
-    savePlot = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
-    stack_type = 8
+    parser.add_argument('--fileDirectory', dest='fileDirect', help='Specifiy the name of the   \
+                                                     directory where to read the files from')
+    parser.add_argument('--saveDirectory', dest='SavePlot', help='Specifiy the name of the   \
+                                                                 directory where to save the files in.', default='None')
+    parser.add_argument('--precision', dest='decimals', help='Specifiy the precision of the lut \
+                                                             e.g.: "2" for 0.01 or "1" for 0.1.')
+    parser.add_argument('--typeStack', dest='typeStack', help='Specifiy if the stack is  \
+                                                                         "_cal" or "_coinc".',
+                        default='')
+    args = parser.parse_args()
+    decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
+    # decimals= 1
+    # n_Procs = 1
+    # n_Events = 30
+    # pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+    # savePlot = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/"
+    # stack_type = 8
     # n_Procs = int(args.nCPU)
     # print(args.nCPU, args.nEvents)
     # print(decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type)
