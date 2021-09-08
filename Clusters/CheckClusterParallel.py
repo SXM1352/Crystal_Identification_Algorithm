@@ -29,7 +29,6 @@ class C_Cluster(object):
 
     def __init__(self, init_event, final_event, start, dic_Events, dic_AssignE, pathtodirectoryRead, decimals, stack_type):
         self.line = "=" * 40
-        print("Oder startet direkt der Bums hier?")
         # self.lock = Lock()
 
         self.start = start
@@ -682,10 +681,10 @@ class C_Cluster(object):
 
         # print("HERE IT IS COG000test", cog000test)
         # print("HERE IT IS pv000test", pv000test)
-        print("HERE IT IS: self.lud000", len(self.lud000))
-        print("HERE IT IS: pv000ref", pv000ref)
-        print("HERE IT IS: COG000ref", cog000ref)
-        print("HERE IT IS: COG", cogref)
+        # print("HERE IT IS: self.lud000", len(self.lud000))
+        # print("HERE IT IS: pv000ref", pv000ref)
+        # print("HERE IT IS: COG000ref", cog000ref)
+        # print("HERE IT IS: COG", cogref)
 
 
 
