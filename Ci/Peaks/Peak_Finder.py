@@ -74,7 +74,7 @@ class PeakFinder(object):
         """
         binsx = self.bins
         binsy = self.bins
-        print("BINSX:", binsx)
+        # print("BINSX:", binsx)
         source1, c_source = {}, array.array("L", [0] * binsx)
         dest1, c_dest = {}, array.array("L", [0] * binsx)
 
@@ -85,31 +85,32 @@ class PeakFinder(object):
         for j in range(1, binsx):
             for k in range(1, binsy):
                 source1[j][k] = self.hist[0][j - 1][k - 1]
+                # print("self.hist:", self.hist[0][j - 1][k - 1])
         spectrum = r.TSpectrum2(300)  # we need to set the maximum amount of peaks it can find!!!!!
-        print("self.hist:", self.hist)
-        print("C_SOURCE!!!:", c_source)
-        print("c_dest!!!!:", c_dest)
-        print("binsx:", binsx)
-        print("binsy:", binsy)
-        print("self.sigma:", self.sigma)
-        print("self.threshold:", self.threshold)
-        print("self.rmBackground:", self.rmBackground)
-        print("self.convIter:", self.convIter)
-        print("self.markov:", self.markov)
-        print("self.mIter:", self.mIter)
+        # print("self.hist:", self.hist)
+        # print("C_SOURCE!!!:", c_source)
+        # print("source1:", source1)
+        # print("c_dest!!!!:", c_dest)
+        # print("binsx:", binsx)
+        # print("binsy:", binsy)
+        # print("self.sigma:", self.sigma)
+        # print("self.threshold:", self.threshold)
+        # print("self.rmBackground:", self.rmBackground)
+        # print("self.convIter:", self.convIter)
+        # print("self.markov:", self.markov)
+        # print("self.mIter:", self.mIter)
         npeaks = spectrum.SearchHighRes(c_source, c_dest, binsx, binsy, self.sigma, self.threshold, self.rmBackground,
                                         self.convIter, self.markov,
                                         self.mIter)  # sigma,thrs,bckg, thrs to 4 if we want all peaks in 111, sonst 6 for 111, 7 for 100
         print("npeaks", npeaks)
         posx = spectrum.GetPositionX()
         posy = spectrum.GetPositionY()
-        print("posx", list(posx))
         xycoord_arr = []
-        print("npeaks:", npeaks)
         for kl in range(npeaks):
             xcoord = self.hist[1][int(posx[kl])]
             ycoord = self.hist[2][int(posy[kl])]
             xycoord_arr.append([xcoord, ycoord])
+            # print("posx:", int(posx[kl]))
         print("Peaks are: ", xycoord_arr)
         return xycoord_arr
 

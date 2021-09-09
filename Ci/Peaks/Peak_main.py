@@ -142,7 +142,7 @@ def main():
         lenmax_edge = 5  # always
 
         for jr, roi_hist in enumerate(ht):
-            print("ROI_HIST:", roi_hist)
+            # print("ROI_HIST!!!:", roi_hist[0][1])
             pFinder = PeakFinder(cg, roi_hist, bins, sigma[cg], threshold[cg], rmBackground, convIter, markov, mIter)
             dic_rows = pFinder.runPeakFinder()  # steps[cg], cg) #100 for 111; in principle also for 100; 010 needs 50 (or less); and 000 auch
             if jr_fixed:
