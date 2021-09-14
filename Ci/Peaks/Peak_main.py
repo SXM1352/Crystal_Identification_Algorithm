@@ -143,6 +143,11 @@ def main():
 
         for jr, roi_hist in enumerate(ht):
             # print("ROI_HIST!!!:", roi_hist[0][1])
+            if jr == 15:
+                with open('/home/janko.lambertus/SearchHighRes.pickle', 'wb') as handle:
+                    pickle.dump(roi_hist, handle,
+                                protocol=pickle.HIGHEST_PROTOCOL)
+
             pFinder = PeakFinder(cg, roi_hist, bins, sigma[cg], threshold[cg], rmBackground, convIter, markov, mIter)
             dic_rows = pFinder.runPeakFinder()  # steps[cg], cg) #100 for 111; in principle also for 100; 010 needs 50 (or less); and 000 auch
             if jr_fixed:
@@ -161,13 +166,20 @@ def main():
             print("rdefect", dic_rdefect)
             # print("dc_c", dic_crystal[1703])
 
-            active_area = raw_input('jr (active area): ')
-            if active_area:
+
+            # active_area = raw_input('jr={} (active area): '.format(jr))
+            # if active_area:
+            if jr == 15:
                 for ij in dic_rows.keys():
                     x = np.array(PeakHelper.Extract_x(dic_rows[ij][0]))
                     y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))
                     x_arr.append(x)
                     y_arr.append(y)
+                print("PLOTTER x_arr", x_arr)
+                print("PLOTTER y_arr", y_arr)
+                print("PLOTTER jr", jr)
+                print("PLOTTER HVD", HVD)
+                print("PLOTTER readdir_refSections", readdir_refSections)
                 pplot = PeakPlot(x_arr, y_arr, jr, HVD, readdir_refSections)
                 pplot.runPeakPlot()
 
