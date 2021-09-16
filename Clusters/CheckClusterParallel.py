@@ -68,7 +68,7 @@ class C_Cluster(object):
         # self.pathtodirectorySavePV = 'PV/'
 
         self.fout_dic_Cluster = '{}dic_Cluster{}.hdf5'.format(self.pathtodirectorySave, self.final_event)
-        print("SELF.FOUT_DIC_CLUSTER: ", self.fout_dic_Cluster)
+        # print("SELF.FOUT_DIC_CLUSTER: ", self.fout_dic_Cluster)
 
         self.fout_dic_notSelectedCluster = '{}dic-notSelected-Cluster{}.hdf5'.format(self.pathtodirectorySave, self.final_event)
 

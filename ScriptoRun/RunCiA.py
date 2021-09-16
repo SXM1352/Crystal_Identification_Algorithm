@@ -84,12 +84,14 @@ def main():
     # print("AAAAAAAAAAAAAAAAAAAAA")
     command_PeakF = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
     # print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+    print(command_PeakF)
     os.system(command_PeakF)
 
     #run routine to label peaks
     # print("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
     command_SanCheck = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
     # print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+    print(command_SanCheck)
     os.system(command_SanCheck)
     # print("EEEEEEEEEEEEEEEEEEEEEEEEEEE")
     pathtodirectoryReadLUD = 'dic-LUD/'
@@ -129,10 +131,10 @@ def main():
     # print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
     __save_Jobs(jobs_per_HVD, pathtodirectory)
     # print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
-    print(jobs)
-    print(pathtodirectory)
-    print(jobs_per_HVD)
-    print(decimals)
+    # print(jobs)
+    # print(pathtodirectory)
+    # print(jobs_per_HVD)
+    # print(decimals)
 
     list_commands = write_commands(jobs, pathtodirectory, jobs_per_HVD, decimals)
     # print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs")
@@ -142,7 +144,8 @@ def main():
     # print("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
     # print('waiting...')
     # sleep(4000)
-    print("COMANDO!!!:", fCommand)
+    # print("COMANDO!!!:", fCommand)
+    print(fCommand)
     os.system(fCommand)  # LUT
     # print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
     Group_jobs = LUT_Group(jobs_per_HVD, pathtodirectory) #group pickles
@@ -155,6 +158,7 @@ def main():
     command_CheckC = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
     # print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
+    print(command_CheckC)
     os.system(command_CheckC)
     print("FINISHED!!!!")
 
