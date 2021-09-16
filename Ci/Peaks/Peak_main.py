@@ -168,8 +168,9 @@ def main():
 
 
             # active_area = raw_input('jr={} (active area): '.format(jr))
-            # if active_area:
-            if jr == 15:
+            active_area = True
+            if active_area:
+            # if jr == 15:
                 for ij in dic_rows.keys():
                     x = np.array(PeakHelper.Extract_x(dic_rows[ij][0]))
                     y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))

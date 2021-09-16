@@ -60,7 +60,7 @@ class PeakFinder(object):
         @return: np_a, pointer
         @rtype: arr, pointer
         """
-        np_a = np.zeros(size, dtype=np.float64)
+        np_a = np.zeros(size, dtype=np.float32)
         pointer, read_only_flag = np_a.__array_interface__["data"]
         return np_a, pointer
 
