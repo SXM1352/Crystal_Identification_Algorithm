@@ -275,6 +275,6 @@ class PeakFinder(object):
         list1 = sorted(list1, key=lambda x: x[1], reverse=True)  # sorted according to "y"
 
         dic_rows, positionss = self.__closest_y(list1)
-        print("Finder_278:", positionss)
+        # print("Finder_278:", positionss)
 
         return dic_rows
