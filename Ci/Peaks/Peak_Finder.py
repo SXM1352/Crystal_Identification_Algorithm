@@ -94,12 +94,12 @@ class PeakFinder(object):
         # print("c_dest!!!!:", c_dest)
         # print("binsx:", binsx)
         # print("binsy:", binsy)
-        print("self.sigma:", self.sigma)
-        print("self.threshold:", self.threshold)
-        print("self.rmBackground:", self.rmBackground)
-        print("self.convIter:", self.convIter)
-        print("self.markov:", self.markov)
-        print("self.mIter:", self.mIter)
+        # print("self.sigma:", self.sigma)
+        # print("self.threshold:", self.threshold)
+        # print("self.rmBackground:", self.rmBackground)
+        # print("self.convIter:", self.convIter)
+        # print("self.markov:", self.markov)
+        # print("self.mIter:", self.mIter)
 
 
 

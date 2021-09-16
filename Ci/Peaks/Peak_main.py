@@ -168,7 +168,7 @@ def main():
 
 
             # active_area = raw_input('jr={} (active area): '.format(jr))
-            active_area = True
+            active_area = False
             if active_area:
             # if jr == 15:
                 for ij in dic_rows.keys():
@@ -176,11 +176,11 @@ def main():
                     y = np.array(PeakHelper.Extract_y(dic_rows[ij][0]))
                     x_arr.append(x)
                     y_arr.append(y)
-                print("PLOTTER x_arr", x_arr)
-                print("PLOTTER y_arr", y_arr)
-                print("PLOTTER jr", jr)
-                print("PLOTTER HVD", HVD)
-                print("PLOTTER readdir_refSections", readdir_refSections)
+                # print("PLOTTER x_arr", x_arr)
+                # print("PLOTTER y_arr", y_arr)
+                # print("PLOTTER jr", jr)
+                # print("PLOTTER HVD", HVD)
+                # print("PLOTTER readdir_refSections", readdir_refSections)
                 pplot = PeakPlot(x_arr, y_arr, jr, HVD, readdir_refSections)
                 pplot.runPeakPlot()
 
