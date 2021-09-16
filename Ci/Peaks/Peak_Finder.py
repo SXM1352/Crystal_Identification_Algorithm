@@ -106,7 +106,7 @@ class PeakFinder(object):
         npeaks = spectrum.SearchHighRes(c_source, c_dest, binsx, binsy, self.sigma, self.threshold, self.rmBackground,
                                         self.convIter, self.markov,
                                         self.mIter)  # sigma,thrs,bckg, thrs to 4 if we want all peaks in 111, sonst 6 for 111, 7 for 100
-        print("npeaks", npeaks)
+        # print("npeaks", npeaks)
         posx = spectrum.GetPositionX()
         posy = spectrum.GetPositionY()
         xycoord_arr = []
