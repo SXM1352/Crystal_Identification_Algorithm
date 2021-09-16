@@ -35,8 +35,8 @@ class PeakPlot():
                 ax.add_patch(rect)
         plt.xlabel("x")
         plt.ylabel("y")
-        plt.show()
-        #plt.savefig("./RowPeaks{}.png".format(j))
+        # plt.show()
+        plt.savefig("{}/Plotties/Peakfinder_{}.pdf".format(self.pathtodirectoryRead, jr))
 
         with open('{}Ref{}_Sections.pickle'.format(self.pathtodirectoryRead, self.HVD), 'rb') as handle:
                      refHVD = pickle.load(handle)
@@ -45,4 +45,5 @@ class PeakPlot():
         
         for kl in range(len(self.x_arr)):
             plt.plot(self.x_arr[kl],self.y_arr[kl], '-ok', mfc='C1', mec='C1')
-        plt.show()
+        # plt.show()
+        plt.savefig("{}/Plotties/Peakfinder2_{}.pdf".format(self.pathtodirectoryRead, jr))
