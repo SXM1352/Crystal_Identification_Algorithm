@@ -82,17 +82,17 @@ def main():
 
     #Run routine to find peaks
     # print("AAAAAAAAAAAAAAAAAAAAA")
-    command_PeakF = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
-    # print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
-    print(command_PeakF)
-    os.system(command_PeakF)
+    # command_PeakF = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/Peaks/Peak_main.py --fileDirectory {} --HVD -1'.format(pathtodirectory)
+    # # print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+    # print(command_PeakF)
+    # os.system(command_PeakF)
 
     #run routine to label peaks
     # print("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
-    command_SanCheck = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
-    # print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-    print(command_SanCheck)
-    os.system(command_SanCheck)
+    # command_SanCheck = 'python /home/janko.lambertus/Masterarbeit/Git/cia/Ci/SanCheck/SanCheck_main.py --HVD -1 --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savePlot)
+    # # print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+    # print(command_SanCheck)
+    # os.system(command_SanCheck)
     # print("EEEEEEEEEEEEEEEEEEEEEEEEEEE")
     pathtodirectoryReadLUD = 'dic-LUD/'
     # print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
