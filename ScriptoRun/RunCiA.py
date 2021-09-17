@@ -145,7 +145,7 @@ def main():
     # print('waiting...')
     # sleep(4000)
     # print("COMANDO!!!:", fCommand)
-    print(fCommand)
+    print("RunCia Command in Line 148:", fCommand)
     os.system(fCommand)  # LUT
     # print("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
     Group_jobs = LUT_Group(jobs_per_HVD, pathtodirectory) #group pickles
@@ -158,9 +158,8 @@ def main():
     command_CheckC = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
     # print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
-    print(command_CheckC)
+    print("RunCia Command in Line 161:", command_CheckC)
     os.system(command_CheckC)
-    print("FINISHED!!!!")
 
 if __name__ == '__main__':
     main()

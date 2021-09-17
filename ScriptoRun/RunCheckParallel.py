@@ -116,14 +116,14 @@ def main():
     # print(decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type)
     pathtodirectorySaveParallel = 'Parallel/'
     pathtodirectorySavePV = 'PhotonSpectrum/'
-    print("RUNCECKAAAAAAAAA")
+    # print("RUNCECKAAAAAAAAA")
     checkFolder(pathtodirectoryRead) #if path not existing it will be created
-    print("RUNCECKBBBBBBB")
+    # print("RUNCECKBBBBBBB")
     # checkFolder(pathtodirectoryRead + pathtodirectorySaveParallel)
     checkFolder(savePlot + pathtodirectorySaveParallel) #if path not existing it will be created
-    print("RUNCECKCCCCCCCCCC")
+    # print("RUNCECKCCCCCCCCCC")
     checkFolder(savePlot + pathtodirectorySaveParallel + pathtodirectorySavePV) #if path not existing it will be created
-    print("RUNCECKDDDDDDDDDDDD")
+    # print("RUNCECKDDDDDDDDDDDD")
 
     n_Procs_total = psutil.cpu_count()
     if n_Procs >= n_Procs_total:
@@ -133,34 +133,32 @@ def main():
     print('Number of available CPU: ', n_Procs_total)
 
     n_jobs_per_proc = int(n_Events/n_Procs)
-    print("RUNCECKEEEEEEEEEEE", n_Procs, n_jobs_per_proc)
+    # print("RUNCECKEEEEEEEEEEE", n_Procs, n_jobs_per_proc)
     jobs = __chunkify_data(n_Procs, n_jobs_per_proc) #splitting big data in little "chunks"
-    print("RUNCECKFFFFFFFFFFFFFF")
+    # print("RUNCECKFFFFFFFFFFFFFF")
     __save_Jobs(jobs, pathtodirectoryRead + pathtodirectorySaveParallel) #saves jobs in pickle
-    print("RUNCECKGGGGGGGGGGG")
+    # print("RUNCECKGGGGGGGGGGG")
 
     list_commands = write_commands(jobs, pathtodirectoryRead, decimals, stack_type)
     #above starts CheckClusterParallel_main.py
-    print("RUNCECKHHHHHHHHHHHHH")
+    # print("RUNCECKHHHHHHHHHHHHH")
 
     fCommand = create_finalCommand(list_commands)
-    print("RUNCECKIIIIIIIIIIIIIOOOOOOOOOOOOO")
+    # print("RUNCECKIIIIIIIIIIIIIOOOOOOOOOOOOO")
 
     fCommand = fCommand  + ' & wait'
-
-    print('Final Command:', fCommand)
     #
     # # print('waiting...')
     # # sleep(4000)
-    print("RUNCECKIIIIIII")
-    print("REALY FINAL COMMAND!!!:", fCommand)
+    # print("RUNCECKIIIIIII")
+    print("RunCheckParallel Comand in Line 156:", fCommand)
     os.system(fCommand) #check clusters
-    print("RUNCECKJJJJJJJJ")
+    # print("RUNCECKJJJJJJJJ")
 
     Group_jobs = C_Group(jobs, pathtodirectoryRead + pathtodirectorySaveParallel, pathtodirectorySavePV) #group pickles
-    print("RUNCECKKKKK")
+    # print("RUNCECKKKKK")
     Group_jobs.runCGroup()
-    print("RUNCECKLLLLLLLLLL")
+    # print("RUNCECKLLLLLLLLLL")
 
     # FitEnSpectrumCommand = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/EneRes/FitEnergySpectrumRunAll.py' + ' --fileDirectory {}'.format(pathtodirectoryRead + pathtodirectorySaveParallel + pathtodirectorySavePV) + ' & wait'
     # print("RUNCECKMMMMMMM")
