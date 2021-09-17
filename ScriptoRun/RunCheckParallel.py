@@ -103,7 +103,8 @@ def main():
                                                                          "_cal" or "_coinc".',
                         default='')
     args = parser.parse_args()
-    decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
+    # decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.SavePlot, args.typeStack
+    decimals, n_Procs, n_Events, pathtodirectoryRead, savePlot, stack_type = args.decimals, int(args.nCPU), int(args.nEvents), args.fileDirect, args.fileDirect, args.typeStack
     # decimals= 1
     # n_Procs = 1
     # n_Events = 30
