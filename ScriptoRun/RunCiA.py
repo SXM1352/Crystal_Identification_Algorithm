@@ -43,8 +43,8 @@ def write_commands(jobs, pathtodirectory, jobs_per_HVD, precision):
     list_commands = []
     for j in jobs:
         for j_HVD in jobs_per_HVD:
-            print("j = ", j)
-            print("j_HVD = ", j_HVD)
+            # print("j = ", j)
+            # print("j_HVD = ", j_HVD)
             command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/LUT/LUT.py' + ' --HVD {} --fileDirectory {} --initEvent {} --finalEvent {} --precision {}'.format(j, pathtodirectory, j_HVD[0], j_HVD[1], precision) #/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/
             list_commands.append(command)
     return list_commands
