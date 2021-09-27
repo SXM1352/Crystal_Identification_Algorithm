@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6d171-56d9-4745-91b9-ed35903f7e96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScriptoRun/RunCheckParallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/RunCheckParallel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScriptoRun/RunCiA.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ScriptoRun/SearchPeaksDebugging" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
