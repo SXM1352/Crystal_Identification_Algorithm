@@ -658,6 +658,7 @@ class C_Cluster(object):
                         protocol=pickle.HIGHEST_PROTOCOL)  # protocol to make it faster it selects last protocol available for current python version (important in py27)
 
     def runCluster(self):
+#'/home/janko.lambertus/Masterarbeit/Git/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {} --typeStack {}'.format(j[0], j[1], pathtodirectoryRead, decimals, stack_type)
 
         atexit.register(self.__endlog)
         self.__log(self.line, "Start Program")
@@ -666,11 +667,12 @@ class C_Cluster(object):
         # cog100test, pv100test, self.lud100, pv100ref, cog100ref = self.__read_data_COG("100")
         # cog010test, pv010test, self.lud010, pv010ref, cog010ref = self.__read_data_COG("010")
         # cog111test, pv111test, self.lud111, pv111ref, cog111ref = self.__read_data_COG("111")
-        data = h5py.File("/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/hdf5Data/new_cog.hdf5", "r")
-        pv000ref, cog000ref = np.array(data["pv000"]), np.array(data["cog000"])
-        pv100ref, cog100ref = np.array(data["pv100"]), np.array(data["cog100"])
-        pv010ref, cog010ref = np.array(data["pv010"]), np.array(data["cog010"])
-        pv111ref, cog111ref = np.array(data["pv111"]), np.array(data["cog111"])
+        print("Jetzt ließt er die Dateien ein.")
+        data = h5py.File("/media/janko.lambertus/pet-scratch/Janko/Master/Data/Train_Detectors/Detector_6/DOI_V2/Mitte_3/test_raw_30000", "r")
+        pv000ref, cog000ref = np.array(data["pv000"]), np.array(data["pos_000"])
+        pv100ref, cog100ref = np.array(data["pv100"]), np.array(data["pos_100"])
+        pv010ref, cog010ref = np.array(data["pv010"]), np.array(data["pos_010"])
+        pv111ref, cog111ref = np.array(data["pv111"]), np.array(data["pos_111"])
         cogref = np.array(data["cog"]) #das hier ersetzt Zeile 701, 702, 703
         data.close()
 

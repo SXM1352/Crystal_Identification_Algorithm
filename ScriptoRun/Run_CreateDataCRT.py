@@ -58,11 +58,11 @@ def main():
     command_NH = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/NewHypmed_main.py --fileDirectory {}'.format(savedirectory)
     os.system(command_NH)
 
-    command_CiA = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 6 --precision 0.1 --nEvents 150'.format(savedirectory)
+    command_CiA = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 10 --precision 0.1 --nEvents 15000'.format(savedirectory)
     os.system(command_CiA)
 
 if __name__ == '__main__':
     main()
 # python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/NewHypmed_main.py --fileDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/
-# python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCiA.py --fileDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/ --HVD -1 --nCPU 6 --precision 0.1 --nEvents 150
+# python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCiA.py --fileDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/ --HVD -1 --nCPU 6 --precision 0.1 --nEvents 90000
 # python Run_CreateDataCRT.py --fileDirectory /media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/ --saveDirectory /media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/Test3/
