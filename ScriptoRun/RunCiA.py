@@ -8,7 +8,7 @@ Crystal Position Maps out of the hdf5 data files.
 import os
 import argparse
 import psutil
-import cPickle as pickle
+import pickle as pickle
 import datetime
 # from time import sleep
 
@@ -45,7 +45,7 @@ def write_commands(jobs, pathtodirectory, jobs_per_HVD, precision):
         for j_HVD in jobs_per_HVD:
             # print("j = ", j)
             # print("j_HVD = ", j_HVD)
-            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/LUT/LUT.py' + ' --HVD {} --fileDirectory {} --initEvent {} --finalEvent {} --precision {}'.format(j, pathtodirectory, j_HVD[0], j_HVD[1], precision) #/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/
+            command = 'python' + ' ' + '/home/sara.mueller/CIA/LUT/LUT.py' + ' --HVD {} --fileDirectory {} --initEvent {} --finalEvent {} --precision {}'.format(j, pathtodirectory, j_HVD[0], j_HVD[1], precision) #/home/david.perez/newEnv/Tenerife/gitFolder/monocal/Positioning/
             list_commands.append(command)
     return list_commands
 def create_finalCommand(list_commands):
@@ -155,11 +155,11 @@ def main():
 
     precision_grid = len(decimals.split(".")[1])
     # print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
-    command_CheckC = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
+    command_CheckC = 'python /home/sara.mueller/CIA/ScriptoRun/RunCheckParallel.py --nCPU 24 --nEvents {} --precision {} --fileDirectory {} --saveDirectory {}'.format(n_Events, precision_grid, pathtodirectory, savePlot)
     # from ini file!! nEvents and nCPU
     # print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
     print("RunCia Command in Line 161:", command_CheckC)
-    os.system(command_CheckC)
+    #os.system(command_CheckC)
 
 if __name__ == '__main__':
     main()

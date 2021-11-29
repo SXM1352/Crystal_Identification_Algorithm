@@ -4,7 +4,7 @@ __author__ = 'david.perez.gonzalez'
 LUT.py provides a frame to create the look up tables and store
 the information about the closest peaks to each grid point.
 """
-import cPickle as pickle
+import pickle as pickle
 import os
 from matplotlib.collections import PolyCollection, LineCollection
 # from scipy.spatial  import ConvexHull
@@ -62,6 +62,7 @@ class LUD():
                     if len(dic_crystal_roi[id]['roi']) > 1 or len(dic_crystal_roi[id]["center"].keys()) > 1:
                         pass
                     elif dic_crystal_roi[id]['roi'][0] == roi_nr:
+                       # print(dic_crystal_roi[id])
                         points_roi.append(dic_crystal_roi[id]['center'][dic_crystal_roi[id]['center'].keys()[0]][0])
 
             hull_list.append(self.__hull_ROI(np.array(points_roi)))

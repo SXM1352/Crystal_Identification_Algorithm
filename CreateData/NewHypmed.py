@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import os
 # import time
 import h5py
-import cPickle as pickle
+import pickle as pickle
 
 class Hypmed():
     """

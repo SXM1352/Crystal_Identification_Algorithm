@@ -8,7 +8,7 @@ hdf5 files out of the raw data in the .DebugSingles files.
 import os
 import argparse
 import psutil
-import cPickle as pickle
+import pickle as pickle
 import datetime
 from time import sleep
 
@@ -30,23 +30,23 @@ def main():
     args = parser.parse_args()
     decimals, stack_id, n_Events, pathtodirectory = args.decimals, args.sID, int(args.nEvents), args.fileDirect
 
-    command_RemLin = 'python /home/david.perez/cia/CreateData/RemoveLastLine.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
-    os.system(command_RemLin)
+    #command_RemLin = 'python /home/sara.mueller/CIA/CreateData/RemoveLastLine.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
+    #os.system(command_RemLin)
 
     # print('waiting...')
     # sleep(18000)
 
-    command_ReadDB_PV = 'python /home/david.perez/cia/CreateData/ReadDebugSinglesPV.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
+    command_ReadDB_PV = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesPV.py --stackID {} --fileDirectory {}'.format(stack_id, pathtodirectory)
     os.system(command_ReadDB_PV)
 
-    command_ReadDB_Pos = 'python /home/david.perez/cia/CreateData/ReadDebugSinglesPos.py --stackID {} --fileDirectory {}'.format(
+    command_ReadDB_Pos = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesPos.py --stackID {} --fileDirectory {}'.format(
         stack_id, pathtodirectory)
     os.system(command_ReadDB_Pos)
 
-    command_NH = 'python /home/david.perez/cia/CreateData/NewHypmed_main.py --fileDirectory {}'.format(pathtodirectory)
+    command_NH = 'python /home/sara.mueller/CIA/CreateData/NewHypmed_main.py --fileDirectory {}'.format(pathtodirectory)
     os.system(command_NH)
 
-    command_CiA = 'python /home/david.perez/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 6 --precision {} --nEvents {}'.format(pathtodirectory, decimals, n_Events)
+    command_CiA = 'python /home/sara.mueller/CIA/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 6 --precision {} --nEvents {}'.format(pathtodirectory, decimals, n_Events)
     os.system(command_CiA)
 
 if __name__ == '__main__':

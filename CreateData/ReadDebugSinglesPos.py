@@ -5,7 +5,7 @@ __author__ = "david.perez.gonzalez"
 INSTALL PATHOS TO BE ABLE TO USE CLASSES'''
 import os
 import argparse
-import cPickle as pickle
+import pickle as pickle
 import psutil  # process and systems utils
 import time
 import os

@@ -173,8 +173,8 @@ def create_hdf5(start, stop, cores):
     stop = stop
     stack_id = "108"
     file_type = ".DebugSingles"
-    pathtodirectoryRead = "/media/janko.lambertus/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
-    pathtodirectorySave_hdf = "/media/janko.lambertus/pet-scratch/Janko/Master/Data/CIA_FT/hdf5/"
+    pathtodirectoryRead = "/media/sara.mueller/pet-scratch/Measurements/Hypmed/2021-02-17_-_15-20-29_-_HypmedStacks/2021-03-12_-_15-42-31_-_2010002165_A41B0821-015_2021-03-08/2021-03-15_-_12-30-54_-_floodmapWithSources/"
+    pathtodirectorySave_hdf = "/media/sara.mueller/pet-scratch/Janko/Master/Data/CIA_FT/hdf5/"
 
     ######################################
 

@@ -46,11 +46,11 @@ def write_commands(jobs, pathtodirectoryRead, decimals, stack_type):
     for j in jobs:
         if stack_type == '_coinc' or stack_type == '_cal':
             print("ZAPZAPZAP")
-            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {} --typeStack {}'.format(j[0], j[1], pathtodirectoryRead, decimals, stack_type)
+            command = 'python' + ' ' + '/home/sara.mueller/CIA/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {} --typeStack {}'.format(j[0], j[1], pathtodirectoryRead, decimals, stack_type)
 
         else:
             print("ZAPZAP2")
-            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {}'.format(j[0], j[1], pathtodirectoryRead, decimals)
+            command = 'python' + ' ' + '/home/sara.mueller/CIA/Clusters/CheckClusterParallel_main.py' + ' --initEvent {} --finalEvent {} --fileDirectory {} --precision {}'.format(j[0], j[1], pathtodirectoryRead, decimals)
 
         list_commands.append(command)
     return list_commands
@@ -58,10 +58,10 @@ def write_commands_calib(jobs, pathtodirectoryRead, stack_type):
     list_commands = []
     for j in jobs:
         if stack_type == '_coinc' or stack_type == '_cal':
-            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {} --typeStack {}'.format(j[1], pathtodirectoryRead, stack_type)
+            command = 'python' + ' ' + '/home/sara.mueller/CIA/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {} --typeStack {}'.format(j[1], pathtodirectoryRead, stack_type)
 
         else:
-            command = 'python' + ' ' + '/home/janko.lambertus/Masterarbeit/Git/cia/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {}'.format(j[1], pathtodirectoryRead)
+            command = 'python' + ' ' + '/home/sara.mueller/CIA/EneRes/CalibPVSpectrum_main.py' + ' --finalEvent {} --fileDirectory {}'.format(j[1], pathtodirectoryRead)
 
         list_commands.append(command)
     return list_commands

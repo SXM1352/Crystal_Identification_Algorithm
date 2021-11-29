@@ -5,7 +5,7 @@ Created on Thu Oct 15 14:57:51 2020
 @author: David
 """
 
-import cPickle as pickle
+import pickle as pickle
 import numpy as np
 import atexit
 from time import clock

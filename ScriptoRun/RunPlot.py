@@ -21,22 +21,22 @@ def main():
     args = parser.parse_args()
     pathtodirectoryRead, savePlot = args.fileDirect, args.SavePlot
 
-    command_AE = 'python /home/david.perez/cia/Tools/AssignEvents.py --fileDirectory {} --saveDirectory {}'.format(
+    command_AE = 'python /home/sara.mueller/CIA/Tools/AssignEvents.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectoryRead, savePlot)
     # from ini file!! nEvents and nCPU
     os.system(command_AE)
 
-    command_SE = 'python /home/david.perez/cia/Tools/Statistic_Events.py --fileDirectory {} --saveDirectory {}'.format(
+    command_SE = 'python /home/sara.mueller/CIA/Tools/Statistic_Events.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectoryRead, savePlot)
     # from ini file!! nEvents and nCPU
     os.system(command_SE)
 
-    command_CM = 'python /home/david.perez/cia/EneRes/CrystalMap-ERes-Mean.py --fileDirectory {} --saveDirectory {} --auto On'.format(
+    command_CM = 'python /home/sara.mueller/CIA/EneRes/CrystalMap-ERes-Mean.py --fileDirectory {} --saveDirectory {} --auto On'.format(
         pathtodirectoryRead, savePlot)
     # from ini file!! nEvents and nCPU
     os.system(command_CM)
 
-    command_PEC = 'python /home/david.perez/cia/Tools/PlotEventCrystal.py --fileDirectory {} --saveDirectory {} --auto On'.format(
+    command_PEC = 'python /home/sara.mueller/CIA/Tools/PlotEventCrystal.py --fileDirectory {} --saveDirectory {} --auto On'.format(
         pathtodirectoryRead, savePlot)
     # from ini file!! nEvents and nCPU
     os.system(command_PEC)

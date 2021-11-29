@@ -36,29 +36,29 @@ def main():
     # command_RemLin = 'python /home/david.perez/cia/CreateData/RemoveLastLine.py --stackID {} --fileDirectory {}'.format('measurement', pathtodirectory)
     # os.system(command_RemLin)
 
-    command_ReadDB_Photon = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/ReadDebugSinglesCRT_Photon.py --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savedirectory)
+    command_ReadDB_Photon = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesCRT_Photon.py --fileDirectory {} --saveDirectory {}'.format(pathtodirectory, savedirectory)
     os.system(command_ReadDB_Photon)
 
-    command_ReadDB_Pos = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/ReadDebugSinglesCRT_Pos.py --fileDirectory {} --saveDirectory {}'.format(
+    command_ReadDB_Pos = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesCRT_Pos.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectory, savedirectory)
     os.system(command_ReadDB_Pos)
 
-    command_ReadDB_TimeStamp = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/ReadDebugSinglesCRT_TimeStamp.py --fileDirectory {} --saveDirectory {}'.format(
+    command_ReadDB_TimeStamp = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesCRT_TimeStamp.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectory, savedirectory)
     os.system(command_ReadDB_TimeStamp)
 
-    command_ReadDB_Val = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/ReadDebugSinglesCRT_Val.py --fileDirectory {} --saveDirectory {}'.format(
+    command_ReadDB_Val = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesCRT_Val.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectory, savedirectory)
     os.system(command_ReadDB_Val)
 
-    command_ReadDB_PV = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/ReadDebugSinglesCRT_PV.py --fileDirectory {} --saveDirectory {}'.format(
+    command_ReadDB_PV = 'python /home/sara.mueller/CIA/CreateData/ReadDebugSinglesCRT_PV.py --fileDirectory {} --saveDirectory {}'.format(
         pathtodirectory, savedirectory)
     os.system(command_ReadDB_PV)
 
-    command_NH = 'python /home/janko.lambertus/Masterarbeit/Git/cia/CreateData/NewHypmed_main.py --fileDirectory {}'.format(savedirectory)
+    command_NH = 'python /home/sara.mueller/CIA/CreateData/NewHypmed_main.py --fileDirectory {}'.format(savedirectory)
     os.system(command_NH)
 
-    command_CiA = 'python /home/janko.lambertus/Masterarbeit/Git/cia/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 10 --precision 0.1 --nEvents 15000'.format(savedirectory)
+    command_CiA = 'python /home/sara.mueller/CIA/ScriptoRun/RunCiA.py --fileDirectory {} --HVD -1 --nCPU 10 --precision 0.1 --nEvents 15000'.format(savedirectory)
     os.system(command_CiA)
 
 if __name__ == '__main__':
